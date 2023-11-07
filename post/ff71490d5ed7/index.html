@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="不会吧，C++20都出了，不会还有人在学C++11的新特性吧（就是我）。这篇文章介绍一些C++11的方便的语法糖&#x2F;特性。 auto类型推导 这可以说是C++11中最方便最常用的特性了，一旦开始用就再也回不去了。 1234float foo();auto a &#x3D; 3; &#x2F;&#x2F;a的类型是intauto b &#x3D; foo(); &#x2F;&#x2F;b的类型是floatauto c; &#x2F;&#x2F;报错，因为编译器无法推断出c的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11方便又常用的特性">
+<meta property="og:url" content="http://cyrus28214.top/post/ff71490d5ed7/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="不会吧，C++20都出了，不会还有人在学C++11的新特性吧（就是我）。这篇文章介绍一些C++11的方便的语法糖&#x2F;特性。 auto类型推导 这可以说是C++11中最方便最常用的特性了，一旦开始用就再也回不去了。 1234float foo();auto a &#x3D; 3; &#x2F;&#x2F;a的类型是intauto b &#x3D; foo(); &#x2F;&#x2F;b的类型是floatauto c; &#x2F;&#x2F;报错，因为编译器无法推断出c的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-01T07:05:55.000Z">
+<meta property="article:modified_time" content="2023-09-30T05:59:46.947Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="编程语言笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/ff71490d5ed7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/ff71490d5ed7/","path":"post/ff71490d5ed7/","title":"C++11方便又常用的特性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++11方便又常用的特性 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#auto%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.</span> <span class="nav-text">auto类型推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4for%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">范围for循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">lambda表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nullptr"><span class="nav-number">4.</span> <span class="nav-text">nullptr</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/ff71490d5ed7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C++11方便又常用的特性 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++11方便又常用的特性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-01 15:05:55" itemprop="dateCreated datePublished" datetime="2023-07-01T15:05:55+08:00">2023-07-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>不会吧，C++20都出了，不会还有人在学C++11的新特性吧（就是我）。这篇文章介绍一些C++11的方便的语法糖/特性。</p>
+<h2 id="auto类型推导">auto类型推导</h2>
+<p>这可以说是C++11中最方便最常用的特性了，一旦开始用就再也回不去了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">float</span> <span class="title">foo</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">auto</span> a = <span class="number">3</span>; <span class="comment">//a的类型是int</span></span><br><span class="line"><span class="keyword">auto</span> b = <span class="built_in">foo</span>(); <span class="comment">//b的类型是float</span></span><br><span class="line"><span class="keyword">auto</span> c; <span class="comment">//报错，因为编译器无法推断出c的类型</span></span><br></pre></td></tr></table></figure>
+<p>这个特性在遍历stl容器的时候很好用，例：</p>
+<span id="more"></span>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; array;</span><br><span class="line"></span><br><span class="line"><span class="comment">//传统的方法很长很麻烦</span></span><br><span class="line"><span class="keyword">for</span>(std::vector&lt;<span class="type">int</span>&gt;::iterator it = array.<span class="built_in">begin</span>(); it != array.<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//现在只需这样</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = array.<span class="built_in">begin</span>(); it != array.<span class="built_in">end</span>(); ++it)&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要注意<code>auto</code>可以用于函数返回值但不能用于函数参数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">foo</span><span class="params">(<span class="type">int</span> a</span></span></span><br><span class="line"><span class="params"><span class="function">  - <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b; <span class="comment">//则auto会自动推导为int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bar</span><span class="params">(<span class="keyword">auto</span> a, <span class="keyword">auto</span> b)</span></span>; <span class="comment">//报错，因为编译器无法自动推导出a、b的类型，如果有这种需求就使用template吧</span></span><br></pre></td></tr></table></figure>
+<h2 id="范围for循环">范围for循环</h2>
+<p>范围for循环又比上面提到的遍历容器的方式更简单了，上代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i : a)&#123;&#125; <span class="comment">//a可以是int[]、vector&lt;int&gt;、queue&lt;double&gt;等等，很灵活，甚至自己写的类只要定义了begin()、end()、++等函数也可以使用这个语法糖</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span>&amp; i : a)&#123;&#125; <span class="comment">//这样的话i是一个引用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; i : a)&#123;&#125; <span class="comment">//结合上一个特性就有了究极偷懒的写法</span></span><br></pre></td></tr></table></figure>
+<h2 id="lambda表达式">lambda表达式</h2>
+<p>python里面的lambda表达式实在是好用，C++11里面也有lambda表达式，不过C++毕竟是静态语言，用起来还是没有python里面的灵活。
+格式：</p>
+<pre><code>[捕获列表] (函数参数) mutable 或 exception 声明 -&gt; 返回值类型 &#123;函数体&#125;</code></pre>
+<p>其中，捕获列表有：</p>
+<ul>
+<li>[] 表示不捕获任何变量</li>
+<li>[=] 表示按值传递的方法捕获父作用域的所有变量</li>
+<li>[&amp;] 表示按引用传递的方法捕获父作用域的所有变量</li>
+<li>[=, &amp;a]
+表示按值传递的方法捕获父作用域的所有变量，但按引用传递的方法捕获变量a</li>
+<li>[&amp;, a]
+表示按引用传递的方法捕获父作用域的所有变量，但按值传递的方法捕获变量a</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//例如要将下面的字符串从短到长排列</span></span><br><span class="line">    std::vector&lt;std::string&gt; a = &#123;<span class="string">&quot;Alpha&quot;</span>, <span class="string">&quot;Charlie&quot;</span>, <span class="string">&quot;Echo&quot;</span>, <span class="string">&quot;Juliet&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    std::<span class="built_in">sort</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), [](<span class="keyword">auto</span> &amp;x, <span class="keyword">auto</span> &amp;y) <span class="keyword">auto</span> &#123;<span class="keyword">return</span> x.<span class="built_in">length</span>() &lt; y.<span class="built_in">length</span>();&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; str : a)&#123;</span><br><span class="line">        std::cout &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    输出结果：</span></span><br><span class="line"><span class="comment">    Echo</span></span><br><span class="line"><span class="comment">    Alpha</span></span><br><span class="line"><span class="comment">    Juliet</span></span><br><span class="line"><span class="comment">    Charlie</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="nullptr">nullptr</h2>
+<p>C++11提供了<code>nullptr</code>关键字来代替以前的<code>NULL</code>。<code>NULL</code>的宏定义是<code>#define NULL ((void *)0)</code>，在隐式类型转换的时候会出现二义性。<code>nullptr</code>解决了这个问题，应该使用<code>nullptr</code>而不是<code>NULL</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B0/" rel="tag"># 编程语言笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/5941ab677246/" rel="prev" title="半加器、全加器与超前进位加法器">
+                  <i class="fa fa-chevron-left"></i> 半加器、全加器与超前进位加法器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/f0b740837a37/" rel="next" title="编译的四个步骤：预编译、编译、汇编、链接">
+                  编译的四个步骤：预编译、编译、汇编、链接 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

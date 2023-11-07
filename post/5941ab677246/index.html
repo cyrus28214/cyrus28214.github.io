@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="半加器(Half Adder) 半加器接受两个输入A、B，输出加法的计算结果S和进位C，表达式及真值表如下： \[\begin{align*} S &amp;&#x3D; A \oplus B \\ C &amp;&#x3D; AB \end{align*}\]    A B  S C     0 0  0 0   0 1  1 1   1 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="半加器、全加器与超前进位加法器">
+<meta property="og:url" content="http://cyrus28214.top/post/5941ab677246/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="半加器(Half Adder) 半加器接受两个输入A、B，输出加法的计算结果S和进位C，表达式及真值表如下： \[\begin{align*} S &amp;&#x3D; A \oplus B \\ C &amp;&#x3D; AB \end{align*}\]    A B  S C     0 0  0 0   0 1  1 1   1 0">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-30T03:30:14.000Z">
+<meta property="article:modified_time" content="2023-08-26T13:29:48.359Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="数字电路">
+<meta property="article:tag" content="图解">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/5941ab677246/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/5941ab677246/","path":"post/5941ab677246/","title":"半加器、全加器与超前进位加法器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>半加器、全加器与超前进位加法器 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E5%8A%A0%E5%99%A8half-adder"><span class="nav-number">1.</span> <span class="nav-text">半加器(Half Adder)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%8A%A0%E5%99%A8full-adder"><span class="nav-number">2.</span> <span class="nav-text">全加器(Full Adder)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E5%89%8D%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">超前进位加法器</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/5941ab677246/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="半加器、全加器与超前进位加法器 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          半加器、全加器与超前进位加法器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-30 11:30:14" itemprop="dateCreated datePublished" datetime="2023-06-30T11:30:14+08:00">2023-06-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="半加器half-adder">半加器(Half Adder)</h2>
+<p>半加器接受两个输入A、B，输出加法的计算结果S和进位C，表达式及真值表如下：</p>
+<p><span class="math display">\[\begin{align*}
+S &amp;= A \oplus B \\
+C &amp;= AB
+\end{align*}\]</span></p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th></th>
+<th>S</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<p>利用异或门可以很简单的设计出一个半加器 <img
+src="https://pic.imgdb.cn/item/649e549d1ddac507cce6a707.png"
+title="半加器" alt="半加器" /></p>
+<p>我们把它抽象成这样 <img
+src="https://pic.imgdb.cn/item/649e55ad1ddac507cce8564b.png"
+title="半加器" alt="半加器" /></p>
+<h2 id="全加器full-adder">全加器(Full Adder)</h2>
+<p>如果我们需要将低位所位的1也加上，就需要用到全加器，它接受三个输入A、B和C，输出加法的计算结果S和进位C1。由此可以写出全加器的表达式。</p>
+<p><span class="math display">\[\begin{align*}
+S &amp;= A \oplus B \oplus C \\
+C_1 &amp;= AB + AC + BC
+\end{align*}\]</span></p>
+<p><em>*这里的乘法和加法分别代表布尔代数中的“与”和“或”，而“<span
+class="math inline">\(\oplus\)</span>”是异或</em></p>
+<p>第一个式子很好理解，因为逻辑门里面的异或就是不进位的加法。而第二个式子翻译成人话就是“A、B、C中至少有两个为真”，也就是有进位的情况。</p>
+<p>根据表达式可以列出它的真值表。</p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th></th>
+<th>S</th>
+<th>C1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>具体的实现也很简单，只需要用到两个半加器。 <img
+src="https://pic.imgdb.cn/item/649e67111ddac507cc085cb5.png"
+title="全加器" alt="全加器" /></p>
+<p>同理我们把它抽象（或者说封装）成这样： <img
+src="https://pic.imgdb.cn/item/649e678b1ddac507cc090432.png"
+title="全加器" alt="全加器" /></p>
+<p>有了全加器和半加器，制作一个n位加法器就很简单了，这里以4位加法器为例。
+<img
+src="https://pic.imgdb.cn/item/649e742d1ddac507cc1e31e8.png%22加法器%22"
+alt="加法器" /></p>
+<p>这种加法器被称为串行进位加法器(Ripple Carry Adder -
+RCA)，也叫行波进位加法器或脉冲进位加法器，RCA的特点是电路简单，但由于高位必须等到低位运算完成才能进行，电路产生的延时很大，运算速度较慢，而且位数越多运算越慢。而超前进位加法器(Carry
+Look-ahead Adder - CLA)可以解决这个问题。</p>
+<h2 id="超前进位加法器">超前进位加法器</h2>
+<p>上面全加器的式子还有另一种写法 <span class="math display">\[
+\begin{align*}
+C_{i+1} &amp;= A_i B_i + A_i C_i + B_i C_i\\
+&amp;= A_i B_i + (A_i + B_i)C_i\\
+S_i &amp;= A_i \oplus B_i \oplus C_i \\
+&amp;= (A_i + B_i) \oplus (A_i B_i) \oplus C_i
+\end{align*}
+\]</span> 由此，不妨令 <span class="math display">\[
+\begin{align*}
+G_i &amp;= A_i B_i\\
+P_i &amp;= A_i + B_i
+\end{align*}
+\]</span> 则有 <span class="math display">\[
+\begin{align*}
+C_{i+1} &amp;= G_i + P_i C_i\\
+S_i &amp;= P_i \oplus G_i \oplus C_i
+\end{align*}
+\]</span> 利用这个我们可以提前计算出进位，降低计算的延迟。 <span
+class="math display">\[
+\begin{align*}
+C_1 &amp;= G_0 + P_0 C_0\\
+C_2 &amp;= G_1 + P_1(G_0 + P_0 C_0)\\
+&amp;= G_1 + P_1 G_0 + P_1 P_0 C_0\\
+C_3 &amp;= G_2 + P_2(G_1 + P_1 G_0 + P_1 P_0 C_0)\\
+&amp;= G_2 + P_2 G_1 + P_2 P_1 G_0 + P_2 P_1 P_0 C_0\\
+&amp;\ldots \ldots
+\end{align*}
+\]</span>
+进位延时只有三个门的延时，加上最后一级全加器的延时，最多四个延时时间。
+具体的实现比较复杂，如图。 <img
+src="https://pic.imgdb.cn/item/649e74c91ddac507cc1f31d4.png%22超前进位加法器%22"
+alt="超前进位加法器" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/" rel="tag"># 数字电路</a>
+              <a href="/tags/%E5%9B%BE%E8%A7%A3/" rel="tag"># 图解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/bfdce4f7f9f8/" rel="prev" title="建站心得">
+                  <i class="fa fa-chevron-left"></i> 建站心得
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/ff71490d5ed7/" rel="next" title="C++11方便又常用的特性">
+                  C++11方便又常用的特性 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

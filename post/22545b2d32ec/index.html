@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码在数据库中的加密存储">
+<meta property="og:url" content="http://cyrus28214.top/post/22545b2d32ec/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-18T15:19:27.000Z">
+<meta property="article:modified_time" content="2023-11-07T10:37:51.994Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/22545b2d32ec/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/22545b2d32ec/","path":"post/22545b2d32ec/","title":"密码在数据库中的加密存储"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>密码在数据库中的加密存储 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%98%8E%E6%96%87%E5%82%A8%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">明文储存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%82%A8%E5%AD%98%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">储存哈希值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%A9%E8%99%B9%E8%A1%A8%E6%94%BB%E5%87%BBrainbow-attack"><span class="nav-number">4.</span> <span class="nav-text">彩虹表攻击（Rainbow Attack）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E7%9B%90"><span class="nav-number">5.</span> <span class="nav-text">密码加盐</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/22545b2d32ec/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="密码在数据库中的加密存储 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          密码在数据库中的加密存储
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-18 23:19:27" itemprop="dateCreated datePublished" datetime="2023-10-18T23:19:27+08:00">2023-10-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="简介">简介</h1>
+<p>本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。</p>
+<h1 id="明文储存">明文储存</h1>
+<p>我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？</p>
+<p><img
+src="https://pic.imgdb.cn/item/652d49c3c458853aef4021ad.jpg" /></p>
+<span id="more"></span>
+<p>有两种可能，攻击者可能可以在密码传递的过程中截取密码（假如传递的过程没有其他的保护），或者数据库泄露给了攻击者。</p>
+<p>如果整个数据库都泄露了（拖库），情况非常糟糕，因为你的所有用户的密码都泄露了，你的所有用户数据都被开放给了攻击者，所有用户的身份认证都失效了！</p>
+<h1 id="储存哈希值">储存哈希值</h1>
+<p>为了避免这一点，我们可以不储存明文密码，而是储存密码的哈希值<span
+class="math inline">\(Hash(Password)\)</span>。</p>
+<p>一个理想的哈希加密函数需要满足这些条件：</p>
+<ol type="1">
+<li>一致性：对于相同的输出，输出应该是相同的， <span
+class="math inline">\(Hash(x) = Hash(x)\)</span></li>
+<li>不可逆性：难以将哈希值还原成原始数据，即 <span
+class="math inline">\(Hash^{-1}(Hash(x)) = x\)</span>
+是难以计算的。</li>
+<li>抗碰撞性：对于随机的 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span>, 若 <span class="math inline">\(x \neq
+y\)</span> ，则 <span class="math inline">\(Hash(x) = Hash(y)\)</span>
+的概率是极小的。</li>
+<li>……（还有些其他性质可以让这个函数更好，比如 <span
+class="math inline">\(Hash(x)\)</span> 的计算很快）</li>
+</ol>
+<p>有了一致性，我们就可以通过不传递明文，而是传递哈希值的方法，判断用户输入的密码是否正确。设置密码时，储存
+<span class="math inline">\(Hash(Password)\)</span> ，而不储存 <span
+class="math inline">\(Password\)</span> 。当用户输入密码，如果<span
+class="math inline">\(Hash(Input) = Hash(Password)\)</span> ，我们就认为
+<span class="math inline">\(Input = Password\)</span>
+，从而验证了密码正确。</p>
+<p>有了不可逆性，我们就可以防止攻击者从 <span
+class="math inline">\(Hash(Password)\)</span> 反推出 <span
+class="math inline">\(Password\)</span> ，即使攻击方拿到了 <span
+class="math inline">\(Hash(Password)\)</span>， 也没有任何用处。</p>
+<p>需要注意的是，哈希函数的性质里不要求它是一个单射，也就是说，可能存在和
+<span class="math inline">\(Password\)</span> 不相同的序列，设为 <span
+class="math inline">\(Cnffjbeq\)</span>
+，它的哈希值和密码是一样的，根据我们对用户输入密码的处理方式，只要 <span
+class="math inline">\(Hash(Cnffjbeq) = HashValue\)</span>
+，我们就认为用户通过了身份验证，然而用户并没有输入正确的密码。这叫做哈希碰撞（Hash
+Collision），这怎么办呢？</p>
+<p>这里就要用到第三个性质了，我们的第三个性质保证了这种情况的概率非常低，因此对这种情况的发生不必担心，只要保证有效的密码（设置的密码+会发生碰撞的密码）占所有可能密码的比例很小，比如
+<span class="math inline">\(\frac{1}{10^{100}}\)</span>
+，攻击者想要暴力枚举试出密码就是困难的。</p>
+<p>常见的哈希加密函数有：md5、SHA-1、SHA-2、SHA-3等。一些加密算法由于时代的发展，被破解的速度越来越快，因而变得越来越不安全，如md5。但md5因为计算速度快，仍然在数据完整性检查中广泛应用。目前，SHA-2因为计算速度较快，安全性也较高，被广泛使用。</p>
+<h1 id="彩虹表攻击rainbow-attack">彩虹表攻击（Rainbow Attack）</h1>
+<p>攻击者可以构造一个巨大的弱密码的哈希值的集合，称作彩虹表，然后用彩虹表比对数据库中的哈希值，一旦发现相同，就成功破解了密码。</p>
+<p><span class="math display">\[
+Rainbow=\left[
+\begin{array}{c}
+    Hash(\text{12345678})\\
+    Hash(\text{qwerty})\\
+    Hash(\text{password})\\
+    Hash(\text{20030101})\\
+    Hash(\text{00000000})\\
+    \cdots
+\end{array}\right]
+\]</span></p>
+<h1 id="密码加盐">密码加盐</h1>
+<p>但是彩虹表攻击可以通过给密码加盐轻松解决，我们为每一个密码都生成一个随机数，称作“盐”，然后将盐储存到单独的表中。储存密码时，我们储存
+<span class="math inline">\(Hash(password + salt)\)</span>
+（这里的加不一定是简单的字符串连接，可以是间隔插入、打乱插入等）。盐是不需要保密的，即使攻击者知道了盐的内容，也无法破解密码。加盐的操作可以轻松使攻击者的彩虹表失效，因为彩虹表是针对弱密码进行的，加了盐之后相当于密码都变成强密码了。</p>
+<p>例如：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">假设密码和盐分别为</span><br><span class="line">password = 12345678</span><br><span class="line">salt = Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br><span class="line">则加了盐的密码就是</span><br><span class="line">salted_password = 12345678Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br></pre></td></tr></table></figure>
+<p>这样，即使储存密码的数据库泄露了，攻击者也没有办法访问用户的数据，保证了数据的安全性。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+              <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"># 后端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/3de5a6a18604/" rel="prev" title="SymPy学习笔记（五）微积分">
+                  <i class="fa fa-chevron-left"></i> SymPy学习笔记（五）微积分
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/2605827041bf/" rel="next" title="SQL学习笔记（八）事务">
+                  SQL学习笔记（八）事务 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

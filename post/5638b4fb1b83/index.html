@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="题面  请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以下几个部分：  若干空格 一个 小数 或者 整数 （可选）一个 &#39;e&#39; 或 &#39;E&#39; ，后面跟着一个 整数 若干空格">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指 Offer 20. 表示数值的字符串 题解">
+<meta property="og:url" content="http://cyrus28214.top/post/5638b4fb1b83/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="题面  请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以下几个部分：  若干空格 一个 小数 或者 整数 （可选）一个 &#39;e&#39; 或 &#39;E&#39; ，后面跟着一个 整数 若干空格">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-27T14:57:02.000Z">
+<meta property="article:modified_time" content="2023-09-30T08:30:49.364Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="图解">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="剑指Offer">
+<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="有限状态自动机">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="正则表达式">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/5638b4fb1b83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/5638b4fb1b83/","path":"post/5638b4fb1b83/","title":"剑指 Offer 20. 表示数值的字符串 题解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>剑指 Offer 20. 表示数值的字符串 题解 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">题面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/5638b4fb1b83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="剑指 Offer 20. 表示数值的字符串 题解 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          剑指 Offer 20. 表示数值的字符串 题解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-27 22:57:02" itemprop="dateCreated datePublished" datetime="2023-07-27T22:57:02+08:00">2023-07-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="题面">题面</h2>
+<blockquote>
+<p>请实现一个函数用来判断字符串是否表示<strong>数值</strong>（包括整数和小数）。</p>
+<p><strong>数值</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li>若干空格</li>
+<li>一个 小数 或者 整数</li>
+<li>（可选）一个 <code>'e'</code> 或 <code>'E'</code> ，后面跟着一个 整数</li>
+<li>若干空格</li>
+</ol>
+<span id="more"></span>
+<p><strong>小数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li>（可选）一个符号字符（<code>'+'</code> 或 <code>'-'</code>）</li>
+<li>下述格式之一：</li>
+<li>至少一位数字，后面跟着一个点 <code>'.'</code></li>
+<li>至少一位数字，后面跟着一个点 <code>'.'</code>
+，后面再跟着至少一位数字</li>
+<li>一个点 <code>'.'</code> ，后面跟着至少一位数字</li>
+</ol>
+<p><strong>整数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li>（可选）一个符号字符（<code>'+'</code> 或 <code>'-'</code>）</li>
+<li>至少一位数字</li>
+</ol>
+<p>部分数值列举如下： +
+<code>["+100" - "5e2" - "-123" - "3.1416" - "-1E-16" - "0123"]</code></p>
+<p>部分非数值列举如下： +
+<code>["12e" - "1a3.14" - "1.2.3" - "+-5" - "12e+5.4"]</code>  </p>
+<p>示例 1： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;0&quot;</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure> 示例 2： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;e&quot;</span><br><span class="line">输出：false</span><br></pre></td></tr></table></figure> 示例 3： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;.&quot;</span><br><span class="line">输出：false</span><br></pre></td></tr></table></figure>
+示例 4： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;    .1  &quot;</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure></p>
+<p>提示： + <code>1 &lt;= s.length &lt;= 20</code></p>
+<ul>
+<li><code>s</code>
+仅含英文字母（大写和小写），数字（<code>0-9</code>），加号
+<code>'+'</code> ，减号 <code>'-'</code> ，空格 <code>' '</code> 或者点
+<code>'.'</code> 。</li>
+</ul>
+</blockquote>
+<h2 id="题解">题解</h2>
+<p>要匹配格式化字符串，首先想到的就是利用正则表达式，构造这样的表达式也很容易。</p>
+<p>首先，根据题面，首位可能有空格，正则表达式里面可以直接用空格<code>' '</code>或者用能够匹配所有空白字符的<code>\s</code>，要0个或多个就用<code>*</code>字符。</p>
+<p>然后匹配正负号0次或1次，注意<code>+</code>需要转义<code>[\+-]?</code></p>
+<p>假如是整数或者有整数部分的小数，就用<code>\d+\.?\d*</code>，<code>\d</code>可以匹配任意数字，相当于<code>[0-9]</code>。</p>
+<p>假如是没有整数部分的小数，就用<code>\.\d+</code>。</p>
+<p>这两个之间使用<code>|</code>或符号连接在一起就是<code>(\d+\.?\d*|\.\d+)</code></p>
+<p>然后是指数部分，首先是字母<code>E</code>或者<code>e</code>，然后是整数部分<code>\d+</code>，指数部分是可选的，所以括号括起来加上<code>?</code>。</p>
+<p>最后因为我们需要匹配整个字符串，加上匹配首尾的符号<code>^</code>和<code>$</code>就大功告成了，表达式为<code>^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$</code>代码非常简单，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="function">regex <span class="title">r</span><span class="params">(<span class="string">R&quot;(^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$)&quot;</span>)</span></span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">regex_match</span>(s</span><br><span class="line">  - r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然而，他竟然TLE了 <img
+src="https://pic.imgdb.cn/item/64c28e0a1ddac507ccd4aed1.jpg%22TLE%22"
+alt="TLE" /></p>
+<p>不信邪的我又写了Python版和JS版的代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isNumber</span>(<span class="params">c</span></span><br><span class="line"><span class="params">  - s</span>):</span><br><span class="line">        <span class="keyword">return</span> re.<span class="keyword">match</span>(<span class="string">r&quot;^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$&quot;</span></span><br><span class="line">  - s) != <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isNumber = <span class="keyword">function</span>(<span class="params">s</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$/i</span>.<span class="title function_">test</span>(s)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>结果惊奇的发现：竟然过了，还挺快的。难道是我在C++程序中使用正则表达式的姿势不对？</p>
+<figure>
+<img
+src="https://pic.imgdb.cn/item/64c28eb11ddac507ccd62dc1.jpg%22换成Python和JS就过了%22"
+alt="换成Python和JS就过了" />
+<figcaption aria-hidden="true">换成Python和JS就过了</figcaption>
+</figure>
+<p>在我的印象中C++在性能方面应该是强于Python的，有空研究一下到底为什么会出现这种现象。</p>
+<p>我准备想第二种方法，来完成C++版本的程序</p>
+<p>实际上正则表达式的本质就是构建了一个自动机在字符串上跑，如果不使用正则表达式，也可以直接用有限状态自动机（FSM
+- finite state machine 又称FSA - finite state automaton ）来搞。</p>
+<p>我自己推导的FSM用了太多的节点，这里贴出力扣的官方题解配的图。</p>
+<figure>
+<img
+src="https://pic.imgdb.cn/item/64c290421ddac507ccd9866b.png%22FSM%22"
+alt="FSM" />
+<figcaption aria-hidden="true">FSM</figcaption>
+</figure>
+<p>根据这个转移箭头，可以直接用数组模拟自动机</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> mapping[<span class="number">256</span>], FSM[<span class="number">16</span>][<span class="number">8</span>] = &#123;&#123;&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> ch = <span class="string">&#x27;0&#x27;</span>; ch &lt;= <span class="string">&#x27;9&#x27;</span>; ++ch) mapping[ch] = <span class="number">1</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;.&#x27;</span>] = <span class="number">2</span>;</span><br><span class="line">        mapping[<span class="string">&#x27; &#x27;</span>] = <span class="number">3</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;e&#x27;</span>] = mapping[<span class="string">&#x27;E&#x27;</span>] = <span class="number">4</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;+&#x27;</span>] = mapping[<span class="string">&#x27;-&#x27;</span>] = <span class="number">5</span>;</span><br><span class="line">        <span class="type">int</span> st = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> ch : s)</span><br><span class="line">            st = FSM[st][mapping[ch]];</span><br><span class="line">        <span class="keyword">return</span> st == <span class="number">3</span> || st == <span class="number">4</span> || st == <span class="number">5</span> || st == <span class="number">8</span> || st == <span class="number">9</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>mapping</code>数组将ASCII字符转化为1-5，分别对应图上的数字、小数点、空格、字符e、+/-号，其余没填充的0会把引入第0节点，即匹配失败。</p>
+<p><code>FSM</code>数组定义了图中10个节点之间的转移关系，当自动机跑到字符串的末尾，如果st处于图中双边缘线圆的节点内就是匹配成功。</p>
+<p>程序速度很快，因为除了查询数组没有什么其他的开销。</p>
+<p>比起使用if-else嵌套，自动机极大地降低了心智负担，避免了逻辑混乱。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E5%9B%BE%E8%A7%A3/" rel="tag"># 图解</a>
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/%E5%89%91%E6%8C%87Offer/" rel="tag"># 剑指Offer</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+              <a href="/tags/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag"># 有限状态自动机</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"># 正则表达式</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/f0b740837a37/" rel="prev" title="编译的四个步骤：预编译、编译、汇编、链接">
+                  <i class="fa fa-chevron-left"></i> 编译的四个步骤：预编译、编译、汇编、链接
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/4bf52f688958/" rel="next" title="什么时候可以使用滚动数组优化？">
+                  什么时候可以使用滚动数组优化？ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

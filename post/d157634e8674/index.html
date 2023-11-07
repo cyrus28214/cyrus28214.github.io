@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言 最近开始正式学习CTF了，准备先打一打校巴上比较简单的题，遇到什么不懂的再去学习。慢慢提升自己的水平。 这是我的第一道Reverse。 题目 题目给了一个二进制可执行程序，执行这个程序，会显示“Please input flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZJU校巴-Reverse1解题记录">
+<meta property="og:url" content="http://cyrus28214.top/post/d157634e8674/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="前言 最近开始正式学习CTF了，准备先打一打校巴上比较简单的题，遇到什么不懂的再去学习。慢慢提升自己的水平。 这是我的第一道Reverse。 题目 题目给了一个二进制可执行程序，执行这个程序，会显示“Please input flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-09T06:59:56.000Z">
+<meta property="article:modified_time" content="2023-11-07T10:37:51.828Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="逆向工程">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="ZJU校巴">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/d157634e8674/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/d157634e8674/","path":"post/d157634e8674/","title":"ZJU校巴-Reverse1解题记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZJU校巴-Reverse1解题记录 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/d157634e8674/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZJU校巴-Reverse1解题记录 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZJU校巴-Reverse1解题记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-09 14:59:56" itemprop="dateCreated datePublished" datetime="2023-10-09T14:59:56+08:00">2023-10-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言">前言</h1>
+<p>最近开始正式学习CTF了，准备先打一打校巴上比较简单的题，遇到什么不懂的再去学习。慢慢提升自己的水平。</p>
+<p>这是我的第一道Reverse。</p>
+<h1 id="题目">题目</h1>
+<p>题目给了一个二进制可执行程序，执行这个程序，会显示“Please input
+flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。</p>
+<span id="more"></span>
+<p><img
+src="https://pic.imgdb.cn/item/652396d9c458853aef40ab58.jpg" /></p>
+<p>使用Ollydbg打开这个程序，找到以下这段需要逆向分析的主要内容</p>
+<p><img
+src="https://pic.imgdb.cn/item/6523978ec458853aef40ef58.jpg" /></p>
+<p>在这段代码之前，还有一系列的赋值操作，以ASCII的形式读取，可以获得
+“MMMwjau`S]]S}ybS?4:;5:&lt;4&lt;q”
+这串神秘的字符串，猜测与flag的值有关。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">004015AB  |. E8 40110000    CALL &lt;JMP.&amp;msvcrt.scanf&gt;                 ; \scanf</span><br><span class="line">004015B0  |. C74424 4C 0000&gt;MOV DWORD PTR SS:[ESP+4C],0</span><br><span class="line">004015B8  |. EB 40          JMP SHORT rev_fmyl.004015FA</span><br><span class="line">004015BA  |&gt; 8D5424 14      /LEA EDX,DWORD PTR SS:[ESP+14]           ; ||</span><br><span class="line">004015BE  |. 8B4424 4C      |MOV EAX,DWORD PTR SS:[ESP+4C]           ; ||</span><br><span class="line">004015C2  |. 01D0           |ADD EAX,EDX                             ; ||</span><br><span class="line">004015C4  |. 0FB600         |MOVZX EAX,BYTE PTR DS:[EAX]             ; ||</span><br><span class="line">004015C7  |. 83F0 0C        |XOR EAX,0C                              ; ||</span><br><span class="line">004015CA  |. 89C1           |MOV ECX,EAX                             ; ||</span><br><span class="line">004015CC  |. 8D5424 32      |LEA EDX,DWORD PTR SS:[ESP+32]           ; ||</span><br><span class="line">004015D0  |. 8B4424 4C      |MOV EAX,DWORD PTR SS:[ESP+4C]           ; ||</span><br><span class="line">004015D4  |. 01D0           |ADD EAX,EDX                             ; ||</span><br><span class="line">004015D6  |. 0FB600         |MOVZX EAX,BYTE PTR DS:[EAX]             ; ||</span><br><span class="line">004015D9  |. 38C1           |CMP CL,AL                               ; ||</span><br><span class="line">004015DB  |. 74 18          |JE SHORT rev_fmyl.004015F5              ; ||</span><br><span class="line">004015DD  |. C70424 1740400&gt;|MOV DWORD PTR SS:[ESP],rev_fmyl.0040401&gt;; ||ASCII &quot;Your flag is not right.&quot;</span><br><span class="line">004015E4  |. E8 FF100000    |CALL &lt;JMP.&amp;msvcrt.printf&gt;               ; |\printf</span><br><span class="line">004015E9  |. C70424 0000000&gt;|MOV DWORD PTR SS:[ESP],0                ; |</span><br><span class="line">004015F0  |. E8 EB100000    |CALL &lt;JMP.&amp;msvcrt.exit&gt;                 ; \exit</span><br><span class="line">004015F5  |&gt; 834424 4C 01   |ADD DWORD PTR SS:[ESP+4C],1</span><br><span class="line">004015FA  |&gt; 8B4424 4C       MOV EAX,DWORD PTR SS:[ESP+4C]           ; ||</span><br><span class="line">004015FE  |. 83F8 1A        |CMP EAX,1A                              ; ||</span><br><span class="line">00401601  |.^72 B7          \JB SHORT rev_fmyl.004015BA              ; ||</span><br><span class="line">00401603  |. C70424 2F40400&gt;MOV DWORD PTR SS:[ESP],rev_fmyl.0040402F ; ||ASCII &quot;You are right!&quot;</span><br><span class="line">0040160A  |. E8 D9100000    CALL &lt;JMP.&amp;msvcrt.printf&gt;                ; |\printf</span><br><span class="line">0040160F  |. C70424 0000000&gt;MOV DWORD PTR SS:[ESP],0                 ; |</span><br><span class="line">00401616  |. E8 C5100000    CALL &lt;JMP.&amp;msvcrt.exit&gt;                  ; \exit</span><br></pre></td></tr></table></figure>
+<p>从 scanf
+函数返回开始看，注意到JMP和JB之间的这段内容，明显是一个循环，而循环的退出条件是
+<code>CMP EAX,1A; JB SHORT rev_fmyl.004015BA</code>
+，也就是若EAX的值小于 0x1A ，即26，循环继续，否则跳到
+<code>printf("You are right!")</code> 。</p>
+<p><code>MOV DWORD PTR SS:[ESP+4C],0</code> 和
+<code>MOV EAX,DWORD PTR SS:[ESP+4C]</code>
+这两句可以看出，EAX的初始值是0。</p>
+<p>循环的中间还有一个 <code>CMP CL,AL; JE SHORT rev_fmyl.004015F5</code>
+，一旦不满足，直接 <code>printf("Your flag is not right.");</code>
+并退出。结合程序的功能很容易猜到这是在比较输入字符串和正确的flag。</p>
+<p>基本的框架如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *s = <span class="string">&quot;MMMwjau`S]]S&#125;ybS?4:;5:&lt;4&lt;q&quot;</span>, in[<span class="number">30</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Please input flag: &quot;</span>);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, &amp;in);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="comment">/*...*/</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Your flag is not right.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;You are right!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>现在分析 JE 之前， LEA 之后的内容。首先，将 ESP+14 地址赋给 EDX
+。从Ollydbg的堆栈区中可以查看到 ESP 指向 0061FF20 ， ESP+14 也就是
+0061FF34 ， EDX 储存的是读取到的字符串地址。</p>
+<p><img
+src="https://pic.imgdb.cn/item/65239cd9c458853aef432456.jpg" /></p>
+<p><code>MOV EAX,DWORD PTR SS:[ESP+4C]</code>，其中 ESP+4C
+就是刚刚初始化为0的循环变量地址。这句就是把循环变量取出来放到<code>EAX</code>里。</p>
+<p>然后 ADD EAX,EDX ，根据我们刚才的分析， EDX
+是输入字符串首地址，与循环变量相加，就是计算 in + i ;</p>
+<p><code>MOVZX EAX,BYTE PTR DS:[EAX]</code>取出了 EAX
+的首字节，因为这里要做 char 类型的比较，而 char 类型长度一个字节。</p>
+<p><code>XOR EAX,0C</code>这句话就是破解的关键了，这句做了异或运算<code>in[i] ^= 12;</code>。</p>
+<p>继续看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MOV ECX,EAX</span><br><span class="line">LEA EDX,DWORD PTR SS:[ESP+32]</span><br><span class="line">MOV EAX,DWORD PTR SS:[ESP+4C]</span><br><span class="line">ADD EAX,EDX</span><br><span class="line">MOVZX EAX,BYTE PTR DS:[EAX]</span><br></pre></td></tr></table></figure>
+<p>这几句先是把前面的 in[i] 放到 ECX 里，之后与上面一样的，就是取出了
+(ESP+32)[i] ，放到 EAX 里，而这个 (ESP+32)
+是什么呢，就是那一段神秘字符串 “MMMwjau`S]]S}ybS?4:;5:&lt;4&lt;q”
+的首地址。也就是 s[i] 。</p>
+<p><code>CMP CL,AL</code>比较了A寄存器和C寄存器的最低字节即 in[i] 和
+s[i] ，如果不相等就输出"Your flag is not right."并直接退出。</p>
+<p>这样一来，源代码就很容易写出了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *s = <span class="string">&quot;MMMwjau\`S]]S&#125;ybS?4:;5:&lt;4&lt;q&quot;</span>, in[<span class="number">30</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Please input flag: &quot;</span>);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, &amp;in);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">    in[i] ^= <span class="number">12</span>;</span><br><span class="line">    <span class="keyword">if</span> (s[i] != in[i]) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Your flag is not right.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;You are right!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>根据这个源代码，正确的flag可以由以下程序给出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[] = <span class="string">&quot;MMMwjau`S]]S&#125;ybS?4:;5:&lt;4&lt;q&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> *p = s;</span><br><span class="line">    <span class="keyword">while</span>(*p) &#123;</span><br><span class="line">        <span class="built_in">putchar</span>(*p ^ <span class="number">12</span>);</span><br><span class="line">        ++p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>这道题还是比较简单的，作为我这样的CTF小白的第一题Reverse刚刚好。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" rel="tag"># 逆向工程</a>
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
+              <a href="/tags/ZJU%E6%A0%A1%E5%B7%B4/" rel="tag"># ZJU校巴</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/64e4e3d61f56/" rel="prev" title="XPath语法参考">
+                  <i class="fa fa-chevron-left"></i> XPath语法参考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/ff3f8f51ca30/" rel="next" title="SymPy学习笔记（一）安装与基本使用">
+                  SymPy学习笔记（一）安装与基本使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
