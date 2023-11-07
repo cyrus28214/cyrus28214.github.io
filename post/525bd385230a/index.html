@@ -27,13 +27,14 @@
 <meta property="og:description" content="求解方程 在SymPy学习笔记（二）需要避免的坑中已经提到过，SymPy中表达相等应该用Eq()而不是&#x3D;&#x3D;或&#x3D; 用solveset(equation, x)可以求equation关于x的解集，如果等式右边是0，也可以不写成solveset(Eq(expr, 0), x)，直接写成solveset(expr, x)，例如：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-30T13:00:17.000Z">
-<meta property="article:modified_time" content="2023-11-07T10:37:52.059Z">
+<meta property="article:modified_time" content="2023-11-07T13:16:11.431Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="系列">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="SymPy">
 <meta property="article:tag" content="科学计算">
+<meta property="article:tag" content="SymPy学习笔记">
 <meta name="twitter:card" content="summary">
 
 
@@ -129,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -225,7 +226,7 @@
     
     <div class="post-body" itemprop="articleBody"><h1 id="求解方程">求解方程</h1>
 <p>在<a
-href="">SymPy学习笔记（二）需要避免的坑</a>中已经提到过，SymPy中表达相等应该用<code>Eq()</code>而不是<code>==</code>或<code>=</code></p>
+href="/post/0b3dbf26ccf5/">SymPy学习笔记（二）需要避免的坑</a>中已经提到过，SymPy中表达相等应该用<code>Eq()</code>而不是<code>==</code>或<code>=</code></p>
 <p><code>用solveset(equation, x)</code>可以求equation关于x的解集，如果等式右边是0，也可以不写成<code>solveset(Eq(expr, 0), x)</code>，直接写成<code>solveset(expr, x)</code>，例如：</p>
 <span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; solveset(Eq(x**2, 1), x)</span><br><span class="line">&#123;-1, 1&#125;</span><br><span class="line">&gt;&gt;&gt; solveset(x**2 - 1, x)</span><br><span class="line">&#123;-1, 1&#125;</span><br></pre></td></tr></table></figure>
@@ -261,6 +262,7 @@ src="https://pic.imgdb.cn/item/6522563cc458853aefd0068f.jpg" /></p>
               <a href="/tags/Python/" rel="tag"># Python</a>
               <a href="/tags/SymPy/" rel="tag"># SymPy</a>
               <a href="/tags/%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97/" rel="tag"># 科学计算</a>
+              <a href="/tags/SymPy%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SymPy学习笔记</a>
           </div>
 
         
