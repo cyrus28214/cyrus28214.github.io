@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -173,6 +173,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/04355221d8d3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/04355221d8d3/" class="post-title-link" itemprop="url">SQL学习笔记（四）条件与分组语句</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-04 13:14:33" itemprop="dateCreated datePublished" datetime="2023-10-04T13:14:33+08:00">2023-10-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上一章节里我们使用了<code>WHERE</code>关键字进行了条件的筛选，实际上这样的关键字还有很多，以下是常用的一些。</p>
+<h1 id="group-by">GROUP BY</h1>
+<p>将数据按某个字段分组</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> category, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> books <span class="keyword">GROUP</span> <span class="keyword">BY</span> category;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/04355221d8d3/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -991,89 +1070,6 @@ class="math inline">\(=\)</span>等于号。</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/0281cead953c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cyrus28214">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/0281cead953c/" class="post-title-link" itemprop="url">图解基础数据结构——堆</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-24 21:10:26" itemprop="dateCreated datePublished" datetime="2023-08-24T21:10:26+08:00">2023-08-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言">前言</h1>
-<p>原本打算写“实现常用排序算法（三）堆排序”，结果用了太多的篇幅讲解堆，于是单独出来写成专门讲解堆的博客，后面在简短的写一写堆排序的实现。</p>
-<h1 id="简介">简介</h1>
-<p>堆其实是很基础的数据结构，堆往往是初学者学习的第一个树形数据结构，排在数组、链表、队列、栈等线形数据结构之后。但其实堆并没有那么好理解，而且也常常被忽略（特别是对于OIer来说），因为经常可以直接调包使用，不需要手写堆，C++内置了<code>std::priority_queue</code>，python也有<code>import heapq</code>。</p>
-<p>堆的思想简洁明了——大的在上面；堆的实现高效优雅——只需要维护一个数组；堆的插入、删除、修改的时间复杂度都是一样的
-<span class="math inline">\(O(\log n)\)</span>
-，因此堆绝对值得好好地理解并且手写一个出来。</p>
-<p>一般来说，只要满足父节点的值比子节点大就可以称作堆，但是在具体实现上，最常用的还是<strong>二叉堆</strong>，也就是同时满足堆性质和二叉树性质的堆，除了二叉堆以外，还有二项堆、斐波那契堆等。通常说的堆指的都是二叉堆。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/0281cead953c/" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1094,14 +1090,6 @@ class="math inline">\(=\)</span>等于号。</p>
   <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
     <span class="post-meta-item" id="busuanzi_container_site_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>

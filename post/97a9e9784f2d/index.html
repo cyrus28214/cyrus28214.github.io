@@ -19,17 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="引入 现代的程序，无论是网站、手机app等等，往往都要处理大量的数据，这些数据需要通过数据库（Database）来管理。为了便于程序与数据库之间的交互，我们引入一门语言，SQL（Structured Query Language，结构化查询语言）。使用SQL可以方便地对 关系型数据库（Relational Database） 进行增、查、改、删等操作。">
+    <meta name="description" content="SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、 C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。 Python中内置了SQLite3，你只需要执行 1import sqlite3 就可以开始使用了，不需要安装任何第三方库。 12345678910111213141516171819202122232425262728293">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL学习笔记（一）安装SQLite">
-<meta property="og:url" content="http://cyrus28214.top/post/0e8d2ef41193/index.html">
+<meta property="og:title" content="SQL学习笔记（九）在Python中使用SQL">
+<meta property="og:url" content="http://cyrus28214.top/post/97a9e9784f2d/index.html">
 <meta property="og:site_name" content="Cyrus&#39; Blog">
-<meta property="og:description" content="引入 现代的程序，无论是网站、手机app等等，往往都要处理大量的数据，这些数据需要通过数据库（Database）来管理。为了便于程序与数据库之间的交互，我们引入一门语言，SQL（Structured Query Language，结构化查询语言）。使用SQL可以方便地对 关系型数据库（Relational Database） 进行增、查、改、删等操作。">
+<meta property="og:description" content="SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、 C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。 Python中内置了SQLite3，你只需要执行 1import sqlite3 就可以开始使用了，不需要安装任何第三方库。 12345678910111213141516171819202122232425262728293">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic.imgdb.cn/item/65198444c458853aefbe5734.png">
-<meta property="og:image" content="https://pic.imgdb.cn/item/6519848ac458853aefbe61cd.jpg">
-<meta property="article:published_time" content="2023-10-01T16:04:13.000Z">
-<meta property="article:modified_time" content="2023-10-02T01:49:15.943Z">
+<meta property="article:published_time" content="2023-11-10T04:12:22.000Z">
+<meta property="article:modified_time" content="2023-11-10T04:12:22.598Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="SQL学习笔记">
 <meta property="article:tag" content="技术">
@@ -38,19 +36,18 @@
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="系列">
 <meta property="article:tag" content="SQLite">
-<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.imgdb.cn/item/65198444c458853aefbe5734.png">
 
 
-<link rel="canonical" href="http://cyrus28214.top/post/0e8d2ef41193/">
+<link rel="canonical" href="http://cyrus28214.top/post/97a9e9784f2d/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/0e8d2ef41193/","path":"post/0e8d2ef41193/","title":"SQL学习笔记（一）安装SQLite"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/97a9e9784f2d/","path":"post/97a9e9784f2d/","title":"SQL学习笔记（九）在Python中使用SQL"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>SQL学习笔记（一）安装SQLite | Cyrus' Blog</title>
+<title>SQL学习笔记（九）在Python中使用SQL | Cyrus' Blog</title>
   
 
 
@@ -109,7 +106,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -122,7 +119,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sqlite%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">SQLite的安装</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -188,7 +184,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/0e8d2ef41193/">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/97a9e9784f2d/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,12 +197,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="SQL学习笔记（一）安装SQLite | Cyrus' Blog">
+      <meta itemprop="name" content="SQL学习笔记（九）在Python中使用SQL | Cyrus' Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          SQL学习笔记（一）安装SQLite
+          SQL学习笔记（九）在Python中使用SQL
         </h1>
 
         <div class="post-meta-container">
@@ -217,7 +213,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-10-02 00:04:13" itemprop="dateCreated datePublished" datetime="2023-10-02T00:04:13+08:00">2023-10-02</time>
+      <time title="创建时间：2023-11-10 12:12:22" itemprop="dateCreated datePublished" datetime="2023-11-10T12:12:22+08:00">2023-11-10</time>
     </span>
 
   
@@ -236,40 +232,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="引入">引入</h1>
-<p>现代的程序，无论是网站、手机app等等，往往都要处理大量的数据，这些数据需要通过<strong>数据库（Database）</strong>来管理。为了便于程序与数据库之间的交互，我们引入一门语言，<strong>SQL（Structured
-Query Language，结构化查询语言）</strong>。使用SQL可以方便地对
-<strong><em>关系型数据库（Relational Database）</em></strong>
-进行增、查、改、删等操作。</p>
-<span id="more"></span>
-<p><em>如果你不知道关系型数据库和非关系型数据库是什么，可以看看<a
-href="/post/380ecd01a284/">我的这篇文章</a></em></p>
-<h1 id="sqlite的安装">SQLite的安装</h1>
-<p>为了学习SQL，我们先来安装一个轻量级的关系型数据库
-<strong>SQLite</strong>
-，请与SQL区分，SQL是一种查询语言，SQLiete是一种数据库。</p>
-<p>因为我们只是用来学习SQL语言，所以比起Oracle这样的庞然大物，使用轻量级的SQLite是更好的选择。当然，你学会了SQL之后，可以自由选择符合你需求的数据库，关系型数据库都使用统一的SQL语言，无需再次学习。</p>
-<p>安装SQLite非常简单，访问<a
-target="_blank" rel="noopener" href="https://sqlite.org/download.html">SQLite官网的下载页面</a>，下载你的系统对应的带有“Precompiled”前缀的压缩包。以windows
-x64系统为例，下载这两个文件，并把他们解压到相同的文件夹下面，例如“C:\sqlite”。</p>
-<figure>
-<img src="https://pic.imgdb.cn/item/65198444c458853aefbe5734.png"
-alt="windows x64系统请下载这两个文件" />
-<figcaption aria-hidden="true">windows
-x64系统请下载这两个文件</figcaption>
-</figure>
-<figure>
-<img src="https://pic.imgdb.cn/item/6519848ac458853aefbe61cd.jpg"
-alt="解压后放到同一个文件夹下将是这样的" />
-<figcaption
-aria-hidden="true">解压后放到同一个文件夹下将是这样的</figcaption>
-</figure>
-<p>此时双击sqlite3.exe，看到以下界面就成功了，连安装都不需要，只要解压，够轻量级吧。</p>
-<p><img
-src="https://pic.imgdb.cn/item/651985d9c458853aefbe98ea.jpg" /></p>
-<p>但是当你在命令行输入<code>sqlite3</code>命令时会发现，系统找不到这个命令，这是因为没有在系统的环境变量path里加上sqlite3.exe所在的路径（例如C:\sqlite）。假如你不知道环境变量path是什么，可以看看我的<a
-href="http://cyrus28214.top/post/4e56adf6545c/">这篇文章</a>。</p>
-<p>添加了环境变量后，在cmd/powershell/bash或者你喜欢的任何shell里输入<code>sqlite3</code>，你应该能看到和上面双击exe一样的输出。</p>
+    <div class="post-body" itemprop="articleBody"><p>SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、
+C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。</p>
+<p>Python中内置了SQLite3，你只需要执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3</span><br></pre></td></tr></table></figure>
+<p>就可以开始使用了，不需要安装任何第三方库。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">db = sqlite3.connect(<span class="string">&quot;database.db&quot;</span>) </span><br><span class="line"><span class="comment"># 连接到一个现有的数据库，如果没有这个文件就创建它</span></span><br><span class="line"></span><br><span class="line">cur = db.cursor() </span><br><span class="line"><span class="comment"># 创建一个cursor，才能执行SQL语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cur.execute(你想执行的SQL语句)</span></span><br><span class="line">cur.execute(<span class="string">&quot;CREATE TABLE books (&#x27;title&#x27; TEXT NOT NULL, &#x27;price&#x27; REAL, &#x27;sales&#x27; INTEGER, &#x27;category&#x27; TEXT);&quot;</span>)  </span><br><span class="line"><span class="comment"># 创建一个表</span></span><br><span class="line"></span><br><span class="line">res = cur.execute(<span class="string">&quot;SELECT name FROM sqlite_master&quot;</span>)</span><br><span class="line"><span class="comment"># SQLite内置了一个名叫“sqlite_master”的表，储存了所有已创建的表</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.fetchone())</span><br><span class="line"><span class="comment"># 输出(&#x27;books&#x27;,)</span></span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    INSERT INTO books VALUES</span></span><br><span class="line"><span class="string">        (&#x27;The Great Gatsby&#x27;, 50.99, 4, &#x27;Fiction&#x27;),</span></span><br><span class="line"><span class="string">        (&#x27;The Lord of the Rings&#x27;, 55.99, 3, &#x27;Fantasy&#x27;)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line">db.commit()</span><br><span class="line"><span class="comment"># 插入两名学生</span></span><br><span class="line"><span class="comment"># 会自动地创建事务，无需手动加上“BEGIN TRANSACTION”</span></span><br><span class="line"><span class="comment"># 需要手动db.commit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">category = <span class="built_in">input</span>(<span class="string">&quot;category:&quot;</span>)</span><br><span class="line">res = cur.execute(<span class="string">&quot;SELECT title FROM books WHERE category = ?&quot;</span>, (category, ))</span><br><span class="line"><span class="comment"># 注意传入的第二个参数是一个元组，不能直接传category</span></span><br><span class="line"><span class="comment"># 请使用“?”占位符，不要使用 f&quot;SELECT title FROM books WHERE category = &#123;category&#125;&quot;或者其他任何方式</span></span><br><span class="line"><span class="comment"># 否则可能会受到SQL注入攻击（SQL injection attacks）</span></span><br><span class="line"><span class="comment"># “?”占位符会自动处理传入的字符串，防止SQL注入</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># cur.executemany可以批量执行SQL语句，推荐使用executemany而不是for循环嵌套execute</span></span><br><span class="line">cur.executemany(<span class="string">&quot;INSERT INTO books VALUES(?, ?, ?, ?);&quot;</span>, data)</span><br><span class="line">db.commit()</span><br><span class="line"></span><br><span class="line">res = cur.execute(<span class="string">&#x27;SELECT title, price FROM books&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> res:</span><br><span class="line">    <span class="built_in">print</span>(row)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">输出</span></span><br><span class="line"><span class="string">(&#x27;The Great Gatsby&#x27;, 50.99)</span></span><br><span class="line"><span class="string">(&#x27;The Lord of the Rings&#x27;, 55.99)</span></span><br><span class="line"><span class="string">(&#x27;To Kill a Mockingbird&#x27;, 25.99)</span></span><br><span class="line"><span class="string">(&#x27;Pride and Prejudice&#x27;, 40.99)</span></span><br><span class="line"><span class="string">(&#x27;To Kill a Mockingbird&#x27;, 25.99)</span></span><br><span class="line"><span class="string">(&#x27;Pride and Prejudice&#x27;, 40.99)</span></span><br><span class="line"><span class="string">(&#x27;1984&#x27;, 35.99)</span></span><br><span class="line"><span class="string">(&#x27;The Catcher in the Rye&#x27;, 60.99)</span></span><br><span class="line"><span class="string">(&#x27;Animal Farm&#x27;, 30.5)</span></span><br><span class="line"><span class="string">(&#x27;The Hobbit&#x27;, 45.0)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">db.close()</span><br><span class="line"><span class="comment"># 关闭数据库连接，现在可以连接别的数据库</span></span><br></pre></td></tr></table></figure>
 <p>本文为系列文章，想要看其他章节可以从下面的tags进入。</p>
 
     </div>
@@ -287,21 +255,18 @@ href="http://cyrus28214.top/post/4e56adf6545c/">这篇文章</a>。</p>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
               <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
               <a href="/tags/SQLite/" rel="tag"># SQLite</a>
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag"># 环境配置</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/post/380ecd01a284/" rel="prev" title="关系型数据库与非关系型数据库">
-                  <i class="fa fa-chevron-left"></i> 关系型数据库与非关系型数据库
+                <a href="/post/cccf6f3d6d50/" rel="prev" title="Linux中的三种时间戳：atime、mtime、ctime">
+                  <i class="fa fa-chevron-left"></i> Linux中的三种时间戳：atime、mtime、ctime
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/post/3f6aa83f99ff/" rel="next" title="SQL学习笔记（二）创建一个表">
-                  SQL学习笔记（二）创建一个表 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
