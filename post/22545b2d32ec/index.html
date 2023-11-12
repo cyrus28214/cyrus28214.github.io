@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
 <meta property="og:type" content="article">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-18T15:19:27.000Z">
-<meta property="article:modified_time" content="2023-11-07T10:37:51.994Z">
+<meta property="article:modified_time" content="2023-11-11T15:08:26.325Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="密码学">
@@ -83,6 +83,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -91,11 +92,37 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </header>
         
@@ -121,6 +148,8 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
   <p class="site-author-name" itemprop="name">Cyrus28214</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -187,7 +216,7 @@
     <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/22545b2d32ec/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/icon512.png">
       <meta itemprop="name" content="Cyrus28214">
     </span>
 
@@ -243,7 +272,7 @@ src="https://pic.imgdb.cn/item/652d49c3c458853aef4021ad.jpg" /></p>
 <p>如果整个数据库都泄露了（拖库），情况非常糟糕，因为你的所有用户的密码都泄露了，你的所有用户数据都被开放给了攻击者，所有用户的身份认证都失效了！</p>
 <h1 id="储存哈希值">储存哈希值</h1>
 <p>为了避免这一点，我们可以不储存明文密码，而是储存密码的哈希值<span
-class="math inline">\(Hash(Password)\)</span>。</p>
+class="math inline">\(Hash(\text{Password})\)</span>。</p>
 <p>一个理想的哈希加密函数需要满足这些条件：</p>
 <ol type="1">
 <li>一致性：对于相同的输出，输出应该是相同的， <span
@@ -259,20 +288,23 @@ y\)</span> ，则 <span class="math inline">\(Hash(x) = Hash(y)\)</span>
 class="math inline">\(Hash(x)\)</span> 的计算很快）</li>
 </ol>
 <p>有了一致性，我们就可以通过不传递明文，而是传递哈希值的方法，判断用户输入的密码是否正确。设置密码时，储存
-<span class="math inline">\(Hash(Password)\)</span> ，而不储存 <span
-class="math inline">\(Password\)</span> 。当用户输入密码，如果<span
-class="math inline">\(Hash(Input) = Hash(Password)\)</span> ，我们就认为
-<span class="math inline">\(Input = Password\)</span>
+<span class="math inline">\(Hash(\text{Password})\)</span> ，而不储存
+<span class="math inline">\(\text{Password}\)</span>
+。当用户输入密码，如果<span class="math inline">\(Hash(\text{Input}) =
+Hash(\text{Password})\)</span> ，我们就认为 <span
+class="math inline">\(\text{Input} = \text{Password}\)</span>
 ，从而验证了密码正确。</p>
 <p>有了不可逆性，我们就可以防止攻击者从 <span
-class="math inline">\(Hash(Password)\)</span> 反推出 <span
-class="math inline">\(Password\)</span> ，即使攻击方拿到了 <span
-class="math inline">\(Hash(Password)\)</span>， 也没有任何用处。</p>
+class="math inline">\(Hash(\text{Password})\)</span> 反推出 <span
+class="math inline">\(\text{Password}\)</span> ，即使攻击方拿到了 <span
+class="math inline">\(Hash(\text{Password})\)</span>，
+也没有任何用处。</p>
 <p>需要注意的是，哈希函数的性质里不要求它是一个单射，也就是说，可能存在和
-<span class="math inline">\(Password\)</span> 不相同的序列，设为 <span
-class="math inline">\(Cnffjbeq\)</span>
+<span class="math inline">\(\text{Password}\)</span> 不相同的序列，设为
+<span class="math inline">\(\text{Cnffjbeq}\)</span>
 ，它的哈希值和密码是一样的，根据我们对用户输入密码的处理方式，只要 <span
-class="math inline">\(Hash(Cnffjbeq) = HashValue\)</span>
+class="math inline">\(Hash(\text{Cnffjbeq}) =
+Hash(\text{Password})\)</span>
 ，我们就认为用户通过了身份验证，然而用户并没有输入正确的密码。这叫做哈希碰撞（Hash
 Collision），这怎么办呢？</p>
 <p>这里就要用到第三个性质了，我们的第三个性质保证了这种情况的概率非常低，因此对这种情况的发生不必担心，只要保证有效的密码（设置的密码+会发生碰撞的密码）占所有可能密码的比例很小，比如
@@ -286,7 +318,7 @@ Rainbow=\left[
 \begin{array}{c}
     Hash(\text{12345678})\\
     Hash(\text{qwerty})\\
-    Hash(\text{password})\\
+    Hash(\text{Password})\\
     Hash(\text{20030101})\\
     Hash(\text{00000000})\\
     \cdots
@@ -294,10 +326,10 @@ Rainbow=\left[
 \]</span></p>
 <h1 id="密码加盐">密码加盐</h1>
 <p>但是彩虹表攻击可以通过给密码加盐轻松解决，我们为每一个密码都生成一个随机数，称作“盐”，然后将盐储存到单独的表中。储存密码时，我们储存
-<span class="math inline">\(Hash(password + salt)\)</span>
-（这里的加不一定是简单的字符串连接，可以是间隔插入、打乱插入等）。盐是不需要保密的，即使攻击者知道了盐的内容，也无法破解密码。加盐的操作可以轻松使攻击者的彩虹表失效，因为彩虹表是针对弱密码进行的，加了盐之后相当于密码都变成强密码了。</p>
+<span class="math inline">\(Hash(\text{Password} + \text{salt})\)</span>
+（这里的加不一定是简单的字符串连接，可以是间隔插入、打乱插入等）。盐是不需要保密的，即使攻击者知道了盐的内容，也无法破解密码。<strong>加盐的操作可以轻松使攻击者的彩虹表失效，因为彩虹表是针对弱密码进行的，加了盐之后相当于密码都变成强密码了。</strong></p>
 <p>例如：</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">假设密码和盐分别为</span><br><span class="line">password = 12345678</span><br><span class="line">salt = Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br><span class="line">则加了盐的密码就是</span><br><span class="line">salted_password = 12345678Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">假设密码和盐分别为</span><br><span class="line">Password = 12345678</span><br><span class="line">salt = Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br><span class="line">则加了盐的密码就是</span><br><span class="line">salted_Password = 12345678Cl9W8TGGMCJj1bZ0SA14Cmb9tCG21i3F</span><br></pre></td></tr></table></figure>
 <p>这样，即使储存密码的数据库泄露了，攻击者也没有办法访问用户的数据，保证了数据的安全性。</p>
 
     </div>
@@ -360,7 +392,7 @@ Rainbow=\left[
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-</div><script color="0,0,0" opacity="0.7" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+</div>
 
     </div>
   </footer>
@@ -381,7 +413,9 @@ Rainbow=\left[
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
 
 
 
