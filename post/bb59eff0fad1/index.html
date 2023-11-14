@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言 最近在学习MIT的“计算机科学教育中缺失的一课（The Missing Semester of Your CS Education）”，这篇博客既是shell常用命令的备忘，也是这门课程的学习笔记。 shell shell是操作系统为用户提供交互界面的命令行解释器的统称，例如Windows中的cmd就是一种shell。bash 是其中最流行的一种。bash 是 Bourne Ag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一看就懂的Linux Shell的基础使用（一）">
+<meta property="og:url" content="http://cyrus28214.top/post/bb59eff0fad1/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="前言 最近在学习MIT的“计算机科学教育中缺失的一课（The Missing Semester of Your CS Education）”，这篇博客既是shell常用命令的备忘，也是这门课程的学习笔记。 shell shell是操作系统为用户提供交互界面的命令行解释器的统称，例如Windows中的cmd就是一种shell。bash 是其中最流行的一种。bash 是 Bourne Ag">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-14T12:26:45.000Z">
+<meta property="article:modified_time" content="2023-11-14T12:26:45.975Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="MIT Missing Semester学习笔记">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Bash">
+<meta property="article:tag" content="系列">
+<meta property="article:tag" content="一看就懂的Linux Shell的基础使用">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/bb59eff0fad1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/bb59eff0fad1/","path":"post/bb59eff0fad1/","title":"一看就懂的Linux Shell的基础使用（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一看就懂的Linux Shell的基础使用（一） | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell"><span class="nav-number">2.</span> <span class="nav-text">shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8shell"><span class="nav-number">3.</span> <span class="nav-text">使用shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84pwdcd"><span class="nav-number">4.</span> <span class="nav-text">路径、pwd、cd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">5.</span> <span class="nav-text">常用的快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%A4%E4%B8%AA"><span class="nav-number">5.1.</span> <span class="nav-text">最重要的两个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9F%E5%BE%88%E9%87%8D%E8%A6%81%E7%9A%84%E5%85%B6%E4%BB%96"><span class="nav-number">5.2.</span> <span class="nav-text">也很重要的其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls"><span class="nav-number">6.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#man"><span class="nav-number">7.</span> <span class="nav-text">man</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section"><span class="nav-number">8.</span> <span class="nav-text">&lt;、&gt;、&gt;&gt;、|、&amp;&amp;、||、;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#touchmkdirmvcprm"><span class="nav-number">9.</span> <span class="nav-text">touch、mkdir、mv、cp、rm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-1"><span class="nav-number">10.</span> <span class="nav-text">#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-2"><span class="nav-number">11.</span> <span class="nav-text">\、&#39;、&quot;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sudo"><span class="nav-number">12.</span> <span class="nav-text">sudo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chmod"><span class="nav-number">13.</span> <span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%AF%AD%E6%B3%95"><span class="nav-number">13.1.</span> <span class="nav-text">字符串语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97%E8%AF%AD%E6%B3%95"><span class="nav-number">13.2.</span> <span class="nav-text">八进制数字语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">14.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/bb59eff0fad1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一看就懂的Linux Shell的基础使用（一） | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一看就懂的Linux Shell的基础使用（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-14 20:26:45" itemprop="dateCreated datePublished" datetime="2023-11-14T20:26:45+08:00">2023-11-14</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言">前言</h1>
+<p>最近在学习MIT的“计算机科学教育中缺失的一课（The Missing Semester of
+Your CS
+Education）”，这篇博客既是shell常用命令的备忘，也是这门课程的学习笔记。</p>
+<h1 id="shell">shell</h1>
+<p>shell是操作系统为用户提供交互界面的命令行解释器的统称，例如Windows中的cmd就是一种shell。bash
+是其中最流行的一种。bash 是 Bourne Again shell 的简称。</p>
+<p>你需要使用一个类Unix shell来完成文中所提到的操作。你可以：</p>
+<ul>
+<li>使用安装了Linux的电脑</li>
+<li>使用Linux虚拟机</li>
+<li>使用<a
+target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/">WSL(Windows
+Subsystem for Linux)</a>。</li>
+</ul>
+<span id="more"></span>
+<h1 id="使用shell">使用shell</h1>
+<p>进入shell，可以看到这样的一行提示：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>cyrus</code>代表当前用户的用户名，也可以使用<code>echo $USER</code>来查看；</li>
+<li><code>~</code>代表当前所在路径，也可以使用<code>pwd</code>来查看；</li>
+<li><code>$</code>是命令提示符，提示用户现在可以输入命令了。</li>
+</ul>
+<p><code>~</code>是表示用户的家目录，非root用户的<code>~</code>代表<code>/home/$USER/</code>，而root用户的<code>~</code>代表<code>/root</code>。</p>
+<p>直接输入一个程序的名称就可以运行，例如，Linux中有一个程序叫做<code>date</code>，直接输入程序的名字，就可以运行它，这个程序将输出当前的时间：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ date</span><br><span class="line">Wed Nov  1 14:07:54 CST 2023</span><br></pre></td></tr></table></figure>
+<p>程序可以附加参数，例如：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo hello</span><br><span class="line">hello</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里的“hello”，就是传给程序<code>echo</code>的参数。<code>echo</code>程序的功能就是输出它的参数。参数和程序名、参数与参数之间都要使用空格隔开。如果参数里包含空格，可以用<code>'</code>或<code>"</code>将参数包裹起来，或者在空格前面加上一个反斜杠转义（如<code>My\ Photos</code>会被转义成<code>My Photos</code>）</p>
+<p>shell怎么知道这些程序在哪里呢？其实shell会在<code>$PATH</code>里面的路径寻找。这里的<code>$PATH</code>和上面的<code>$USER</code>都是shell中的变量，<code>$</code>表示引用变量，提示shell把<code>$变量名</code>替换成变量的值。<code>$PATH</code>储存了多个路径，用“:”隔开，提示了shell去哪里找这个程序。你也可以使用<code>which</code>来查找某一个程序的具体位置。输入程序的完整路径，也可以绕过<code>$PATH</code>运行程序。</p>
+<p><strong>想要了解更多关于PATH的内容可以查看我的<a
+href="/post/4e56adf6545c/">另一篇博客</a></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">cyrus:~$ which echo</span><br><span class="line">/bin/echo</span><br><span class="line">cyrus:~$ /bin/echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br></pre></td></tr></table></figure>
+<h1 id="路径pwdcd">路径、<code>pwd</code>、<code>cd</code></h1>
+<p>在Linux和MacOS中，路径使用<code>/</code>分隔，而在Windows中是<code>\</code>。在Linux和MacOS中，路径从<code>/</code>开始，代表根目录（包含了所有目录）；在Windows中，路径从盘符开始，如<code>C:\</code>。</p>
+<p>以<code>/</code>开头的路径叫绝对路径，否则就是相对路径。<code>pwd</code>（print
+working
+directory的缩写）可以显示当前所在的绝对路径，<code>cd</code>（change
+directory的缩写）可以改变当前所在路径。</p>
+<p><code>.</code>代表当前所在目录，<code>..</code>代表父目录。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ pwd</span><br><span class="line">/home/cyrus</span><br><span class="line">cyrus:~$ cd /home</span><br><span class="line">cyrus:/home$ pwd</span><br><span class="line">/home</span><br><span class="line">cyrus:/home$ cd ..</span><br><span class="line">cyrus:/$ pwd</span><br><span class="line">/</span><br><span class="line">cyrus:/$ cd ./home</span><br><span class="line">cyrus:/home$ pwd</span><br><span class="line">/home</span><br></pre></td></tr></table></figure>
+<p>注意输入cd命令后，“cyrus:”后面的路径改变了。</p>
+<p>输入<code>cd -</code>可以移动到上次所在的目录，相当于<code>cd $OLDPWD</code>，非常方便。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cyrus:/$ cd ~</span><br><span class="line">cyrus:~$ pwd</span><br><span class="line">/home/cyrus</span><br><span class="line">cyrus:~$ echo $OLDPWD</span><br><span class="line">/</span><br><span class="line">cyrus:~$ cd -</span><br><span class="line">/</span><br><span class="line">cyrus:/$ pwd</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+<h1 id="常用的快捷键">常用的快捷键</h1>
+<h2 id="最重要的两个">最重要的两个</h2>
+<ul>
+<li>在shell中输入路径时，可以按Tab来自动补全文件名。</li>
+<li>在shell中按↑/↓方向键，可以浏览历史命令。</li>
+</ul>
+<h2 id="也很重要的其他">也很重要的其他</h2>
+<ul>
+<li>Ctrl + A 可以跳转到行首（助记：a是第一个字母，所以是行首）</li>
+<li>Ctrl + E 可以跳转到行尾（助记：e -&gt; end）</li>
+<li>Ctrl + R 打开历史命令搜索，可以搜索之前使用过的指令，非常好用</li>
+<li>Ctrl + L 清屏，和使用 <code>clear</code> 命令效果相同</li>
+<li>Ctrl + C 强行终止当前程序</li>
+</ul>
+<h1 id="ls"><code>ls</code></h1>
+<p><code>ls</code>（list的缩写）可以列出当前目录下有什么：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cyrus:/$ ls</span><br><span class="line">bin</span><br><span class="line">boot</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>绝大多数程序都可以接受以<code>-</code>开头的参数来改变程序的行为。例如，<code>-h</code>或<code>--help</code>一般会输出程序的帮助文本，如：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cyrus:/$ ls --help</span><br><span class="line">Usage: ls [OPTION]... [FILE]...</span><br><span class="line">List information about the FILEs (the current directory by default).</span><br><span class="line">Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><em>显示<code>ls</code>的帮助只能使用<code>--help</code>而不能使用<code>-h</code>，因为<code>-h</code>已经被其他功能占用了</em></p>
+<p>其中有一行</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-l                         use a long listing format</span><br></pre></td></tr></table></figure>
+<p>根据这个内容，我们给<code>ls</code>命令附加上<code>-l</code>参数，有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cyrus:/home$ ls -l</span><br><span class="line">drwxr-x--- 20 cyrus cyrus 4096 Oct 26 19:09 cyrus</span><br></pre></td></tr></table></figure>
+<p><code>-l</code>参数非常有用，可以列出详细信息。</p>
+<p>第一列的第一个字符是<code>d</code>代表这是一个文件夹，下面列出了可能的类型：</p>
+<table>
+<thead>
+<tr class="header">
+<th>标识符</th>
+<th>类型</th>
+<th>英文</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td>常规文件</td>
+<td>regular file</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>文件目录</td>
+<td>directory</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>字符设备文件</td>
+<td>character device file</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>块设备文件</td>
+<td>block device file</td>
+</tr>
+<tr class="odd">
+<td>s</td>
+<td>本地socket文件</td>
+<td>local socket file</td>
+</tr>
+<tr class="even">
+<td>p</td>
+<td>命名管道</td>
+<td>named pipe</td>
+</tr>
+<tr class="odd">
+<td>l</td>
+<td><a href="/post/4fc4538d6849/">符号链接</a></td>
+<td>symbolic link</td>
+</tr>
+</tbody>
+</table>
+<p>然后是九个字符描述了使用此文件的权限，三个字符为一组分成三组，分别表示文件持有者、文件持有组、和其他用户的权限。每组的三个字符中，<code>r</code>、<code>w</code>、<code>x</code>分别代表read读、write写、execute执行权限，<code>-</code>代表没有权限。</p>
+<p>例如<code>rwxr-xr--</code>代表文件持有者可以读、写、运行此文件，文件持有组可以读、运行此文件，其他用户只能读此文件。</p>
+<p>第二列是有多少“ <a href="/post/4fc4538d6849/">硬链接</a>
+”指向这个文件。</p>
+<p>第三列和第四列，分别是文件持有者和文件持有组的名称</p>
+<p>第五列是文件大小，默认以byte为单位，如果想要显示成“8M”,“13K”这种形式，只需要为<code>ls</code>命令附加上<code>-h</code>参数。</p>
+<p>第六列就是文件的修改时间，即<a
+href="/post/cccf6f3d6d50/">mtime</a>。</p>
+<p>最后一列就是文件名</p>
+<h1 id="man"><code>man</code></h1>
+<p><code>man</code>可以显示一个命令的详细帮助文档，输入<code>man ls</code>，会显示比<code>ls --help</code>更加详细的命令使用帮助。</p>
+<h1
+id="section"><code>&lt;</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>|</code>、<code>&amp;&amp;</code>、<code>||</code>、<code>;</code></h1>
+<p>"&lt; 文件"可以使用文件作为程序的输入，"&gt;
+文件"可以将程序的输出保存到文件中（不存在就会被创建）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo hello &gt; hello.txt</span><br><span class="line">cyrus:~$ cat hello.txt</span><br><span class="line">hello</span><br><span class="line">cyrus:~$ cat &lt; hello.txt</span><br><span class="line">hello</span><br><span class="line">cyrus:~$ cat &lt; hello.txt &gt; hello2.txt</span><br><span class="line">cyrus:~$ cat hello2.txt</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<p>上面<code>cat</code>的作用是将文件的内容展示到命令行输出。</p>
+<p>“&gt;”会覆盖原来存在的文件，如果文件不存在，会创建一个新文件并写入。</p>
+<p>如果不想原来存在的文件被覆盖，而是想将新的内容加在文件末尾，可以使用“&gt;&gt;”</p>
+<p>“|”长得像一个管道，它的作用就是像管道一样连接两个程序的输入与输出，它会把前面的程序的输出作为后面的程序的输入。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ ls -l / | tail -n1</span><br><span class="line">drwxr-xr-x  13 root root    4096 May  2  2023 var</span><br></pre></td></tr></table></figure>
+<p>这里的<code>tail -n1</code>表示将取输入的最后一行并输出。</p>
+<p><code>&amp;&amp;</code>其实是逻辑与运算，也可以用来连接两条命令，当前面的命令执行成功时才执行后面的命令。用<code>&amp;&amp;</code>连接多个命令，假如中间发生了错误，就不会继续执行，引发一连串的错误。</p>
+<p><code>||</code>相应的，逻辑或运算是当前面的命令执行失败时才执行后面的命令。可以用于设置一个“Plan
+B”，当前面的命令执行失败，就执行“Plan B”。</p>
+<p><code>;</code>就是单纯的先后执行两条命令，无论成功与否，两条命令都会执行。</p>
+<h1
+id="touchmkdirmvcprm"><code>touch</code>、<code>mkdir</code>、<code>mv</code>、<code>cp</code>、<code>rm</code></h1>
+<p><code>touch 文件名</code>有两个作用：</p>
+<ul>
+<li>若文件不存在，创建这个文件</li>
+<li>若文件存在，将文件的<a href="/post/cccf6f3d6d50/">atime</a>和<a
+href="/post/cccf6f3d6d50/">mtime</a>设置为现在的时间。</li>
+</ul>
+<p><code>mkdir 目录名</code>（make
+directory）可以创建新的文件夹，例：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ mkdir new_dir</span><br><span class="line">cyrus:~$ ls -l</span><br><span class="line">...</span><br><span class="line">drwxr-xr-x 2 cyrus cyrus 4096 Nov  1 15:55 new_dir</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><code>mv 源 目标</code>（move），可以用来移动文件/文件夹，也可以用来重命名文件/文件夹。</p>
+<p>根据“源”和“目标”的不同，<code>mv</code>会做出以下不同的行为：</p>
+<ul>
+<li>移动：如果目标是一个存在的路径，则源会被移动到此目录下，名称不变。</li>
+<li>重命名：否则，则源文件名会变为此目标文件名，如果存在同名文件，则会覆盖己存在的同名文件。</li>
+</ul>
+<p><code>cp</code>（copy）的使用和<code>mv</code>很像，会在目标目录下生成一个副本，如果需要复制一个文件夹，需要附加<code>-r</code>参数（recursive
+递归的缩写），来递归地拷贝文件夹下所有文件。</p>
+<p><code>rm 目标</code>（remove）可以删除文件或目录，如果要删除的是一个目录，也需要附加<code>-r</code>参数，来执行递归地删除。默认情况下，<code>rm</code>命令需要你逐个确认你是否确定删除这个文件，附加<code>-f</code>参数可以无需再次确认，
+<strong>使用<code>-f</code>时请保证你真的要删除，没有再次确定的机会了</strong></p>
+<h1 id="section-1"><code>#</code></h1>
+<p><code>#</code>表示注释，<code>#</code>后的文本会被忽略。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo hello</span><br><span class="line">hello</span><br><span class="line">cyrus:~$ echo #hello</span><br><span class="line"></span><br><span class="line">cyrus:~$ touch hello</span><br><span class="line">cyrus:~$ touch #hello</span><br><span class="line">touch: missing file operand</span><br><span class="line">Try &#x27;touch --help&#x27; for more information.</span><br></pre></td></tr></table></figure>
+<h1 id="section-2"><code>\</code>、<code>'</code>、<code>"</code></h1>
+<p>在shell中，有一些字符不能直接作为参数的一部分传递，例如<code>!</code>、<code>$</code>、<code></code>、<code>#</code>、<code>\</code>。</p>
+<p>使用反斜杠<code>\</code>可以转义单个字符，使其正常输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo hello$world</span><br><span class="line">hello</span><br><span class="line">cyrus:~$ echo hello\$world</span><br><span class="line">hello$world</span><br><span class="line">cyrus:~$ echo hello     world</span><br><span class="line">hello world</span><br><span class="line">cyrus:~$ echo hello\ \ \ \ \ world</span><br><span class="line">hello     world</span><br><span class="line">cyrus:~$ echo hello\world</span><br><span class="line">helloworld</span><br><span class="line">cyrus:~$ echo hello\\world</span><br><span class="line">hello\world</span><br></pre></td></tr></table></figure>
+<p>使用单引号<code>'</code>括起来，可以让字符串原样输出，不进行转义和替换</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo &#x27;hello\\world&#x27;</span><br><span class="line">hello\\world</span><br></pre></td></tr></table></figure>
+<p>使用双引号<code>"</code>括起来的字符串仍然有部分会被转义，参见<a
+target="_blank" rel="noopener" href="https://www.gnu.org/software/bash/manual/html_node/Quoting.html">Quoting</a>。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo &#x27;$SHELL&#x27;</span><br><span class="line">$SHELL</span><br><span class="line">cyrus:~$ echo &quot;$SHELL&quot;</span><br><span class="line">/bin/bash</span><br><span class="line">cyrus:~$ echo &quot;hello world&quot;</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+<h1 id="sudo"><code>sudo</code></h1>
+<p>Linux系统中有一个用户的身份是特殊的，那就是 root
+用户，root用户拥有最高的权限，可以做几乎任何事情，直接登录到root用户是很危险的，因为你可能一不小心就利用root权限做出了一些破环性的操作（例如：误删除数据、全局修改了关键系统设置），因此，常常使用<code>sudo 命令</code>（意思是
+do as
+superuser），来使用超级用户权限执行命令，这样可以让你能再次确认你的操作无误。</p>
+<p>当你输入一个命令，发现命令行输出了“Permission
+denied”，很可能就是你没有合适的权限执行这个命令，只要在原命令前加上<code>sudo</code>就可以解决。</p>
+<p>第一次<code>sudo</code>时，会输出一段这样的提示：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br></pre></td></tr></table></figure>
+<p>翻译如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我们确信您已经收到了本地系统管理员的例行讲解。</span><br><span class="line">通常可以归结为以下三点：</span><br><span class="line"></span><br><span class="line">    #1) 尊重他人隐私。</span><br><span class="line">    #2) 打字前先思考。</span><br><span class="line">    #3) 权力越大，责任越大。</span><br></pre></td></tr></table></figure>
+<p>“With great power comes great
+responsibility.”，使用root权限时要时刻提醒自己，谨慎对待每一个命令。</p>
+<p>下面有一个来自 MIT Missing Semester
+的例子，指出了使用<code>sudo</code>的一个常见误区：</p>
+<blockquote>
+<p>例如，您笔记本电脑的屏幕亮度写在 <code>brightness</code>
+文件中，它位于 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;/sys/class/backlight</span><br></pre></td></tr></table></figure>
+通过将数值写入该文件，我们可以改变屏幕的亮度。现在，蹦到您脑袋里的第一个想法可能是：
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;$ sudo find -L /sys/class/backlight -maxdepth 2 -name &#x27;*brightness*&#x27;</span><br><span class="line">&gt;/sys/class/backlight/thinkpad_screen/brightness</span><br><span class="line">&gt;$ cd /sys/class/backlight/thinkpad_screen</span><br><span class="line">&gt;$ sudo echo 3 &gt; brightness</span><br><span class="line">&gt;An error occurred while redirecting file &#x27;brightness&#x27;</span><br><span class="line">&gt;open: Permission denied</span><br></pre></td></tr></table></figure>
+出乎意料的是，我们还是得到了一个错误信息。毕竟，我们已经使用了
+<code>sudo</code> 命令！关于
+shell，有件事我们必须要知道。<code>|</code>、<code>&gt;</code>、和
+<code>&lt;</code> 是通过 shell 执行的，而不是被各个程序单独执行。
+<code>echo</code> 等程序并不知道 <code>|</code>
+的存在，它们只知道从自己的输入输出流中进行读写。 对于上面这种情况，
+shell (权限为您的当前用户) 在设置 <code>sudo echo</code> 前尝试打开
+brightness 文件并写入，但是系统拒绝了 shell 的操作因为此时 shell
+不是根用户。</p>
+<p>明白这一点后，我们可以这样操作： <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;$ echo 3 | sudo tee brightness</span><br></pre></td></tr></table></figure> 因为打开 /sys
+文件的是 tee 这个程序，并且该程序以 root 权限在运行，因此操作可以进行。
+这样您就可以在 /sys
+中愉快地玩耍了，例如修改系统中各种LED的状态（路径可能会有所不同）：
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;$ echo 1 | sudo tee /sys/class/leds/input6::scrolllock/brightness</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="chmod"><code>chmod</code></h1>
+<p>前面我们提到了文件的三种权限<code>rwx</code>，使用<code>chmod</code>可以调整这些权限。</p>
+<p>chmod可以使用两种语法，字符串语法和数字语法。</p>
+<h2 id="字符串语法">字符串语法</h2>
+<ul>
+<li>用<code>ugoa</code>四个字母表示设置哪些人的权限</li>
+<li>用<code>+-=</code>三个字母表示如何改变权限</li>
+<li>用<code>rwx</code>表示什么权限</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>u</td>
+<td>user，文件的拥有者</td>
+</tr>
+<tr class="even">
+<td>g</td>
+<td>group，文件拥有者所在的组的其他人</td>
+</tr>
+<tr class="odd">
+<td>o</td>
+<td>others，除了ug的其他人</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td>all，所有人</td>
+</tr>
+<tr class="odd">
+<td>+</td>
+<td>添加权限</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>减少权限</td>
+</tr>
+<tr class="odd">
+<td>=</td>
+<td>设置权限</td>
+</tr>
+<tr class="even">
+<td>r</td>
+<td>read，读取</td>
+</tr>
+<tr class="odd">
+<td>w</td>
+<td>write，写入</td>
+</tr>
+<tr class="even">
+<td>x</td>
+<td>execute，执行</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<p><code>chmod ug+rw file</code>表示文件拥有者所在的组的所有人添加读取和写入file的权限。</p>
+<p><code>chmod a-w file</code>表示所有人都不能写入file。</p>
+<p><code>chmod ug=rwx,o=x file</code>表示文件拥有者所在的组的所有人都可以读、写、运行file，其他人只能运行file</p>
+<h2 id="八进制数字语法">八进制数字语法</h2>
+<p>一共有三种权限<code>rwx</code>，<span
+class="math inline">\(2^3=8\)</span>，可以使用8个数字来表示某种人的权限，权限又分为针对三种人<code>ugo</code>，于是，一个文件的权限可以用三个0-7的数字表示。</p>
+<p><code>rwx</code>三种权限从高位到低位可以组成一个三位二进制数，<code>0</code>代表没有这种权限，<code>1</code>代表有，再将这个二进制数转化成八进制（或者十进制，在这里结果是一样的），就得到了对应的数字，下面列出了0-7对应的权限：</p>
+<table>
+<thead>
+<tr class="header">
+<th>八进制</th>
+<th>二进制</th>
+<th>权限</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>000</td>
+<td>---</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>001</td>
+<td>--x</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>010</td>
+<td>-w-</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>011</td>
+<td>-wx</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>100</td>
+<td>r--</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>101</td>
+<td>r-x</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>110</td>
+<td>rw-</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>111</td>
+<td>rwx</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<ul>
+<li><p><code>chmod 777 file</code>代表所有人都有file的所有权限</p></li>
+<li><p><code>chmod 755 file</code>代表file的权限是<code>rwxr-xr-x</code>
+755是创建新文件夹的默认权限</p></li>
+<li><p><code>chmod 644 file</code>代表file的权限是<code>rw-r--r--</code>
+644是创建新文件的默认权限</p></li>
+</ul>
+<p>使用数字来设置权限，可以仅仅用三个字符就设置好每一个权限，非常方便快捷。</p>
+<h1 id="相关链接">相关链接</h1>
+<p><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/">MIT The Missing Semester of
+Your CS Education</a> <a
+target="_blank" rel="noopener" href="https://www.gnu.org/software/coreutils/manual/html_node/General-output-formatting.html">GNU
+manual documents</a></p>
+<p>本文为系列文章，想要看其他章节可以从下面的tags进入。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Shell/" rel="tag"># Shell</a>
+              <a href="/tags/MIT-Missing-Semester%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># MIT Missing Semester学习笔记</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Bash/" rel="tag"># Bash</a>
+              <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
+              <a href="/tags/%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E7%9A%84Linux-Shell%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" rel="tag"># 一看就懂的Linux Shell的基础使用</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/8beffd240c93/" rel="prev" title="博客新添加了搜索功能">
+                  <i class="fa fa-chevron-left"></i> 博客新添加了搜索功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

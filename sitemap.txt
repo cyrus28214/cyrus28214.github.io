@@ -1,3 +1,6 @@
+http://cyrus28214.top/about/index.html
+http://cyrus28214.top/post/bb59eff0fad1/
+http://cyrus28214.top/post/9d100e533618/
 http://cyrus28214.top/post/8beffd240c93/
 http://cyrus28214.top/post/7bd4548aa0da/
 http://cyrus28214.top/post/64e4e3d61f56/
@@ -21,7 +24,6 @@ http://cyrus28214.top/post/edace09c6f86/
 http://cyrus28214.top/post/02beb009aea2/
 http://cyrus28214.top/post/068582ed9a63/
 http://cyrus28214.top/post/5ac6b37ce725/
-http://cyrus28214.top/post/9d100e533618/
 http://cyrus28214.top/post/04355221d8d3/
 http://cyrus28214.top/post/6495a78f89c0/
 http://cyrus28214.top/post/3f6aa83f99ff/
@@ -40,14 +42,17 @@ http://cyrus28214.top/post/ff71490d5ed7/
 http://cyrus28214.top/post/5941ab677246/
 http://cyrus28214.top/post/bfdce4f7f9f8/
 http://cyrus28214.top/tags/index.html
-http://cyrus28214.top/about/index.html
 http://cyrus28214.top/
 http://cyrus28214.top/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/
 http://cyrus28214.top/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/
 http://cyrus28214.top/tags/%E6%95%B0%E5%AD%A6/
 http://cyrus28214.top/tags/%E6%95%B0%E8%AE%BA/
+http://cyrus28214.top/tags/Shell/
+http://cyrus28214.top/tags/MIT-Missing-Semester%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
 http://cyrus28214.top/tags/Linux/
+http://cyrus28214.top/tags/Bash/
 http://cyrus28214.top/tags/%E7%B3%BB%E5%88%97/
+http://cyrus28214.top/tags/%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E7%9A%84Linux-Shell%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/
 http://cyrus28214.top/tags/Python/
 http://cyrus28214.top/tags/XPath/
 http://cyrus28214.top/tags/C-C/
@@ -108,3 +113,4 @@ http://cyrus28214.top/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/
 http://cyrus28214.top/tags/socket/
 http://cyrus28214.top/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/
 http://cyrus28214.top/tags/%E5%8D%9A%E5%AE%A2/
+http://cyrus28214.top/tags/%E6%8E%A8%E8%8D%90/
