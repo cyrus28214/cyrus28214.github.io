@@ -160,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -206,6 +206,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/edace09c6f86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/edace09c6f86/" class="post-title-link" itemprop="url">SQL学习笔记（七）建立索引</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-08 10:01:30" itemprop="dateCreated datePublished" datetime="2023-10-08T10:01:30+08:00">2023-10-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="引入">引入</h1>
+<p>当数据量小的时候，查找操作几乎是瞬间完成的，但是当数据库的规模很大的时候，对数据库的搜索操作会变得很慢，因为默认情况下数据库是使用低效的线性查找，这时候就需要我们建立
+<strong>索引</strong> 。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX 索引名 <span class="keyword">ON</span> 表名 (列名, ...);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX title_index <span class="keyword">ON</span> movies (title);</span><br></pre></td></tr></table></figure>
+<p>当执行这个语句之后，数据库会为这几列创建一种名为
+<strong>B树（B-Tree）</strong> 的数据结构，将搜索加速到 <span
+class="math inline">\(O(\log n)\)</span>
+，但同时使用的储存空间也会更多，所以推荐只在需要经常查找的字段上建立索引。</p>
+<p><em>另外，<code>.timer on</code>可以打开计时器比较执行速度，但是在我使用的这么小的数据里是看不出效果的。</em></p>
+<p>本文为系列文章，想要看其他章节可以从下面的tags进入。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -990,89 +1069,6 @@ Database）有什么区别呢？请看下面的表格。</p>
 <p>简单来说，关系型数据库就像Excel表格，非关系型数据库就像.json文件（当使用键值对数据结构时）。</p>
 <p>关系型数据库更成熟稳定，非关系型数据库更灵活易扩展。</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/4e56adf6545c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon512.png">
-      <meta itemprop="name" content="Cyrus28214">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/4e56adf6545c/" class="post-title-link" itemprop="url">环境变量path是什么</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-10-01T00:00:00+08:00">2023-10-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="有什么用">有什么用</h1>
-<p>当你想要在命令行启动某个程序，通常你要cd进入到这个程序所在的目录，或者键入程序的完整路径。如果经常使用它，这样太繁琐了。环境变量path可以告诉命令行去哪里找程序的位置，这样，只需要键入程序名称，无需键入完整路径，就可以打开程序。</p>
-<p>具体来说，搜索程序的顺序一般是这样的：</p>
-<ol type="1">
-<li>先在当前的工作路径寻找</li>
-<li>如果未找到，在环境变量的path中寻找</li>
-<li>如果仍未找到，报错</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/4e56adf6545c/" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

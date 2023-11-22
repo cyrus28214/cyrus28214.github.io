@@ -160,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -206,6 +206,87 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/22545b2d32ec/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/22545b2d32ec/" class="post-title-link" itemprop="url">密码在数据库中的加密存储</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-18 23:19:27" itemprop="dateCreated datePublished" datetime="2023-10-18T23:19:27+08:00">2023-10-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="简介">简介</h1>
+<p>本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。</p>
+<h1 id="明文储存">明文储存</h1>
+<p>我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？</p>
+<p><img
+src="https://pic.imgdb.cn/item/652d49c3c458853aef4021ad.jpg" /></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/22545b2d32ec/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -923,85 +1004,6 @@ language），当然，XPath也是可以用于HTML的。</p>
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/edace09c6f86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon512.png">
-      <meta itemprop="name" content="Cyrus28214">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/edace09c6f86/" class="post-title-link" itemprop="url">SQL学习笔记（七）建立索引</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-08 10:01:30" itemprop="dateCreated datePublished" datetime="2023-10-08T10:01:30+08:00">2023-10-08</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="引入">引入</h1>
-<p>当数据量小的时候，查找操作几乎是瞬间完成的，但是当数据库的规模很大的时候，对数据库的搜索操作会变得很慢，因为默认情况下数据库是使用低效的线性查找，这时候就需要我们建立
-<strong>索引</strong> 。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX 索引名 <span class="keyword">ON</span> 表名 (列名, ...);</span><br></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX title_index <span class="keyword">ON</span> movies (title);</span><br></pre></td></tr></table></figure>
-<p>当执行这个语句之后，数据库会为这几列创建一种名为
-<strong>B树（B-Tree）</strong> 的数据结构，将搜索加速到 <span
-class="math inline">\(O(\log n)\)</span>
-，但同时使用的储存空间也会更多，所以推荐只在需要经常查找的字段上建立索引。</p>
-<p><em>另外，<code>.timer on</code>可以打开计时器比较执行速度，但是在我使用的这么小的数据里是看不出效果的。</em></p>
-<p>本文为系列文章，想要看其他章节可以从下面的tags进入。</p>
-
       
     </div>
 
