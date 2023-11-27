@@ -27,7 +27,7 @@
 <meta property="og:description" content="引入 当数据量小的时候，查找操作几乎是瞬间完成的，但是当数据库的规模很大的时候，对数据库的搜索操作会变得很慢，因为默认情况下数据库是使用低效的线性查找，这时候就需要我们建立 索引 。 1CREATE INDEX 索引名 ON 表名 (列名, ...); 1CREATE INDEX title_index ON movies (title); 当执行这个语句之后，数据库会为这几列创建一种名">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-08T02:01:30.000Z">
-<meta property="article:modified_time" content="2023-11-07T10:37:51.788Z">
+<meta property="article:modified_time" content="2023-11-26T09:27:09.733Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="系列">
 <meta property="article:tag" content="技术">
@@ -161,13 +161,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">74</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -275,7 +275,8 @@
 class="math inline">\(O(\log n)\)</span>
 ，但同时使用的储存空间也会更多，所以推荐只在需要经常查找的字段上建立索引。</p>
 <p><em>另外，<code>.timer on</code>可以打开计时器比较执行速度，但是在我使用的这么小的数据里是看不出效果的。</em></p>
-<p>本文为系列文章，想要看其他章节可以从下面的tags进入。</p>
+<p>本文属于系列文章：<a
+href="/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">SQL学习笔记</a></p>
 
     </div>
 
