@@ -26,9 +26,11 @@
 <meta property="og:site_name" content="Cyrus&#39; Blog">
 <meta property="og:description" content="题面  请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。 数值（按顺序）可以分成以下几个部分：  若干空格 一个 小数 或者 整数 （可选）一个 &#39;e&#39; 或 &#39;E&#39; ，后面跟着一个 整数 若干空格">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://cyrus28214.top/images/s/64c290421ddac507ccd9866b.png%22FSM%22">
+<meta property="og:image" content="http://cyrus28214.top/images/s/64c28e0a1ddac507ccd4aed1.jpg">
+<meta property="og:image" content="http://cyrus28214.top/images/s/64c28eb11ddac507ccd62dc1.jpg">
+<meta property="og:image" content="http://cyrus28214.top/images/s/64c290421ddac507ccd9866b.png">
 <meta property="article:published_time" content="2023-07-27T14:57:02.000Z">
-<meta property="article:modified_time" content="2023-11-22T16:49:17.511Z">
+<meta property="article:modified_time" content="2023-11-28T10:41:42.678Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="LeetCode">
@@ -42,7 +44,7 @@
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="图解">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cyrus28214.top/images/s/64c290421ddac507ccd9866b.png%22FSM%22">
+<meta name="twitter:image" content="http://cyrus28214.top/images/s/64c28e0a1ddac507ccd4aed1.jpg">
 
 
 <link rel="canonical" href="http://cyrus28214.top/post/5638b4fb1b83/">
@@ -320,15 +322,14 @@
 <p>然后是指数部分，首先是字母<code>E</code>或者<code>e</code>，然后是整数部分<code>\d+</code>，指数部分是可选的，所以括号括起来加上<code>?</code>。</p>
 <p>最后因为我们需要匹配整个字符串，加上匹配首尾的符号<code>^</code>和<code>$</code>就大功告成了，表达式为<code>^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$</code>代码非常简单，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="function">regex <span class="title">r</span><span class="params">(<span class="string">R&quot;(^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$)&quot;</span>)</span></span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">regex_match</span>(s</span><br><span class="line">  - r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>然而，他竟然TLE了 <img
-src="/images/s/64c28e0a1ddac507ccd4aed1.jpg%22TLE%22" alt="TLE" /></p>
+<p>然而，他竟然TLE了 <img src="/images/s/64c28e0a1ddac507ccd4aed1.jpg"
+alt="TLE" /></p>
 <p>不信邪的我又写了Python版和JS版的代码</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isNumber</span>(<span class="params">c</span></span><br><span class="line"><span class="params">  - s</span>):</span><br><span class="line">        <span class="keyword">return</span> re.<span class="keyword">match</span>(<span class="string">r&quot;^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$&quot;</span></span><br><span class="line">  - s) != <span class="literal">None</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isNumber = <span class="keyword">function</span>(<span class="params">s</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$/i</span>.<span class="title function_">test</span>(s)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>结果惊奇的发现：竟然过了，还挺快的。难道是我在C++程序中使用正则表达式的姿势不对？</p>
 <figure>
-<img
-src="/images/s/64c28eb11ddac507ccd62dc1.jpg%22换成Python和JS就过了%22"
+<img src="/images/s/64c28eb11ddac507ccd62dc1.jpg"
 alt="换成Python和JS就过了" />
 <figcaption aria-hidden="true">换成Python和JS就过了</figcaption>
 </figure>
@@ -338,7 +339,7 @@ alt="换成Python和JS就过了" />
 - finite state machine 又称FSA - finite state automaton ）来搞。</p>
 <p>我自己推导的FSM用了太多的节点，这里贴出力扣的官方题解配的图。</p>
 <figure>
-<img src="/images/s/64c290421ddac507ccd9866b.png%22FSM%22" alt="FSM" />
+<img src="/images/s/64c290421ddac507ccd9866b.png" alt="FSM" />
 <figcaption aria-hidden="true">FSM</figcaption>
 </figure>
 <p>根据这个转移箭头，可以直接用数组模拟自动机</p>

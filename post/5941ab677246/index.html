@@ -27,9 +27,9 @@
 <meta property="og:description" content="半加器(Half Adder) 半加器接受两个输入A、B，输出加法的计算结果S和进位C，表达式及真值表如下： \[\begin{align*} S &amp;&#x3D; A \oplus B \\ C &amp;&#x3D; AB \end{align*}\]    A B  S C     0 0  0 0   0 1  1 1   1 0">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://cyrus28214.top/images/s/649e55ad1ddac507cce8564b.png">
-<meta property="og:image" content="http://cyrus28214.top/images/s/649e742d1ddac507cc1e31e8.png%22%E5%8A%A0%E6%B3%95%E5%99%A8%22">
+<meta property="og:image" content="http://cyrus28214.top/images/s/649e742d1ddac507cc1e31e8.png">
 <meta property="article:published_time" content="2023-06-30T03:30:14.000Z">
-<meta property="article:modified_time" content="2023-11-22T16:49:17.511Z">
+<meta property="article:modified_time" content="2023-11-28T10:44:36.296Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="图解">
@@ -314,10 +314,9 @@ C &amp;= AB
 </table>
 <span id="more"></span>
 <p>利用异或门可以很简单的设计出一个半加器 <img
-src="/images/s/649e549d1ddac507cce6a707.png" title="半加器"
-alt="半加器" /></p>
+src="/images/s/649e549d1ddac507cce6a707.png" alt="半加器" /></p>
 <p>我们把它抽象成这样 <img src="/images/s/649e55ad1ddac507cce8564b.png"
-title="半加器" alt="半加器" /></p>
+alt="半加器" /></p>
 <h2 id="全加器full-adder">全加器(Full Adder)</h2>
 <p>如果我们需要将低位所位的1也加上，就需要用到全加器，它接受三个输入A、B和C，输出加法的计算结果S和进位C1。由此可以写出全加器的表达式。</p>
 <p><span class="math display">\[\begin{align*}
@@ -407,14 +406,11 @@ class="math inline">\(\oplus\)</span>”是异或</em></p>
 </tbody>
 </table>
 <p>具体的实现也很简单，只需要用到两个半加器。 <img
-src="/images/s/649e67111ddac507cc085cb5.png" title="全加器"
-alt="全加器" /></p>
+src="/images/s/649e67111ddac507cc085cb5.png" alt="全加器" /></p>
 <p>同理我们把它抽象（或者说封装）成这样： <img
-src="/images/s/649e678b1ddac507cc090432.png" title="全加器"
-alt="全加器" /></p>
+src="/images/s/649e678b1ddac507cc090432.png" alt="全加器" /></p>
 <p>有了全加器和半加器，制作一个n位加法器就很简单了，这里以4位加法器为例。
-<img src="/images/s/649e742d1ddac507cc1e31e8.png%22加法器%22"
-alt="加法器" /></p>
+<img src="/images/s/649e742d1ddac507cc1e31e8.png" alt="加法器" /></p>
 <p>这种加法器被称为串行进位加法器(Ripple Carry Adder -
 RCA)，也叫行波进位加法器或脉冲进位加法器，RCA的特点是电路简单，但由于高位必须等到低位运算完成才能进行，电路产生的延时很大，运算速度较慢，而且位数越多运算越慢。而超前进位加法器(Carry
 Look-ahead Adder - CLA)可以解决这个问题。</p>
@@ -449,8 +445,7 @@ C_3 &amp;= G_2 + P_2(G_1 + P_1 G_0 + P_1 P_0 C_0)\\
 \]</span>
 进位延时只有三个门的延时，加上最后一级全加器的延时，最多四个延时时间。
 具体的实现比较复杂，如图。 <img
-src="/images/s/649e74c91ddac507cc1f31d4.png%22超前进位加法器%22"
-alt="超前进位加法器" /></p>
+src="/images/s/649e74c91ddac507cc1f31d4.png" alt="超前进位加法器" /></p>
 
     </div>
 
