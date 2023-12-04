@@ -26,15 +26,13 @@
 <meta property="og:site_name" content="Cyrus&#39; Blog">
 <meta property="og:description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://cyrus28214.top/images/s/652d49c3c458853aef4021ad.jpg">
 <meta property="article:published_time" content="2023-10-18T15:19:27.000Z">
-<meta property="article:modified_time" content="2023-11-22T16:49:17.460Z">
+<meta property="article:modified_time" content="2023-12-04T14:59:04.304Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="密码学">
 <meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cyrus28214.top/images/s/652d49c3c458853aef4021ad.jpg">
 
 
 <link rel="canonical" href="http://cyrus28214.top/post/22545b2d32ec/">
@@ -267,7 +265,8 @@
 <p>本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。</p>
 <h1 id="明文储存">明文储存</h1>
 <p>我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？</p>
-<p><img src="/images/s/652d49c3c458853aef4021ad.jpg" /></p>
+<p><img
+src="https://cyrus28214/images/s/652d49c3c458853aef4021ad.jpg" /></p>
 <span id="more"></span>
 <p>有两种可能，攻击者可能可以在密码传递的过程中截取密码（假如传递的过程没有其他的保护），或者数据库泄露给了攻击者。</p>
 <p>如果整个数据库都泄露了（拖库），情况非常糟糕，因为你的所有用户的密码都泄露了，你的所有用户数据都被开放给了攻击者，所有用户的身份认证都失效了！</p>

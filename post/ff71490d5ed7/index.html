@@ -27,7 +27,7 @@
 <meta property="og:description" content="不会吧，C++20都出了，不会还有人在学C++11的新特性吧（就是我）。这篇文章介绍一些C++11的方便的语法糖&#x2F;特性。 auto类型推导 这可以说是C++11中最方便最常用的特性了，一旦开始用就再也回不去了。 1234float foo();auto a &#x3D; 3; &#x2F;&#x2F;a的类型是intauto b &#x3D; foo(); &#x2F;&#x2F;b的类型是floatauto c; &#x2F;&#x2F;报错，因为编译器无法推断出c的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-01T07:05:55.000Z">
-<meta property="article:modified_time" content="2023-11-25T10:09:41.655Z">
+<meta property="article:modified_time" content="2023-12-04T13:39:51.929Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="编程语言">
@@ -274,8 +274,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i : a)&#123;&#125; <span class="comment">//a可以是int[]、vector&lt;int&gt;、queue&lt;double&gt;等等，很灵活，甚至自己写的类只要定义了begin()、end()、++等函数也可以使用这个语法糖</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span>&amp; i : a)&#123;&#125; <span class="comment">//这样的话i是一个引用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; i : a)&#123;&#125; <span class="comment">//结合上一个特性就有了究极偷懒的写法</span></span><br></pre></td></tr></table></figure>
 <h2 id="lambda表达式">lambda表达式</h2>
 <p>python里面的lambda表达式实在是好用，C++11里面也有lambda表达式，不过C++毕竟是静态语言，用起来还是没有python里面的灵活。
-格式：</p>
-<pre><code>[捕获列表] (函数参数) mutable 或 exception 声明 -&gt; 返回值类型 &#123;函数体&#125;</code></pre>
+格式： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[捕获列表] (函数参数) mutable 或 exception 声明 -&gt; 返回值类型 &#123;函数体&#125;</span><br></pre></td></tr></table></figure></p>
 <p>其中，捕获列表有：</p>
 <ul>
 <li>[] 表示不捕获任何变量</li>

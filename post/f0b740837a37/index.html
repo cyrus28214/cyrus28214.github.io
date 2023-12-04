@@ -19,19 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="假设我们有以下文件： main.cpp 123456#include&lt;iostream&gt;int main()&amp;#123;    std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;    return 0;&amp;#125; 当我们执行一条命令g++ main.cpp -o main时，实际上g++共完成了四个步">
+    <meta name="description" content="假设我们有以下文件： main.cpp 123456#include&lt;iostream&gt;int main()&amp;#123;    std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;    return 0;&amp;#125; 当我们执行一条命令g++ main.cpp -o main时，实际上g++共完成了四个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译的四个步骤：预编译、编译、汇编、链接">
 <meta property="og:url" content="http://cyrus28214.top/post/f0b740837a37/index.html">
 <meta property="og:site_name" content="Cyrus&#39; Blog">
-<meta property="og:description" content="假设我们有以下文件： main.cpp 123456#include&lt;iostream&gt;int main()&amp;#123;    std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;    return 0;&amp;#125; 当我们执行一条命令g++ main.cpp -o main时，实际上g++共完成了四个步">
+<meta property="og:description" content="假设我们有以下文件： main.cpp 123456#include&lt;iostream&gt;int main()&amp;#123;    std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;    return 0;&amp;#125; 当我们执行一条命令g++ main.cpp -o main时，实际上g++共完成了四个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-14T04:23:25.000Z">
-<meta property="article:modified_time" content="2023-11-07T10:37:51.386Z">
+<meta property="article:modified_time" content="2023-12-04T13:58:18.419Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="编译原理">
 <meta property="article:tag" content="C&#x2F;C++">
-<meta property="article:tag" content="技术">
 <meta name="twitter:card" content="summary">
 
 
@@ -142,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86preprocessing"><span class="nav-number">1.</span> <span class="nav-text">1. 预处理（Preprocessing）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91compiling"><span class="nav-number">2.</span> <span class="nav-text">2. 编译(Compiling)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%87%E7%BC%96assembling"><span class="nav-number">3.</span> <span class="nav-text">3. 汇编(Assembling)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5linking"><span class="nav-number">4.</span> <span class="nav-text">4. 链接(Linking)</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86preprocessing"><span class="nav-number">1.</span> <span class="nav-text">1. 预处理（Preprocessing）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91compiling"><span class="nav-number">2.</span> <span class="nav-text">2. 编译(Compiling)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96assembling"><span class="nav-number">3.</span> <span class="nav-text">3. 汇编(Assembling)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5linking"><span class="nav-number">4.</span> <span class="nav-text">4. 链接(Linking)</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -262,23 +261,24 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>假设我们有以下文件：</p>
-<p>main.cpp <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>main.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当我们执行一条命令<code>g++ main.cpp -o main</code>时，实际上g++共完成了四个步骤：
 <span id="more"></span></p>
-<h1 id="预处理preprocessing">1. 预处理（Preprocessing）</h1>
+<h2 id="预处理preprocessing">1. 预处理（Preprocessing）</h2>
 <p><code>g++ -E main.cpp -o main.i</code></p>
 <p>或许你会注意到，C++程序中有很多以<code>#</code>开头的行，例如<code>#include</code>、<code>#define</code>、<code>#undef</code>、<code>#ifdef</code>等。它们明显与我们通常写的语句不同，如它们无需以分号结尾，它们不可以直接折行。这些被称作<strong>预处理指令（Preprocessor
 Directive）</strong>。预处理指令就是在预处理这一步生效的。预处理具体做的工作包括引入头文件、宏的展开、注释的删除等。</p>
-<h1 id="编译compiling">2. 编译(Compiling)</h1>
+<h2 id="编译compiling">2. 编译(Compiling)</h2>
 <p><code>g++ -S main.i -o main.s</code></p>
 <p>编译阶段将C/C++代码翻译成汇编指令，这是编译器所做的最核心、最重要的工作。编译通常包括词法分析、语法分析、语义分析几个步骤。</p>
 <p>打开main.s，可以发现里面是汇编指令，以下是截取的一个片段。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">main:</span><br><span class="line">.LFB2211:</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.seh_pushreg	%rbp</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.seh_setframe	%rbp, 0</span><br><span class="line">	subq	$32, %rsp</span><br><span class="line">	.seh_stackalloc	32</span><br><span class="line">	.seh_endprologue</span><br><span class="line">	call	__main</span><br><span class="line">	leaq	.LC0(%rip), %rax</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	.refptr._ZSt4cout(%rip), %rax</span><br><span class="line">	movq	%rax, %rcx</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc</span><br><span class="line">	movq	%rax, %rcx</span><br><span class="line">	movq	.refptr._ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(%rip), %rax</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	call	_ZNSolsEPFRSoS_E</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	addq	$32, %rsp</span><br><span class="line">	popq	%rbp</span><br><span class="line">	ret</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="汇编assembling">3. 汇编(Assembling)</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">.LFB2211:</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.seh_pushreg	%rbp</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.seh_setframe	%rbp, 0</span><br><span class="line">	subq	$32, %rsp</span><br><span class="line">	.seh_stackalloc	32</span><br><span class="line">	.seh_endprologue</span><br><span class="line">	call	__main</span><br><span class="line">	leaq	.LC0(%rip), %rax</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	movq	.refptr._ZSt4cout(%rip), %rax</span><br><span class="line">	movq	%rax, %rcx</span><br><span class="line">	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc</span><br><span class="line">	movq	%rax, %rcx</span><br><span class="line">	movq	.refptr._ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(%rip), %rax</span><br><span class="line">	movq	%rax, %rdx</span><br><span class="line">	call	_ZNSolsEPFRSoS_E</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	addq	$32, %rsp</span><br><span class="line">	popq	%rbp</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+<h2 id="汇编assembling">3. 汇编(Assembling)</h2>
 <p><code>g++ -c main.s -o main.o</code></p>
 <p>汇编阶段将汇编指令转化成二进制文件，也就是机器码。</p>
 <p>现在若要打开main.o文件需要使用查看二进制文件的工具，而非文本编辑器。</p>
-<h1 id="链接linking">4. 链接(Linking)</h1>
+<h2 id="链接linking">4. 链接(Linking)</h2>
 <p><code>g++ main.o -o main</code></p>
 <p>链接阶段的工作是寻找程序用到的外部文件，拼接每个模块，生成最终的可执行文件。</p>
 <p>链接分为两种：静态链接和动态链接</p>
@@ -295,7 +295,6 @@ Directive）</strong>。预处理指令就是在预处理这一步生效的。�
           <div class="post-tags">
               <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag"># 编译原理</a>
               <a href="/tags/C-C/" rel="tag"># C/C++</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
           </div>
 
         
