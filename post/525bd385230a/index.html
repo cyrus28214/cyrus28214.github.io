@@ -27,7 +27,7 @@
 <meta property="og:description" content="求解方程 在SymPy学习笔记（二）需要避免的坑中已经提到过，SymPy中表达相等应该用Eq()而不是&#x3D;&#x3D;或&#x3D; 用solveset(equation, x)可以求equation关于x的解集，如果等式右边是0，也可以不写成solveset(Eq(expr, 0), x)，直接写成solveset(expr, x)，例如：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-30T13:00:17.000Z">
-<meta property="article:modified_time" content="2023-12-04T14:59:04.300Z">
+<meta property="article:modified_time" content="2023-12-04T15:05:20.566Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="系列">
 <meta property="article:tag" content="Python">
@@ -266,7 +266,7 @@
     
     <div class="post-body" itemprop="articleBody"><h1 id="求解方程">求解方程</h1>
 <p>在<a
-target="_blank" rel="noopener" href="https://cyrus28214/post/0b3dbf26ccf5/">SymPy学习笔记（二）需要避免的坑</a>中已经提到过，SymPy中表达相等应该用<code>Eq()</code>而不是<code>==</code>或<code>=</code></p>
+href="https://cyrus28214.top/post/0b3dbf26ccf5/">SymPy学习笔记（二）需要避免的坑</a>中已经提到过，SymPy中表达相等应该用<code>Eq()</code>而不是<code>==</code>或<code>=</code></p>
 <p><code>用solveset(equation, x)</code>可以求equation关于x的解集，如果等式右边是0，也可以不写成<code>solveset(Eq(expr, 0), x)</code>，直接写成<code>solveset(expr, x)</code>，例如：</p>
 <span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; solveset(Eq(x**2, 1), x)</span><br><span class="line">&#123;-1, 1&#125;</span><br><span class="line">&gt;&gt;&gt; solveset(x**2 - 1, x)</span><br><span class="line">&#123;-1, 1&#125;</span><br></pre></td></tr></table></figure>
@@ -279,16 +279,16 @@ target="_blank" rel="noopener" href="https://cyrus28214/post/0b3dbf26ccf5/">SymP
 <h1 id="求解非线性方程组">求解非线性方程组</h1>
 <p>使用<code>nonlinsolve()</code></p>
 <p><img
-src="https://cyrus28214/images/s/65225569c458853aefcf1434.jpg" /></p>
+src="https://cyrus28214.top/images/s/65225569c458853aefcf1434.jpg" /></p>
 <h1 id="获得多项式的重根数">获得多项式的重根数</h1>
 <p><code>solveset()</code>返回的都是不重复的根，要获得多项式的重根数，可以使用<code>roots()</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; solveset(x**3 - 6*x**2 + 9*x, x)</span><br><span class="line">&#123;0, 3&#125;</span><br><span class="line">&gt;&gt;&gt; roots(x**3 - 6*x**2 + 9*x, x)</span><br><span class="line">&#123;0: 1, 3: 2&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="求解微分方程">求解微分方程</h1>
 <p>使用<code>dsolve()</code></p>
 <p><img
-src="https://cyrus28214/images/s/6522563cc458853aefd0068f.jpg" /></p>
+src="https://cyrus28214.top/images/s/6522563cc458853aefd0068f.jpg" /></p>
 <p>本文属于系列文章：<a
-target="_blank" rel="noopener" href="https://cyrus28214/tags/SymPy%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">SymPy学习笔记</a></p>
+href="https://cyrus28214.top/tags/SymPy%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">SymPy学习笔记</a></p>
 
     </div>
 

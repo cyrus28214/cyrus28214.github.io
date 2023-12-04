@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言 原本打算写“实现常用排序算法（三）堆排序”，结果用了太多的篇幅讲解堆，于是单独出来写成专门讲解堆的博客，后面在简短的写一写堆排序的实现。 简介 堆其实是很基础的数据结构，堆往往是初学者学习的第一个树形数据结构，排在数组、链表、队列、栈等线形数据结构之后。但其实堆并没有那么好理解，而且也常常被忽略（特别是对于OIer来说），因为经常可以直接调包使用，不需要手写堆，C++内置了std::p">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-24T13:10:26.000Z">
-<meta property="article:modified_time" content="2023-12-04T14:59:04.327Z">
+<meta property="article:modified_time" content="2023-12-04T15:05:20.538Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="图解">
 <meta property="article:tag" content="基础">
@@ -276,21 +276,21 @@
 Heap）也是同理</strong></p>
 <p>要储存堆，首先要给堆中的每个结点编号。首先，以根节点为1，从上至下，每层再从左至右地编号，如图：</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6637661c6c8e549edae6.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6637661c6c8e549edae6.png" /></p>
 <p><em>*其实编号从零开始也可以，但是之后取子节点和父节点编码的公式会有所不同。</em></p>
 <p>然后，我们只需要用一个数组，就可以储存下整个堆了。</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6646661c6c8e549eeffc.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6646661c6c8e549eeffc.png" /></p>
 <p>一般来说，我们会让堆是一棵<strong>完全二叉树（Complete Binary
 Tree）</strong>，完全二叉树就是除了最后一层以外每一层均填满，而且最后一层从左至右地填满（请与<strong>完美二叉树（Perfect
 Binary
 Tree）</strong>区分），这样既节省了数组的空间，又方便了后续的操作。</p>
 <p>假如这个堆不是一棵完全二叉树会怎么样呢？请看下图：</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6658661c6c8e549f0ea8.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6658661c6c8e549f0ea8.png" /></p>
 <p>如果这样的话，数组就会变成下图：</p>
 <p><img
-src="https://cyrus28214/images/s/64eb666b661c6c8e549f19ca.png" /></p>
+src="https://cyrus28214.top/images/s/64eb666b661c6c8e549f19ca.png" /></p>
 <p>可以看到存在空间浪费，不仅如此，后续操作也会带来麻烦。因此通常令堆为完全二叉树，并使用一个大小为<span
 class="math inline">\(n\)</span>的数组储存。</p>
 <h2 id="这种储存方式相应的操作">这种储存方式相应的操作</h2>
@@ -307,34 +307,34 @@ Up）和向下调整（Shift Down）</p>
 <h2 id="向上调整">向上调整</h2>
 <p>假如其中一个节点偏大而不满足堆性质，那么根据最大堆的特点我们可以知道，这个节点需要向上调整其位置。按照以下程序框图执行。</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6176661c6c8e549d6633.jpg" /></p>
+src="https://cyrus28214.top/images/s/64eb6176661c6c8e549d6633.jpg" /></p>
 <p>当然，也有可能遇到不存在父节点的情况（此节点已经变成了根节点），那么也算调整完毕</p>
 <p>例：有一个这样的堆，其中橙色节点需要向上调整</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6714661c6c8e549f4561.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6714661c6c8e549f4561.png" /></p>
 <p><span class="math inline">\(61 \gt 19\)</span>
 因此交换它们，并继续向上调整61</p>
 <p><img
-src="https://cyrus28214/images/s/64eb674e661c6c8e549f4ff2.png" /></p>
+src="https://cyrus28214.top/images/s/64eb674e661c6c8e549f4ff2.png" /></p>
 <p><span class="math inline">\(61 \gt 36\)</span>
 交换61和36，并继续向上调整61</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6775661c6c8e549f8557.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6775661c6c8e549f8557.png" /></p>
 <p><span class="math inline">\(61 \lt 90\)</span>
 调整结束，可以看到调整后的二叉树已经满足了堆性质。</p>
 <h2 id="向下调整">向下调整</h2>
 <p>向下调整就是和向上调整相反的过程，假如一个节点偏小而不满足堆性质，则这个节点需要被向下调整，按照下面的流程图完成向下调整。</p>
 <p><img
-src="https://cyrus28214/images/s/64eb629d661c6c8e549d91b6.jpg" /></p>
+src="https://cyrus28214.top/images/s/64eb629d661c6c8e549d91b6.jpg" /></p>
 <p>同样举个例子</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6913661c6c8e549fbbec.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6913661c6c8e549fbbec.png" /></p>
 <p>22的两个子节点36、26都比它大，则交换22和36，并继续向下调整22</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6913661c6c8e549fbbf7.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6913661c6c8e549fbbf7.png" /></p>
 <p><span class="math inline">\(25 \lt 22\)</span> 交换25和22</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6b21661c6c8e54a03d64.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6b21661c6c8e54a03d64.png" /></p>
 <p>22的两个子节点7、3都比它小，满足堆性质，向下调整结束。</p>
 <h2 id="时间复杂度分析">时间复杂度分析</h2>
 <p>无论是向上调整还是向下调整，节点移动的距离都不会超过树高，则显然时间复杂度为
@@ -346,13 +346,13 @@ src="https://cyrus28214/images/s/64eb6b21661c6c8e54a03d64.png" /></p>
 <h1 id="插入操作">插入操作</h1>
 <p>有了向上调整，插入操作就很简单了，我们只需要把新的节点加到数组末尾，然后向上调整它。</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6af8661c6c8e54a03957.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6af8661c6c8e54a03957.png" /></p>
 <p>相应的二叉树为：</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6af8661c6c8e54a03967.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6af8661c6c8e54a03967.png" /></p>
 <p>调整后即为插入完毕后的堆</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6af8661c6c8e54a0397a.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6af8661c6c8e54a0397a.png" /></p>
 <p>由于插入操作本质上就是向上调整，复杂度显然是 <span
 class="math inline">\(O(\log n)\)</span></p>
 <h2 id="实现-1">实现</h2>
@@ -361,9 +361,11 @@ class="math inline">\(O(\log n)\)</span></p>
 <p>删除操作就是插入操作的逆操作，在堆里面，通常说的删除是指<strong>pop</strong>操作，也就是删除根节点。</p>
 <p>逆着插入操作，我们只需要将根节点的值与最后一个节点交换，去掉最后一个节点，然后向下调整根节点。</p>
 <p><img
-src="https://cyrus28214/images/s/64eb6e0d661c6c8e54a0d921.png" /> <img
-src="https://cyrus28214/images/s/64eb6e0d661c6c8e54a0d92c.png" /> <img
-src="https://cyrus28214/images/s/64eb6e0d661c6c8e54a0d93a.png" /></p>
+src="https://cyrus28214.top/images/s/64eb6e0d661c6c8e54a0d921.png" />
+<img
+src="https://cyrus28214.top/images/s/64eb6e0d661c6c8e54a0d92c.png" />
+<img
+src="https://cyrus28214.top/images/s/64eb6e0d661c6c8e54a0d93a.png" /></p>
 <p>顺带一提，假如需要删除非根节点，只需要让这个节点一直与它的父节点交换直到它变成根节点，再执行<code>pop</code>操作就行了。</p>
 <p>显然时间复杂度也是 <span class="math inline">\(O(\log n)\)</span></p>
 <h2 id="实现-2">实现</h2>
@@ -382,18 +384,18 @@ src="https://cyrus28214/images/s/64eb6e0d661c6c8e54a0d93a.png" /></p>
 class="math inline">\(O(n)\)</span> 的时间复杂度。</p>
 <p>我们从倒数第二行开始，自底向上对每个节点进行向下调整。（因为倒数第一行没有子节点不需要向下调整）</p>
 <p><img
-src="https://cyrus28214/images/s/64eca339661c6c8e54e672b3.png" /></p>
+src="https://cyrus28214.top/images/s/64eca339661c6c8e54e672b3.png" /></p>
 <p>进行倒序遍历：</p>
 <p>7号、6号没有子节点，不调整。5号、4号的子节点小于它，无需调整。</p>
 <p>向下调整3号后：</p>
 <p><img
-src="https://cyrus28214/images/s/64eca339661c6c8e54e672d1.png" /></p>
+src="https://cyrus28214.top/images/s/64eca339661c6c8e54e672d1.png" /></p>
 <p>向下调整2号后：</p>
 <p><img
-src="https://cyrus28214/images/s/64eca33a661c6c8e54e672f8.png" /></p>
+src="https://cyrus28214.top/images/s/64eca33a661c6c8e54e672f8.png" /></p>
 <p>向下调整1号后：</p>
 <p><img
-src="https://cyrus28214/images/s/64eca33e661c6c8e54e673cc.png" /></p>
+src="https://cyrus28214.top/images/s/64eca33e661c6c8e54e673cc.png" /></p>
 <p>可以看到此时堆已经建好了</p>
 <h2 id="时间复杂度分析-1">时间复杂度分析</h2>
 <p>为了简便，考虑这个堆是一个完美二叉树时的情况（当 <span
@@ -415,7 +417,7 @@ T(n) &amp;\leq 2^0 \times (h-1) + 2^1 \times (h-2) + 2^2 \times (h-3) +
 \]</span></p>
 <p>则时间复杂度为 <span class="math inline">\(O(n)\)</span></p>
 <p>也可以使用<a
-target="_blank" rel="noopener" href="https://cyrus28214/post/96d2515a01ca/"><strong>主定理（Master
+href="https://cyrus28214.top/post/96d2515a01ca/"><strong>主定理（Master
 Theorem）</strong></a>求解，结果是一样的。</p>
 <p><span class="math display">\[
 \begin{aligned}

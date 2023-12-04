@@ -26,16 +26,16 @@
 <meta property="og:site_name" content="Cyrus&#39; Blog">
 <meta property="og:description" content="inode inode（index node），索引节点，是文件系统中用来储存文件元数据（metadata）的数据结构，例如文件储存的位置、创建时间、最后修改时间、所有者、访问权限等（但不包括名字）。每一个inode在创建的时候都会分配一个唯一的编码，知道了这个编码，就可以查到文件的元数据。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cyrus28214/images/s/652a2545c458853aef801039.png">
-<meta property="og:image" content="https://cyrus28214/images/s/652a2d77c458853aef9f2761.jpg">
+<meta property="og:image" content="https://cyrus28214.top/images/s/652a2545c458853aef801039.png">
+<meta property="og:image" content="https://cyrus28214.top/images/s/652a2d77c458853aef9f2761.jpg">
 <meta property="article:published_time" content="2023-10-14T06:18:49.000Z">
-<meta property="article:modified_time" content="2023-12-04T14:59:04.305Z">
+<meta property="article:modified_time" content="2023-12-04T15:05:20.566Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="操作系统">
 <meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cyrus28214/images/s/652a2545c458853aef801039.png">
+<meta name="twitter:image" content="https://cyrus28214.top/images/s/652a2545c458853aef801039.png">
 
 
 <link rel="canonical" href="http://cyrus28214.top/post/4fc4538d6849/">
@@ -282,7 +282,7 @@ collection）机制非常类似。</p>
 <p>正因为硬链接指向了相同的inode，因此创建硬链接必须要在同一分区内（无论是物理分区或逻辑分区），因为在其他分区是找不到这个inode的。</p>
 <p>用图片解释比较清楚：</p>
 <figure>
-<img src="https://cyrus28214/images/s/652a2545c458853aef801039.png"
+<img src="https://cyrus28214.top/images/s/652a2545c458853aef801039.png"
 alt="硬链接" />
 <figcaption aria-hidden="true">硬链接</figcaption>
 </figure>
@@ -297,7 +297,7 @@ link）。</p>
 <p>可以看到删除了原来的文件，硬链接并没有失效。</p>
 <p>同样用图片说明软链接的原理：</p>
 <figure>
-<img src="https://cyrus28214/images/s/652a2d77c458853aef9f2761.jpg"
+<img src="https://cyrus28214.top/images/s/652a2d77c458853aef9f2761.jpg"
 alt="软链接" />
 <figcaption aria-hidden="true">软链接</figcaption>
 </figure>
@@ -313,7 +313,7 @@ block），保存包含的文件与子目录。</li>
 <h1 id="一个我遇到的例子">一个我遇到的例子</h1>
 <p>这个博客在服务器上的地址是“/data/www/hexo”，我使用nginx代理静态文件，设置路由“/”到“/data/www/hexo”。</p>
 <p>后来我写了一个js小游戏（详见<a
-target="_blank" rel="noopener" href="https://cyrus28214/post/068582ed9a63/">我用JavaScript写了一个小游戏！</a>）。放在“/data/www/js-game”，我想要让用户访问“/js-game”时路由到“/data/www/js-game”。我没有直接拷贝“js-game”到hexo目录下，因为这会造成二者同时进行git版本控制的困难。</p>
+href="https://cyrus28214.top/post/068582ed9a63/">我用JavaScript写了一个小游戏！</a>）。放在“/data/www/js-game”，我想要让用户访问“/js-game”时路由到“/data/www/js-game”。我没有直接拷贝“js-game”到hexo目录下，因为这会造成二者同时进行git版本控制的困难。</p>
 <p>于是我使用软链接将“hexo/js-game”链接到“../js-game”，轻松解决。</p>
 <h1 id="参考文章">参考文章</h1>
 <p><a

@@ -27,7 +27,7 @@
 <meta property="og:description" content="前言 最近开始正式学习CTF了，准备先打一打校巴上比较简单的题，遇到什么不懂的再去学习。慢慢提升自己的水平。 这是我的第一道Reverse。 题目 题目给了一个二进制可执行程序，执行这个程序，会显示“Please input flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-09T06:59:56.000Z">
-<meta property="article:modified_time" content="2023-12-04T14:59:04.305Z">
+<meta property="article:modified_time" content="2023-12-04T15:05:20.566Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="题解">
@@ -271,10 +271,10 @@
 flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。</p>
 <span id="more"></span>
 <p><img
-src="https://cyrus28214/images/s/652396d9c458853aef40ab58.jpg" /></p>
+src="https://cyrus28214.top/images/s/652396d9c458853aef40ab58.jpg" /></p>
 <p>使用Ollydbg打开这个程序，找到以下这段需要逆向分析的主要内容</p>
 <p><img
-src="https://cyrus28214/images/s/6523978ec458853aef40ef58.jpg" /></p>
+src="https://cyrus28214.top/images/s/6523978ec458853aef40ef58.jpg" /></p>
 <p>在这段代码之前，还有一系列的赋值操作，以ASCII的形式读取，可以获得
 “MMMwjau`S]]S}ybS?4:;5:&lt;4&lt;q”
 这串神秘的字符串，猜测与flag的值有关。</p>
@@ -296,7 +296,7 @@ src="https://cyrus28214/images/s/6523978ec458853aef40ef58.jpg" /></p>
 。从Ollydbg的堆栈区中可以查看到 ESP 指向 0061FF20 ， ESP+14 也就是
 0061FF34 ， EDX 储存的是读取到的字符串地址。</p>
 <p><img
-src="https://cyrus28214/images/s/65239cd9c458853aef432456.jpg" /></p>
+src="https://cyrus28214.top/images/s/65239cd9c458853aef432456.jpg" /></p>
 <p><code>MOV EAX,DWORD PTR SS:[ESP+4C]</code>，其中 ESP+4C
 就是刚刚初始化为0的循环变量地址。这句就是把循环变量取出来放到<code>EAX</code>里。</p>
 <p>然后 ADD EAX,EDX ，根据我们刚才的分析， EDX
