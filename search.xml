@@ -3580,11 +3580,48 @@ href="https://docs.python.org/3/glossary.html#term-argument">参数解包语法<
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>]]) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.flatten()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = a.ravel()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>],</span><br><span class="line">       [<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line">array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c</span><br><span class="line">array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">2</span>] = <span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">4</span>],</span><br><span class="line">       [<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c[<span class="number">2</span>] = <span class="number">0</span> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">       [<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>]])</span><br></pre></td></tr></table></figure>
 <h2 id="保存和读取numpy数组">保存和读取NumPy数组</h2>
 <p>有多种方法保存NumPy数组</p>
-<p>|函数|含义|后缀名|读取|
-|<code>np.save()</code>|保存单个数组|<code>.npy</code>|<code>np.load()</code>|
-|<code>np.savez()</code>|在一个文件中保存多个数组|<code>.npz</code>|<code>np.load()</code>|
-|<code>np.savez_compressed()</code>|和上一个一样，但是有压缩，生成的文件体积更小|<code>.npz</code>|<code>np.load()</code>|
-|<code>np.savetxt()</code>|用文本形式保存，便于共享，但速度和体积都不如上面三个|<code>.csv</code>或<code>.txt</code>|<code>np.loadtxt()</code>|</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>含义</th>
+<th>后缀名</th>
+<th>读取</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>np.save()</code></td>
+<td>保存单个数组</td>
+<td><code>.npy</code></td>
+<td><code>np.load()</code></td>
+</tr>
+<tr class="even">
+<td><code>np.savez()</code></td>
+<td>在一个文件中保存多个数组</td>
+<td><code>.npz</code></td>
+<td><code>np.load()</code></td>
+</tr>
+<tr class="odd">
+<td><code>np.savez_compressed()</code></td>
+<td>和上一个一样，但是有压缩，生成的文件体积更小</td>
+<td><code>.npz</code></td>
+<td><code>np.load()</code></td>
+</tr>
+<tr class="even">
+<td><code>np.savetxt()</code></td>
+<td>用文本形式保存，便于共享，但速度和体积都不如上面三个</td>
+<td><code>.csv</code>或<code>.txt</code></td>
+<td><code>np.loadtxt()</code></td>
+</tr>
+</tbody>
+</table>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([<span class="number">0.08451327</span>, <span class="number">0.75102915</span>, <span class="number">0.94578432</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line">array([[<span class="number">0.80930188</span>, <span class="number">0.38539336</span>],</span><br><span class="line">       [<span class="number">0.5628236</span> , <span class="number">0.22558801</span>],</span><br><span class="line">       [<span class="number">0.25427619</span>, <span class="number">0.52475443</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.save(<span class="string">&#x27;file1&#x27;</span>, a) <span class="comment"># 保存到文件“file1.npy”</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.load(<span class="string">&#x27;file1.npy&#x27;</span>)</span><br><span class="line">array([<span class="number">0.08451327</span>, <span class="number">0.75102915</span>, <span class="number">0.94578432</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.savez(<span class="string">&#x27;file2&#x27;</span>, apple=a, banana=b) <span class="comment"># 保存多个数组，并添加标识“apple”和“banana”</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data = np.load(<span class="string">&#x27;file2.npz&#x27;</span>) <span class="comment"># 保存到文件“file2.npz”</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data[<span class="string">&#x27;apple&#x27;</span>]</span><br><span class="line">array([<span class="number">0.08451327</span>, <span class="number">0.75102915</span>, <span class="number">0.94578432</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data[<span class="string">&#x27;banana&#x27;</span>]</span><br><span class="line">array([[<span class="number">0.80930188</span>, <span class="number">0.38539336</span>],</span><br><span class="line">       [<span class="number">0.5628236</span> , <span class="number">0.22558801</span>],</span><br><span class="line">       [<span class="number">0.25427619</span>, <span class="number">0.52475443</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.savetxt(<span class="string">&#x27;file3.csv&#x27;</span>, a) <span class="comment"># 保存到文件“file3.csv”</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.loadtxt(<span class="string">&#x27;file3.csv&#x27;</span>) </span><br><span class="line">array([<span class="number">0.08451327</span>, <span class="number">0.75102915</span>, <span class="number">0.94578432</span>])</span><br></pre></td></tr></table></figure>
 <h2 id="使用numpy进行线性代数计算">使用NumPy进行线性代数计算</h2>
 <p>用NumPy处理线性代数的矩阵可以使用NumPy中的矩阵库<code>numpy.matlib</code>，这个库里面有所有<code>numpy</code>命名空间里面的函数，但是换成了矩阵版本的。</p>
