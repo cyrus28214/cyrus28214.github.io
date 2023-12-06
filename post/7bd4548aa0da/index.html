@@ -27,7 +27,7 @@
 <meta property="og:description" content="费马小定理 定义 若 \(p\) 是素数，且 \(\gcd(a,p) &#x3D; 1\) ，则 \[a^{p-1} \equiv 1 \pmod{p}\] 另一种形式：若 \(p\) 是素数，则 \[a^p \equiv a \pmod{p}\]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-11T11:54:16.000Z">
-<meta property="article:modified_time" content="2023-11-24T14:45:13.997Z">
+<meta property="article:modified_time" content="2023-12-04T16:58:00.781Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="数论">
@@ -141,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">欧拉定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-1"><span class="nav-number">3.2.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">拓展欧拉定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-2"><span class="nav-number">4.2.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">2.2.</span> <span class="nav-text">性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">欧拉定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-1"><span class="nav-number">3.2.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">拓展欧拉定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-2"><span class="nav-number">4.2.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -156,13 +156,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -192,6 +192,9 @@
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -261,15 +264,15 @@
     
     
     <div class="post-body" itemprop="articleBody"><!-- TODO:引用RSA的博客 -->
-<h1 id="费马小定理">费马小定理</h1>
-<h2 id="定义">定义</h2>
+<h2 id="费马小定理">费马小定理</h2>
+<h3 id="定义">定义</h3>
 <p>若 <span class="math inline">\(p\)</span> 是素数，且 <span
 class="math inline">\(\gcd(a,p) = 1\)</span> ，则 <span
 class="math display">\[a^{p-1} \equiv 1 \pmod{p}\]</span></p>
 <p>另一种形式：若 <span class="math inline">\(p\)</span> 是素数，则
 <span class="math display">\[a^p \equiv a \pmod{p}\]</span></p>
 <span id="more"></span>
-<h2 id="证明">证明</h2>
+<h3 id="证明">证明</h3>
 <p>构造集合 <span class="math inline">\(A=\{1,2,\dots,p-1\}\)</span>
 ，将集合中每一个数都乘以 <span class="math inline">\(a\)</span> 再模
 <span class="math inline">\(p\)</span> ，即 <span
@@ -292,13 +295,13 @@ class="math inline">\(A\)</span> 一样。</p>
 \]</span> 因为 <span class="math inline">\((p-1)!\)</span> 与 <span
 class="math inline">\(p\)</span> 互质，可以两边都除以 <span
 class="math inline">\((p-1)!\)</span> 即得证。</p>
-<h1 id="欧拉函数">欧拉函数</h1>
+<h2 id="欧拉函数">欧拉函数</h2>
 <p>在学习欧拉定理之前，需要先了解欧拉函数（欧拉，怎么到处都是你？）</p>
-<h2 id="定义-1">定义</h2>
+<h3 id="定义-1">定义</h3>
 <p>欧拉函数 <span class="math inline">\(\varphi(n)\)</span> 表示所有小于
 <span class="math inline">\(n\)</span> 的数中与 <span
 class="math inline">\(n\)</span> 互质的数的个数。</p>
-<h2 id="性质">性质</h2>
+<h3 id="性质">性质</h3>
 <p>对于质数 <span class="math inline">\(p\)</span> ，由定义立即有 <span
 class="math inline">\(\varphi(p) = p-1\)</span></p>
 <p>欧拉函数是积性函数，这意味着若 <span
@@ -306,13 +309,13 @@ class="math inline">\(\gcd(a,b)=1\)</span> 有 <span
 class="math inline">\(\varphi(a\times b) =
 \varphi(a)\times\varphi(b)\)</span></p>
 <p>还有很多有趣的性质，感兴趣可以自行了解。</p>
-<h1 id="欧拉定理">欧拉定理</h1>
-<h2 id="定义-2">定义</h2>
+<h2 id="欧拉定理">欧拉定理</h2>
+<h3 id="定义-2">定义</h3>
 <p>若 <span class="math inline">\(\gcd(a,m)=1\)</span> ，则 <span
 class="math display">\[a^{\varphi(m)}\equiv1\pmod{m}\]</span></p>
 <p>不难发现欧拉定理是费马小定理的推广，费马小定理是欧拉定理当 <span
 class="math inline">\(m\)</span> 为质数的特例。</p>
-<h2 id="证明-1">证明</h2>
+<h3 id="证明-1">证明</h3>
 <p>欧拉定理的证明也和费马小定理的证明很像，考虑所有小于 <span
 class="math inline">\(m\)</span> 与 <span
 class="math inline">\(m\)</span> 互质的数的集合 <span
@@ -331,7 +334,7 @@ class="math inline">\(m\)</span> 互质的数的集合。所以</p>
 class="math display">\[\prod_{i=1}^{\varphi(m)}i\equiv\prod_{i=1}^{\varphi(m)}ai\pmod{m}\]</span>
 <span class="math display">\[a^{\varphi(m)}\equiv1\pmod{m}\]</span></p>
 <p><em>拓展学习：群论中的拉格朗日定理</em></p>
-<h2 id="应用">应用</h2>
+<h3 id="应用">应用</h3>
 <p>由 <span class="math inline">\(a^{\varphi(m)}\equiv1\pmod{m}\)</span>
 可以得到 <span class="math display">\[a^n\equiv
 a^{n\bmod\varphi(m)}\pmod{m} \]</span></p>
@@ -348,11 +351,11 @@ a^{n\bmod\varphi(m)}\pmod{m} \]</span></p>
 <ul>
 <li>欧拉定理还可以应用到RSA加密算法中</li>
 </ul>
-<h1 id="拓展欧拉定理">拓展欧拉定理</h1>
+<h2 id="拓展欧拉定理">拓展欧拉定理</h2>
 <p>刚刚的欧拉定理好是好，就是有一个条件 <span
 class="math inline">\(\gcd(a,m)=1\)</span>
 假如不满足这个条件，可以吗？</p>
-<h2 id="定义-3">定义</h2>
+<h3 id="定义-3">定义</h3>
 <p>扩展欧拉定理：</p>
 <p><span class="math display">\[
 a^n\equiv
@@ -369,10 +372,10 @@ class="math inline">\(a,m\)</span> 不互质且 <span
 class="math inline">\(n\)</span>
 足够大，可以降幂，但是需要在指数上多加一个 <span
 class="math inline">\(\varphi(m)\)</span></p>
-<h2 id="证明-2">证明</h2>
+<h3 id="证明-2">证明</h3>
 <p>扩展欧拉定理的证明相对就没有其他两个定理简单了，所以我<span
 style="color:grey;font-size:0.75em">咕咕咕</span>了</p>
-<h1 id="参考链接">参考链接</h1>
+<h2 id="参考链接">参考链接</h2>
 <p><a
 target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86">https://zh.wikipedia.org/zh-hans/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86</a></p>
 <p><a

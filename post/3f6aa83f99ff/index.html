@@ -27,10 +27,9 @@
 <meta property="og:description" content="在命令行里键入以下命令： 1sqlite3 如果你按照上一个章节中那样配置好了环境，应该可以看到以下输出。 123# SQLite version 3.43.1 2023-09-11 12:01:27# Enter &quot;.help&quot; for usage hints.# sqlite&gt; 看到输入提示符变成“sqlite&gt;”，我们就进入了sqlite的命令行。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-02T06:29:55.000Z">
-<meta property="article:modified_time" content="2023-12-04T15:05:20.565Z">
+<meta property="article:modified_time" content="2023-12-04T16:01:46.686Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="系列">
-<meta property="article:tag" content="技术">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="SQL学习笔记">
@@ -146,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">基本语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">查看表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">打开数据库</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">基本语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">查看表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">打开数据库</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +196,9 @@
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -266,11 +268,11 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>在命令行里键入以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite3</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite3</span><br></pre></td></tr></table></figure>
 <p>如果你按照上一个章节中那样配置好了环境，应该可以看到以下输出。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SQLite version 3.43.1 2023-09-11 12:01:27</span></span><br><span class="line"><span class="comment"># Enter &quot;.help&quot; for usage hints.</span></span><br><span class="line"><span class="comment"># sqlite&gt;</span></span><br></pre></td></tr></table></figure>
 <p>看到输入提示符变成“sqlite&gt;”，我们就进入了sqlite的命令行。</p>
-<h1 id="基本语句">基本语句</h1>
+<h2 id="基本语句">基本语句</h2>
 <p>数据库有四个基本操作<span style="color:#DC143C">CRUD</span>，即<span
 style="color:#DC143C">C</span>reate增、<span
 style="color:#DC143C">R</span>ead查、<span
@@ -283,7 +285,7 @@ style="color:#DC143C">D</span>elete删，在SQL中分别对应以下语句。</p
 <li>删：DELETE, DROP</li>
 </ul>
 <span id="more"></span>
-<h2 id="创建一个表">创建一个表</h2>
+<h3 id="创建一个表">创建一个表</h3>
 <p>使用以下命令来创建一个表，注意所有的SQL语句末尾都要有分号。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (<span class="string">&#x27;列名&#x27;</span> 数据类型, ...);</span><br></pre></td></tr></table></figure>
 <p><em>不同的数据库可能对相同的类型有不同的名称、不同的长度、数据范围</em>
@@ -328,7 +330,7 @@ Values，逗号分隔的值的缩写）</p>
 <p>将sqlite切换为csv模式并导入这个.csv文件。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.mode csv</span><br><span class="line">.import books.csv books</span><br></pre></td></tr></table></figure>
 <p><em>所有以逗号开头的命令都不属于SQL，而是SQLite的语法</em></p>
-<h2 id="查看表">查看表</h2>
+<h3 id="查看表">查看表</h3>
 <p>这样可以查看有哪些表，每个表有哪些字段：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.schema</span><br></pre></td></tr></table></figure>
 <p>这样查看表的内容：</p>
@@ -339,7 +341,7 @@ Values，逗号分隔的值的缩写）</p>
 <p>可以看到输出了刚刚导入的表格</p>
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────────────────────┬───────┬───────┬─────────────────┐</span><br><span class="line">│                 title                 │ price │ sales │    category     │</span><br><span class="line">├───────────────────────────────────────┼───────┼───────┼─────────────────┤</span><br><span class="line">│ The Great Gatsby                      │ 50.99 │ 4     │ Fiction         │</span><br><span class="line">│ To Kill a Mockingbird                 │ 25.99 │ 3     │ Fiction         │</span><br><span class="line">│ Pride and Prejudice                   │ 40.99 │ 2     │ Fiction         │</span><br><span class="line">│ 1984                                  │ 35.99 │ 1     │ Science Fiction │</span><br><span class="line">│ The Catcher in the Rye                │ 60.99 │ 5     │ Fiction         │</span><br><span class="line">│ Animal Farm                           │ 30.5  │ 2     │ Fiction         │</span><br><span class="line">│ The Hobbit                            │ 45.0  │ 4     │ Fantasy         │</span><br><span class="line">│ The Lord of the Rings                 │ 55.99 │ 3     │ Fantasy         │</span><br><span class="line">│ Harry Potter and the Sorcerer&#x27;s Stone │ 20.0  │ 1     │ Fantasy         │</span><br><span class="line">│ The Chronicles of Narnia              │ 15.98 │ 5     │ Fantasy         │</span><br><span class="line">│ Moby Dick                             │ 45.99 │ 3     │ Fiction         │</span><br><span class="line">│ The Odyssey                           │ 30.99 │ 2     │ Classic         │</span><br><span class="line">│ To the Lighthouse                     │ 40.0  │ 4     │ Classic         │</span><br><span class="line">│ The Adventures of Tom Sawyer          │ 25.1  │ 2     │ Classic         │</span><br><span class="line">│ War and Peace                         │ 50.99 │ 4     │ Classic         │</span><br><span class="line">│ Crime and Punishment                  │ 35.99 │ 1     │ Classic         │</span><br><span class="line">│ The Alchemist                         │ 55.99 │ 2     │ Fiction         │</span><br><span class="line">│ Fahrenheit 451                        │ 20.99 │ 4     │ Science Fiction │</span><br><span class="line">│ The Picture of Dorian Gray            │ 15.98 │ 5     │ Classic         │</span><br><span class="line">│ Brave New World                       │ 60.3  │ 3     │ Science Fiction │</span><br><span class="line">└───────────────────────────────────────┴───────┴───────┴─────────────────┘</span><br></pre></td></tr></table></figure>
 <p>当然，不一定要选择所有的列，如果输入<code>SELECT name FROM books;</code>就只会显示所有的书名。试一试吧！</p>
-<h1 id="打开数据库">打开数据库</h1>
+<h2 id="打开数据库">打开数据库</h2>
 <p>输入<code>.quit</code>退出SQLite。</p>
 <p>你会发现，SQLite为你在目录下自动创建了一个名为“books.db”的文件。</p>
 <p>下一次打开数据库只需要输入<code>sqlite3 books.db</code>即可恢复原来的数据。</p>
@@ -355,7 +357,6 @@ href="https://cyrus28214.top/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
               <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
               <a href="/tags/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SQL学习笔记</a>

@@ -27,10 +27,9 @@
 <meta property="og:description" content="INSERT 1INSERT INTO 表名 (列名, ...) VALUES (值, ...); 这样可以插入新的数据，例如插入一本新书“A Wrinkle in Time”。 1INSERT INTO books (title, price, sales, category) VALUES (&amp;#x27;A Wrinkle in Time&amp;#x27;,23.99,1,&amp;#x27;Fant">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-06T05:28:26.000Z">
-<meta property="article:modified_time" content="2023-12-04T15:05:20.565Z">
+<meta property="article:modified_time" content="2023-12-04T16:21:44.484Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="系列">
-<meta property="article:tag" content="技术">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="SQL学习笔记">
@@ -146,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#insert"><span class="nav-number">1.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update"><span class="nav-number">2.</span> <span class="nav-text">UPDATE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#delete"><span class="nav-number">3.</span> <span class="nav-text">DELETE</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#insert"><span class="nav-number">1.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#update"><span class="nav-number">2.</span> <span class="nav-text">UPDATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete"><span class="nav-number">3.</span> <span class="nav-text">DELETE</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +196,9 @@
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -265,20 +267,20 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="insert">INSERT</h1>
+    <div class="post-body" itemprop="articleBody"><h2 id="insert">INSERT</h2>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 (列名, ...) <span class="keyword">VALUES</span> (值, ...);</span><br></pre></td></tr></table></figure>
 <p>这样可以插入新的数据，例如插入一本新书“A Wrinkle in Time”。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> books (title, price, sales, category) <span class="keyword">VALUES</span> (<span class="string">&#x27;A Wrinkle in Time&#x27;</span>,<span class="number">23.99</span>,<span class="number">1</span>,<span class="string">&#x27;Fantasy&#x27;</span>);</span><br></pre></td></tr></table></figure>
 <p>键入<code>SELECT * FROM books;</code>可以看到已经成功地插入了新的书。</p>
 <span id="more"></span>
-<h1 id="update">UPDATE</h1>
+<h2 id="update">UPDATE</h2>
 <p>用<code>UPDATE</code>将所有“Science
 Fiction”分类改名为“Sci-fi”可以这样写：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> books <span class="keyword">SET</span> category <span class="operator">=</span> <span class="string">&#x27;Sci-fi&#x27;</span> <span class="keyword">WHERE</span> category <span class="operator">=</span> <span class="string">&#x27;Science Fiction&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <p>这是我们接触到的第一个“破坏性”的命令，所以键入命令时请double
 check一下，确认这就是你想要的，<strong>避免造成严重的后果</strong>
 。实际的项目中一般有权限控制、备份、生产环境隔离等方法来避免这种悲剧的发生，但是养成这个好习惯也很重要。</p>
-<h1 id="delete">DELETE</h1>
+<h2 id="delete">DELETE</h2>
 <p>这个命令比<code>UPDATE</code>更加危险，因此请确保你所写下的命令，就是你想要的，不要漏掉任何条件语句如<code>WHERE</code>。</p>
 <p>下面的命令可以删除所有销量不高于2的书：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> books <span class="keyword">WHERE</span> sales <span class="operator">&lt;=</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
@@ -296,7 +298,6 @@ href="https://cyrus28214.top/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
               <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
               <a href="/tags/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SQL学习笔记</a>

@@ -27,7 +27,7 @@
 <meta property="og:description" content="简介 本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。 明文储存 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-18T15:19:27.000Z">
-<meta property="article:modified_time" content="2023-12-04T15:05:20.566Z">
+<meta property="article:modified_time" content="2023-12-04T16:51:53.374Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="信息安全">
 <meta property="article:tag" content="密码学">
@@ -142,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%98%8E%E6%96%87%E5%82%A8%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">明文储存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%82%A8%E5%AD%98%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">储存哈希值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%A9%E8%99%B9%E8%A1%A8%E6%94%BB%E5%87%BBrainbow-attack"><span class="nav-number">4.</span> <span class="nav-text">彩虹表攻击（Rainbow Attack）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E7%9B%90"><span class="nav-number">5.</span> <span class="nav-text">密码加盐</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%8E%E6%96%87%E5%82%A8%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">明文储存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%A8%E5%AD%98%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">储存哈希值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A9%E8%99%B9%E8%A1%A8%E6%94%BB%E5%87%BBrainbow-attack"><span class="nav-number">4.</span> <span class="nav-text">彩虹表攻击（Rainbow Attack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E7%9B%90"><span class="nav-number">5.</span> <span class="nav-text">密码加盐</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -157,13 +157,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -193,6 +193,9 @@
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -261,16 +264,16 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="简介">简介</h1>
+    <div class="post-body" itemprop="articleBody"><h2 id="简介">简介</h2>
 <p>本文将从攻防两方的视角出发，简单讲解在数据库中储存密码的正确方法。</p>
-<h1 id="明文储存">明文储存</h1>
+<h2 id="明文储存">明文储存</h2>
 <p>我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？</p>
 <p><img
 src="https://cyrus28214.top/images/s/652d49c3c458853aef4021ad.jpg" /></p>
 <span id="more"></span>
 <p>有两种可能，攻击者可能可以在密码传递的过程中截取密码（假如传递的过程没有其他的保护），或者数据库泄露给了攻击者。</p>
 <p>如果整个数据库都泄露了（拖库），情况非常糟糕，因为你的所有用户的密码都泄露了，你的所有用户数据都被开放给了攻击者，所有用户的身份认证都失效了！</p>
-<h1 id="储存哈希值">储存哈希值</h1>
+<h2 id="储存哈希值">储存哈希值</h2>
 <p>为了避免这一点，我们可以不储存明文密码，而是储存密码的哈希值<span
 class="math inline">\(Hash(\text{Password})\)</span>。</p>
 <p>一个理想的哈希加密函数需要满足这些条件：</p>
@@ -311,7 +314,7 @@ Collision），这怎么办呢？</p>
 <span class="math inline">\(\frac{1}{10^{100}}\)</span>
 ，攻击者想要暴力枚举试出密码就是困难的。</p>
 <p>常见的哈希加密函数有：md5、SHA-1、SHA-2、SHA-3等。一些加密算法由于时代的发展，被破解的速度越来越快，因而变得越来越不安全，如md5。但md5因为计算速度快，仍然在数据完整性检查中广泛应用。目前，SHA-2因为计算速度较快，安全性也较高，被广泛使用。</p>
-<h1 id="彩虹表攻击rainbow-attack">彩虹表攻击（Rainbow Attack）</h1>
+<h2 id="彩虹表攻击rainbow-attack">彩虹表攻击（Rainbow Attack）</h2>
 <p>攻击者可以构造一个巨大的弱密码的哈希值的集合，称作彩虹表，然后用彩虹表比对数据库中的哈希值，一旦发现相同，就成功破解了密码。</p>
 <p><span class="math display">\[
 Rainbow=\left[
@@ -324,7 +327,7 @@ Rainbow=\left[
     \cdots
 \end{array}\right]
 \]</span></p>
-<h1 id="密码加盐">密码加盐</h1>
+<h2 id="密码加盐">密码加盐</h2>
 <p>但是彩虹表攻击可以通过给密码加盐轻松解决，我们为每一个密码都生成一个随机数，称作“盐”，然后将盐储存到单独的表中。储存密码时，我们储存
 <span class="math inline">\(Hash(\text{Password} + \text{salt})\)</span>
 （这里的加不一定是简单的字符串连接，可以是间隔插入、打乱插入等）。盐是不需要保密的，即使攻击者知道了盐的内容，也无法破解密码。<strong>加盐的操作可以轻松使攻击者的彩虹表失效，因为彩虹表是针对弱密码进行的，加了盐之后相当于密码都变成强密码了。</strong></p>

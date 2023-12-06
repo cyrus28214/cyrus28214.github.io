@@ -27,10 +27,9 @@
 <meta property="og:description" content="准备 为了介绍 主键（Primary Keys） 与外键 （Foreign Keys） ，我们再新建一个数据库。 1234sqlite3 movies.db# SQLite version 3.43.1 2023-09-11 12:01:27# Enter &quot;.help&quot; for usage hints.# sqlite&gt; 假如movies.db不存在，SQLit">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-07T06:22:34.000Z">
-<meta property="article:modified_time" content="2023-12-04T15:05:20.566Z">
+<meta property="article:modified_time" content="2023-12-04T16:31:19.176Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="系列">
-<meta property="article:tag" content="技术">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="SQL学习笔记">
@@ -146,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE%E5%92%8C%E5%A4%96%E9%94%AE"><span class="nav-number">2.</span> <span class="nav-text">主键和外键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#join"><span class="nav-number">3.</span> <span class="nav-text">JOIN</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%94%AE%E5%92%8C%E5%A4%96%E9%94%AE"><span class="nav-number">2.</span> <span class="nav-text">主键和外键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#join"><span class="nav-number">3.</span> <span class="nav-text">JOIN</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +196,9 @@
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -265,7 +267,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="准备">准备</h1>
+    <div class="post-body" itemprop="articleBody"><h2 id="准备">准备</h2>
 <p>为了介绍 <strong>主键（Primary Keys）</strong> 与外键
 <strong>（Foreign Keys）</strong> ，我们再新建一个数据库。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sqlite3 movies.db</span><br><span class="line"><span class="comment"># SQLite version 3.43.1 2023-09-11 12:01:27</span></span><br><span class="line"><span class="comment"># Enter &quot;.help&quot; for usage hints.</span></span><br><span class="line"><span class="comment"># sqlite&gt;</span></span><br></pre></td></tr></table></figure>
@@ -282,12 +284,12 @@
 href="https://cyrus28214.top/files/SQLdata.zip">下载这三个文件</a></p>
 <p>创建三个相应的表格，并载入数据：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> movies (</span><br><span class="line">  <span class="string">&#x27;id&#x27;</span> <span class="type">INTEGER</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">  <span class="string">&#x27;title&#x27;</span> TEXT</span><br><span class="line">);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> stars (</span><br><span class="line">  <span class="string">&#x27;id&#x27;</span> <span class="type">INTEGER</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">  <span class="string">&#x27;name&#x27;</span> TEXT</span><br><span class="line">);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> movies_stars (</span><br><span class="line">  <span class="string">&#x27;movie_id&#x27;</span> <span class="type">INTEGER</span>,</span><br><span class="line">  <span class="string">&#x27;star_id&#x27;</span> <span class="type">INTEGER</span>,</span><br><span class="line">  <span class="keyword">FOREIGN</span> KEY(<span class="string">&#x27;movie_id&#x27;</span>) <span class="keyword">REFERENCES</span> movies(<span class="string">&#x27;id&#x27;</span>),</span><br><span class="line">  <span class="keyword">FOREIGN</span> KEY(<span class="string">&#x27;star_id&#x27;</span>) <span class="keyword">REFERENCES</span> stars(<span class="string">&#x27;id&#x27;</span>)</span><br><span class="line">);</span><br><span class="line">.mode csv</span><br><span class="line">.import movies.csv movies</span><br><span class="line">.import stars.csv stars</span><br><span class="line">.import movies_stars.csv movies_stars</span><br><span class="line">.mode box</span><br></pre></td></tr></table></figure>
-<h1 id="主键和外键">主键和外键</h1>
+<h2 id="主键和外键">主键和外键</h2>
 <p>我们这次的数据里，每个电影都对应了多名主演，而每个演员也可能出演多部电影，所以我们使用一张movies_stars表格来记录电影和主演之间的关系，而不是直接放在同一个表格的另一列中。</p>
 <p>主键是一种约束，一个表只能有一列主键，每个主键唯一，且不可以为空。<code>'id' INTEGER PRIMARY KEY</code>会将id设置为主键。</p>
 <p>外键可以连接其他的表的主键，设置外键的约束可以防止插入外部表中不存在的主键。按以下格式：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> movies_stars (</span><br><span class="line">  ......,</span><br><span class="line">  <span class="keyword">FOREIGN</span> KEY(外键) <span class="keyword">REFERENCES</span> 外部表(外部表的主键)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h1 id="join">JOIN</h1>
+<h2 id="join">JOIN</h2>
 <p>查看movies_stars，发现它实际上只有两列数字id，如果我们想看看这些数字id代表那哪电影或哪名演员，就要使用<code>JOIN</code>合并两张表。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名, ... <span class="keyword">FROM</span> 表<span class="number">1</span> <span class="keyword">JOIN</span> 表<span class="number">2</span> <span class="keyword">ON</span> 条件;</span><br></pre></td></tr></table></figure>
 <p>按照上面的格式，有：</p>
@@ -314,7 +316,6 @@ href="https://cyrus28214.top/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
               <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
               <a href="/tags/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SQL学习笔记</a>

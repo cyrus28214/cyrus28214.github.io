@@ -27,10 +27,9 @@
 <meta property="og:description" content="简介 通常，一个程序的内存布局包括以下部分  代码段 初始化数据段 未初始化数据段（bss） 堆 栈  它们的位置如图所示">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-30T08:01:24.000Z">
-<meta property="article:modified_time" content="2023-12-04T15:05:20.564Z">
+<meta property="article:modified_time" content="2023-12-04T15:39:29.031Z">
 <meta property="article:author" content="Cyrus28214">
 <meta property="article:tag" content="C&#x2F;C++">
-<meta property="article:tag" content="技术">
 <meta property="article:tag" content="图解">
 <meta property="article:tag" content="内存">
 <meta name="twitter:card" content="summary">
@@ -143,9 +142,9 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5textcode-segment"><span class="nav-number">2.</span> <span class="nav-text">代码段（Text&#x2F;Code Segment）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">数据段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.1.</span> <span class="nav-text">初始化数据段（Initialized
-Data Segment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.2.</span> <span class="nav-text">未初始化数据段（Initialized
-Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88stack"><span class="nav-number">4.</span> <span class="nav-text">栈（Stack）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A0%86heap"><span class="nav-number">5.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">6.1.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">6.2.</span> <span class="nav-text">静态变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F"><span class="nav-number">6.3.</span> <span class="nav-text">初始化的变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">6.4.</span> <span class="nav-text">局部变量</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5textcode-segment"><span class="nav-number">2.</span> <span class="nav-text">代码段（Text&#x2F;Code Segment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">数据段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.1.</span> <span class="nav-text">初始化数据段（Initialized
+Data Segment）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.2.</span> <span class="nav-text">未初始化数据段（Initialized
+Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88stack"><span class="nav-number">4.</span> <span class="nav-text">栈（Stack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86heap"><span class="nav-number">5.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">6.1.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">6.2.</span> <span class="nav-text">静态变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F"><span class="nav-number">6.3.</span> <span class="nav-text">初始化的变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">6.4.</span> <span class="nav-text">局部变量</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -160,13 +159,13 @@ Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-1"><a cla
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -196,6 +195,9 @@ Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-1"><a cla
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
             </li>
         </ul>
       </div>
@@ -264,7 +266,7 @@ Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-1"><a cla
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="简介">简介</h1>
+    <div class="post-body" itemprop="articleBody"><h2 id="简介">简介</h2>
 <p>通常，一个程序的内存布局包括以下部分</p>
 <ol type="1">
 <li>代码段</li>
@@ -277,22 +279,22 @@ Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-1"><a cla
 <p><img
 src="https://cyrus28214.top/images/s/6516efb5c458853aef15f8fb.png" /></p>
 <span id="more"></span>
-<h1 id="代码段textcode-segment">代码段（Text/Code Segment）</h1>
+<h2 id="代码段textcode-segment">代码段（Text/Code Segment）</h2>
 <p>代码段就是程序代码编译后的机器码储存的位置，储存着计算机可执行的指令。</p>
 <p>代码段通常是<strong>只读</strong>的，防止程序在运行的时候意外修改到自身的代码。</p>
-<h1 id="数据段">数据段</h1>
+<h2 id="数据段">数据段</h2>
 <p>数据段只包含全局变量和静态变量，局部变量并不在这块区域里，而是在栈里。</p>
-<h2 id="初始化数据段initialized-data-segment">初始化数据段（Initialized
-Data Segment）</h2>
+<h3 id="初始化数据段initialized-data-segment">初始化数据段（Initialized
+Data Segment）</h3>
 <p>顾名思义，就是被程序员手动初始化的全局变量和静态变量。</p>
-<h2
+<h3
 id="未初始化数据段initialized-data-segment">未初始化数据段（Initialized
-Data Segment）</h2>
+Data Segment）</h3>
 <p>由于一些历史原因，也被叫做bss段，这个名字是“block started by
 symbol”的简称，感兴趣的可以在<a
 target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/.bss">wiki百科</a>（需要魔法）上了解。</p>
 <p>未初始化的全局变量和静态变量会被默认置0。</p>
-<h1 id="栈stack">栈（Stack）</h1>
+<h2 id="栈stack">栈（Stack）</h2>
 <p>开头的图中可以看出，栈区和堆区在程序运行的时候朝着不同的方向增长，当两个区域碰上的时候，程序的可分配内存就耗尽了，可能造成程序异常、崩溃等。</p>
 <p>假如向栈内写入了过多数据（如调用函数层数过多，函数使用的局部数据太大），就会造成栈溢出（Stack
 Overflow），使程序报错。有趣的是，那个世界著名的<a
@@ -318,27 +320,27 @@ src="https://cyrus28214.top/images/s/6517d488c458853aef49fffc.png" /></p>
 <p><code>times2</code>返回。</p>
 <p><img
 src="https://cyrus28214.top/images/s/6517d488c458853aef4a0006.png" /></p>
-<h1 id="堆heap">堆（Heap）</h1>
+<h2 id="堆heap">堆（Heap）</h2>
 <p>和栈不同的是，堆这个名字和数据结构的堆没有任何关系，他只是一个分配动态内存的空间，堆从bss段结尾开始，朝向栈的方向增长。在C语言中，使用<code>malloc</code>、<code>realloc</code>、<code>free</code>命令所管理的内存就是这块区域。</p>
 <hr />
-<h1 id="例子">例子</h1>
+<h2 id="例子">例子</h2>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example # 使用-c让编译器只编译不链接，这样用size看到的程序大小就只包括我们自己写的代码</span><br><span class="line">size example</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">     67       0       0      67      43 example</span></span><br></pre></td></tr></table></figure>
-<h2 id="全局变量">全局变量</h2>
+<h3 id="全局变量">全局变量</h3>
 <p>使用<code>gcc</code>编译后，可以用<code>size</code>命令查看可执行程序的内存布局，其中“text”就是代码段，“data”就是已初始化数据段，“bss”就是未初始化数据段，“dec”是十进制下的程序总大小，“hex”是十六进制下的程序总大小。</p>
 <p>我们为程序增加一个全局变量，且不初始化它。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global;</span><br><span class="line"><span class="comment">/*一般来说，全局变量是不需要添加static的</span></span><br><span class="line"><span class="comment">这里添加static是为了让编译器知道这个变量定义在当前文件里，立即分配bss空间</span></span><br><span class="line"><span class="comment">而不是把他当做一个弱声明（weak declaration），在链接的时候再一起分配空间。</span></span><br><span class="line"><span class="comment">可以自己试一下如果不加static有什么不同，想想为什么。</span></span><br><span class="line"><span class="comment">如果无法理解可以先跳过，这不是本文的重点*/</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       4      71      47 example</span></span><br></pre></td></tr></table></figure>
 <p>可以看到bss字段大小增加了4个字节，恰好是一个int变量的大小。</p>
-<h2 id="静态变量">静态变量</h2>
+<h3 id="静态变量">静态变量</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> static_variable;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       8      75      4b example</span></span><br></pre></td></tr></table></figure>
 <p>添加一个变量后，bss又增加了4个字节</p>
-<h2 id="初始化的变量">初始化的变量</h2>
+<h3 id="初始化的变量">初始化的变量</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> static_variable;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       4       4      75      4b example</span></span><br></pre></td></tr></table></figure>
 <p>我们将<code>global</code>初始化为1，可以看到，现在<code>global</code>被放到了.data里而不是.bss里。对于静态变量<code>static_variable</code>，效果一样，就不展示了。</p>
-<h2 id="局部变量">局部变量</h2>
+<h3 id="局部变量">局部变量</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> local[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       0      67      43 example</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，局部变量既不在.data里，又不在.bss里，那么他在哪里呢，前文讲过，局部变量在<strong>栈</strong>里，当函数调用时动态分配空间，并不是编译时确定的。</p>
@@ -352,7 +354,6 @@ src="https://cyrus28214.top/images/s/6517d488c458853aef4a0006.png" /></p>
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/C-C/" rel="tag"># C/C++</a>
-              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
               <a href="/tags/%E5%9B%BE%E8%A7%A3/" rel="tag"># 图解</a>
               <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
           </div>
