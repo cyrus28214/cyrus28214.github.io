@@ -3701,4 +3701,335 @@ src="https://cyrus28214.top/images/np_matrix_broadcasting.png" /></p>
         <tag>NumPy</tag>
       </tags>
   </entry>
+  <entry>
+    <title>线性代数中的投影</title>
+    <url>/post/bb0633eb563b/</url>
+    <content><![CDATA[<h2 id="投影矩阵的推导">投影矩阵的推导</h2>
+<p>假设我们想把一个向量<span
+class="math inline">\(\boldsymbol{b}\)</span>投影到线性空间<span
+class="math inline">\(\mathcal{S}\)</span>中，应该怎么做呢。</p>
+<p>设投影后的向量为<span
+class="math inline">\(\boldsymbol{p}\)</span>，则有<span
+class="math inline">\(\boldsymbol{p}\in
+\mathcal{S}\)</span>，设误差向量（error vector）<span
+class="math inline">\(\boldsymbol{e}=\boldsymbol{b}-\boldsymbol{p}\)</span>，则<span
+class="math inline">\(\boldsymbol{e}\)</span>应与<span
+class="math inline">\(\mathcal{S}\)</span>正交。投影就是将向量分为两部分<span
+class="math inline">\(\boldsymbol{b}=\boldsymbol{p}+\boldsymbol{e}\)</span>，一部分在<span
+class="math inline">\(\mathcal{S}\)</span>中，另一部分与<span
+class="math inline">\(\mathcal{S}\)</span>正交，然后取其中的<span
+class="math inline">\(\boldsymbol{p}\)</span>。也可以用图像直观理解：</p>
+<p><img src="https://cyrus28214.top/images/Projection.png" /></p>
+<span id="more"></span>
+<p>要求得<span
+class="math inline">\(\boldsymbol{p}\)</span>，只需要将<span
+class="math inline">\(\boldsymbol{p}\in
+\mathcal{S}\;\mathrm{(1)}\)</span>和<span
+class="math inline">\(\boldsymbol{e}\perp
+\mathcal{S}\;\mathrm{(2)}\)</span>这两个条件翻译成线性代数的语言即可。</p>
+<p>首先，我们要先表达线性空间<span
+class="math inline">\(\mathcal{S}\)</span>，设<span
+class="math inline">\(\mathcal{S} \subset \mathbb{P}^m\)</span>，<span
+class="math inline">\(\mathrm{dim}\mathcal{S}=n\)</span>，取<span
+class="math inline">\(\mathcal{S}\)</span>的一组基，作为矩阵<span
+class="math inline">\(A_{m\times n}\)</span>的列向量，则<span
+class="math inline">\(\mathcal{S}\)</span>就是<span
+class="math inline">\(A\)</span>的列空间，<span
+class="math inline">\(\mathcal{S}=\mathrm{C}(A)\)</span>。</p>
+<ol type="1">
+<li>然后要翻译<span class="math inline">\(\boldsymbol{p}\in
+\mathcal{S}\)</span>，只需要令<span
+class="math inline">\(\boldsymbol{p}=A\hat{\boldsymbol{x}}\)</span>，其中<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>为<span
+class="math inline">\(\mathbb{P}^m\)</span>中的任意向量。</li>
+<li>翻译<span
+class="math inline">\(\boldsymbol{e}\perp\mathcal{S}\)</span>，就是<span
+class="math inline">\(\boldsymbol{e}\in\mathcal{S}^\perp=\mathrm{C}(A)^\perp=\mathrm{N}(A^T)\)</span>，即<span
+class="math inline">\(A^T\boldsymbol{e}=0\)</span>。</li>
+</ol>
+<p>得到方程组 <span class="math display">\[\begin{cases}
+\boldsymbol{p}=A\hat{\boldsymbol{x}}\\
+A^T\boldsymbol{e}=0
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+A^T \boldsymbol{e} &amp;= 0 \\
+A^T(\boldsymbol{b}-A\hat{\boldsymbol{x}}) &amp;= 0 \\
+A^T \boldsymbol{b} &amp;= A^T A\hat{\boldsymbol{x}} \\
+\hat{\boldsymbol{x}} &amp;= (A^T A)^{-1}A^T\boldsymbol{b} \\
+\boldsymbol{p} &amp;= A(A^T A)^{-1}A^T\boldsymbol{b}
+\end{align*}
+\]</span></p>
+<p>令<span class="math inline">\(P=A(A^T A)^{-1}A^T\)</span>，称<span
+class="math inline">\(P\)</span>为<span
+class="math inline">\(\mathcal{S}\)</span>的<strong>投影矩阵（projection
+matrix）</strong>，则要将<span
+class="math inline">\(\boldsymbol{b}\)</span>投影至<span
+class="math inline">\(\mathcal{S}\)</span>，只需左乘<span
+class="math inline">\(P\)</span>即可，<span
+class="math inline">\(\boldsymbol{p}=P\boldsymbol{b}\)</span>。</p>
+<p>这里的<span class="math inline">\((A^T A)^{-1}\)</span>不能拆作<span
+class="math inline">\(A^{-1}(A^{-1})^T\)</span>，因为<span
+class="math inline">\(A\)</span>不一定为方阵，当<span
+class="math inline">\(n&lt;m\)</span>时，<span
+class="math inline">\(A\)</span>不可逆。当<span
+class="math inline">\(n=m\)</span>时，<span
+class="math inline">\(A\)</span>必定可逆，因为列向量线性无关，然而当<span
+class="math inline">\(n=m\)</span>时，投影的意义不大，易得<span
+class="math inline">\(P=I\)</span>，投影不会改变任何东西。而<span
+class="math inline">\((A^T
+A)^{-1}\)</span>一定是可逆的（想想为什么？）。</p>
+<hr />
+<h3 id="当a是向量时">当<span
+class="math inline">\(A\)</span>是向量时</h3>
+<p>当<span
+class="math inline">\(A\)</span>是向量而非矩阵时，一切都没有变，我们仍然有<span
+class="math inline">\(\boldsymbol{p}=\boldsymbol{a}(\boldsymbol{a}^T
+\boldsymbol{a})^{-1} \boldsymbol{a}^T
+\boldsymbol{b}\)</span>，不过现在<span
+class="math inline">\(\boldsymbol{a}^T
+\boldsymbol{a}\)</span>是一个标量了，也可以写作</p>
+<p><span class="math display">\[\boldsymbol{p}=\frac{\boldsymbol{a}^T
+\boldsymbol{b}}{\boldsymbol{a}^T
+\boldsymbol{a}}\boldsymbol{a}=\frac{\boldsymbol{a}\cdot
+\boldsymbol{b}}{\boldsymbol{a}\cdot
+\boldsymbol{a}}\boldsymbol{a}\]</span>
+这和我们常见的向量投影到另一个向量的形式是一致的。</p>
+<hr />
+<h2 id="投影矩阵的特性">投影矩阵的特性</h2>
+<h3 id="对称性">1. 对称性</h3>
+<p><span class="math inline">\(P^T=P\)</span></p>
+<h4 id="证明">证明</h4>
+<p><span class="math display">\[
+\begin{align*}
+P^T &amp;= (A(A^T A)^{-1}A^T)^T \\
+&amp;= A((A^T A)^{-1})^T A^T \\
+&amp;= A((A^T A)^T)^{-1} A^T \\
+&amp;= A(A^T A)^{-1}A^T \\
+&amp;= P
+\end{align*}\]</span></p>
+<h3 id="幂等性">2. 幂等性</h3>
+<p><span class="math inline">\(P^k=P\quad(k=1,2,\dots)\)</span></p>
+<p>直观理解，就是将<span
+class="math inline">\(\boldsymbol{b}\)</span>投影到<span
+class="math inline">\(\mathcal{S}\)</span>后，再投影一次，没有任何变化，因为<span
+class="math inline">\(\boldsymbol{p}\)</span>，已经在<span
+class="math inline">\(\mathcal{S}\)</span>里了。</p>
+<h4 id="证明-1">证明</h4>
+<p>要证原命题，只需证<span class="math inline">\(P^2=P\)</span></p>
+<p><span class="math display">\[
+\begin{align*}
+P^2 &amp;= (A(A^T A)^{-1}A^T)(A(A^T A)^{-1}A^T) \\
+&amp;= A(A^T A)^{-1}(A^T A)(A^T A)^{-1}A^T \\
+&amp;= A(A^T A)^{-1}A^T \\
+&amp;= P
+\end{align*}
+\]</span></p>
+<hr />
+<h2 id="两种极端情况">两种极端情况</h2>
+<h3 id="当boldsymbolbinmathcals有pboldsymbolbboldsymbolb">1. 当<span
+class="math inline">\(\boldsymbol{b}\in\mathcal{S}\)</span>，有<span
+class="math inline">\(P\boldsymbol{b}=\boldsymbol{b}\)</span></h3>
+<p>已经在<span
+class="math inline">\(\mathcal{S}\)</span>上的向量再投影到<span
+class="math inline">\(\mathcal{S}\)</span>不会变化</p>
+<h4 id="证明-2">证明</h4>
+<p>因为<span
+class="math inline">\(\boldsymbol{b}\in\mathrm{C}(A)\)</span>，则<span
+class="math inline">\(\exists\boldsymbol{x},\;s.t.\;\boldsymbol{b}=A\boldsymbol{x}\)</span>，有：</p>
+<p><span class="math display">\[
+\begin{align*}
+P\boldsymbol{b} &amp;= A(A^T A)^{-1}A^TA\boldsymbol{x} \\
+&amp;= A(A^T A)^{-1}(A^T A)\boldsymbol{x} \\
+&amp;= A\boldsymbol{x} \\
+&amp;= \boldsymbol{b}
+\end{align*}
+\]</span></p>
+<h3 id="当boldsymbolb-perp-mathcals有pboldsymbolb0">2. 当<span
+class="math inline">\(\boldsymbol{b} \perp \mathcal{S}\)</span>，有<span
+class="math inline">\(P\boldsymbol{b}=0\)</span></h3>
+<p>正交与<span
+class="math inline">\(\mathcal{S}\)</span>的向量，投影到<span
+class="math inline">\(\mathcal{S}\)</span>就只剩下一个点了</p>
+<h4 id="证明-3">证明</h4>
+<p><span class="math inline">\(\boldsymbol{b}\perp\mathrm{C}(A)
+\Leftrightarrow \boldsymbol{b} \in \mathrm{N}(A^T)\)</span>，故<span
+class="math inline">\(A^T\boldsymbol{b}=0\)</span></p>
+<p><span class="math display">\[
+\begin{align*}
+P\boldsymbol{b} &amp;= A(A^T A)^{-1}A^T\boldsymbol{b} \\
+&amp;= A(A^T A)^{-1}(A^T\boldsymbol{b}) \\
+&amp;= 0
+\end{align*}
+\]</span></p>
+<hr />
+<h2 id="投影的应用">投影的应用</h2>
+<h3 id="解一个无解的方程">解一个无解的方程</h3>
+<p><span
+class="math inline">\(A\boldsymbol{x}=\boldsymbol{b}\)</span>有时是无解的，因为<span
+class="math inline">\(\boldsymbol{b}\)</span>不在<span
+class="math inline">\(A\)</span>的列空间<span
+class="math inline">\(\mathrm{C}(A)\)</span>中，于是我们可以将<span
+class="math inline">\(\boldsymbol{b}\)</span>投影到<span
+class="math inline">\(\mathrm{C}(A)\)</span>中。设<span
+class="math inline">\(\boldsymbol{p}\)</span>为<span
+class="math inline">\(\boldsymbol{b}\)</span>在<span
+class="math inline">\(\mathrm{C}(A)\)</span>的投影，则<span
+class="math inline">\(A\hat{\boldsymbol{x}}=\boldsymbol{p}\)</span>一定有解。</p>
+<p>注意：这里的<span
+class="math inline">\(\boldsymbol{p}\)</span>不能和前文一样使用<span
+class="math inline">\(A(A^T
+A)^{-1}A^T\boldsymbol{b}\)</span>求得，因为前面的<span
+class="math inline">\(A\)</span>是列线性无关的，这里不一定。当<span
+class="math inline">\(A\)</span>列线性无关时，<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>有唯一解，当<span
+class="math inline">\(A\)</span>列线性相关时，<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>有无穷多解，无论如何，<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>总是存在的。</p>
+<p>回归正题，我们解出来的这个<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>虽然不是一个精确的解，但却是一个最好的解，这个<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>可以令<span
+class="math inline">\(||A\boldsymbol{x}-\boldsymbol{b}||^2\)</span>最小，这一点可以从两个角度证明：</p>
+<ol type="1">
+<li>几何直观理解：<span
+class="math inline">\(||A\boldsymbol{x}-\boldsymbol{b}||^2\)</span>就是<span
+class="math inline">\(A\boldsymbol{x}\)</span>和<span
+class="math inline">\(\boldsymbol{b}\)</span>的欧氏距离，所有可能的<span
+class="math inline">\(A\boldsymbol{x}\)</span>都在<span
+class="math inline">\(\mathrm{C}(A)\)</span>中，而<span
+class="math inline">\(\mathrm{C}(A)\)</span>中距离<span
+class="math inline">\(\boldsymbol{b}\)</span>最近的那个点，就是<span
+class="math inline">\(\boldsymbol{b}\)</span>的投影<span
+class="math inline">\(\boldsymbol{p}\)</span>，此时<span
+class="math inline">\(\boldsymbol{x}=\hat{\boldsymbol{x}}\)</span>。</li>
+<li>代数严格证明：由<span
+class="math inline">\(||A\boldsymbol{x}-\boldsymbol{b}||^2=||A\boldsymbol{x}-\boldsymbol{p}-\boldsymbol{e}||^2=||A\boldsymbol{x}-\boldsymbol{p}||^2+||\boldsymbol{e}||^2\geq||\boldsymbol{e}||^2\)</span>，其中<span
+class="math inline">\(||\boldsymbol{e}||^2\)</span>是与<span
+class="math inline">\(\boldsymbol{x}\)</span>无关的常量，则当<span
+class="math inline">\(||A\boldsymbol{x}-\boldsymbol{p}||^2=0\)</span>时，取得最小值，此时<span
+class="math inline">\(A\boldsymbol{x}=\boldsymbol{p}\)</span>，即<span
+class="math inline">\(\boldsymbol{x}=\hat{\boldsymbol{x}}\)</span></li>
+</ol>
+<p>新的方程<span
+class="math inline">\(A\hat{\boldsymbol{x}}=\boldsymbol{p}\)</span>，不仅有“一定有解”、“解是最好的”这两个良好的性质，当<span
+class="math inline">\(A\boldsymbol{x}=\boldsymbol{b}\)</span>本身就有解时，新的方程与原方程的解是一致的，这是因为当<span
+class="math inline">\(\boldsymbol{b}\in\mathrm{C}(A)\)</span>时，<span
+class="math inline">\(\boldsymbol{p}=\boldsymbol{b}\)</span>（上面两种极端情况的第一种）。</p>
+<p>也就是说，无论<span
+class="math inline">\(A\boldsymbol{x}=\boldsymbol{b}\)</span>是否有解，你可以不管三七二十一，就计算<span
+class="math inline">\(A\hat{\boldsymbol{x}}=\boldsymbol{p}\)</span>，肯定能解出来一个最好的<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>，它满足“如果有精确解，我就是精确解，如果没有精确解，我就是最好的解”。你可以在对<span
+class="math inline">\(A\)</span>一无所知的情况下，保证能解出一个优秀的<span
+class="math inline">\(\hat{\boldsymbol{x}}\)</span>。</p>
+<h3 id="换一个形式">换一个形式</h3>
+<p>为了方便，下面还是假设<span
+class="math inline">\(A\)</span>列满秩。</p>
+<p><span
+class="math inline">\(A\hat{\boldsymbol{x}}=\boldsymbol{p}=A(A^T
+A)^{-1}A^T\boldsymbol{b}\)</span>，我们都知道求逆矩阵既困难又会造成精度问题（浮点数计算时），于是可以两边都左乘<span
+class="math inline">\(A^T\)</span>，变成</p>
+<p><span class="math display">\[
+\begin{align*}
+A^T A\hat{\boldsymbol{x}}&amp;=(A^T A)(A^T A)^{-1}A^T\boldsymbol{b} \\
+A^T A\hat{\boldsymbol{x}}&amp;=A^T\boldsymbol{b} \tag{1} \\
+\hat{\boldsymbol{x}}&amp;= (A^T A)^{-1}A^T\boldsymbol{b} \tag{2}
+\end{align*}
+\]</span></p>
+<p>其中<span
+class="math inline">\(\text{(1)}\)</span>是比较好用的形式</p>
+<p>而<span
+class="math inline">\(\text{(2)}\)</span>在线性回归领域也写作</p>
+<p><span class="math display">\[\boldsymbol{\theta}=(X^T
+X)^{-1}X^T\boldsymbol{y}\]</span></p>
+<p>并被称为<strong>normal equation</strong>（或许译作正交方程？）</p>
+<h3 id="最小二乘法">最小二乘法</h3>
+<p>最小二乘法其实可以从投影的角度理解，个人认为这是最巧妙，无需计算的解法了（相比于对均方误差求导的解法）</p>
+<p>假设我们有<span class="math inline">\(m\)</span>个点<span
+class="math inline">\((t_1,b_1),(t_2,b_2),\dots,(t_m,b_m)\)</span>，要找一条直线<span
+class="math inline">\(y=cx+d\)</span>，最佳拟合它们，即令<span
+class="math inline">\(\sum
+(ct_i+d-b_i)^2\)</span>（也被称为均方误差，mean square error,
+MSE）最小。</p>
+<p>只需令</p>
+<p><span class="math display">\[
+\boldsymbol{b}=\left[
+\begin{array}{ll}
+    b_1    \\
+    b_2  \\
+    \vdots \\
+    b_m
+\end{array}\right]\qquad
+A=\left[
+\begin{array}{ll}
+    1 &amp; t_1            \\
+    1 &amp; t_2            \\
+     \vdots &amp; \vdots \\
+    1 &amp; t_m
+\end{array}\right]\qquad
+\boldsymbol{x}=\left[
+\begin{array}{ll}
+    d    \\
+    c
+\end{array}\right]
+\]</span></p>
+<p>就有<span
+class="math inline">\(A\boldsymbol{x}=\boldsymbol{b}\)</span>。假如<span
+class="math inline">\(m\)</span>个点落在同一条直线上，这个方程才有解，大多数情况下，它是无解的，运用前面推导的式子，有</p>
+<p><span class="math display">\[A^T A=\left[\begin{array}{ll}
+m &amp; \sum t_i \\
+\sum t_i &amp; \sum t_i^2
+\end{array}\right]\qquad
+A^T \boldsymbol{b}=\left[\begin{array}{l}
+\sum b_i \\
+\sum b_i t_i
+\end{array}\right]
+\]</span> 只需解 <span class="math display">\[\left[\begin{array}{ll}
+m &amp; \sum t_i \\
+\sum t_i &amp; \sum t_i^2
+\end{array}\right]\left[\begin{array}{l}d\\
+c\end{array}\right]=\left[\begin{array}{l}
+\sum b_i \\
+\sum b_i t_i
+\end{array}\right]\]</span>即可得到使MSE最小的<span
+class="math inline">\(c\)</span>和<span
+class="math inline">\(d\)</span>。</p>
+<h3 id="拟合抛物线">拟合抛物线</h3>
+<p>假如将拟合直线变成拟合抛物线<span
+class="math inline">\(y=c_2x^2+c_1x+c_0\)</span>，只需要改成</p>
+<p><span class="math display">\[
+\boldsymbol{b}=\left[
+\begin{array}{ll}
+    b_1    \\
+    b_2  \\
+    \vdots \\
+    b_m
+\end{array}\right]\qquad
+A=\left[
+\begin{array}{lll}
+    1 &amp; t_1 &amp; t_1^2           \\
+    1 &amp; t_2 &amp; t_2^2          \\
+     \vdots &amp; \vdots &amp; \vdots \\
+    1 &amp; t_m &amp; t_m^2
+\end{array}\right]\qquad
+\boldsymbol{x}=\left[
+\begin{array}{ll}
+    c_0    \\
+    c_1 \\
+    c_2 \\
+\end{array}\right]
+\]</span> 然后求<span class="math inline">\(A^T
+A\hat{\boldsymbol{x}}=A^T\boldsymbol{b}\)</span>就完事了，如果把抛物线换成<span
+class="math inline">\(n\)</span>次多项式也是类似的。</p>
+<hr />
+<h2 id="参考">参考</h2>
+<p>Introduction to Linear Algebra, 5th edition, by Gilbert Strang</p>
+]]></content>
+      <tags>
+        <tag>线性代数</tag>
+        <tag>数学</tag>
+        <tag>笔记</tag>
+        <tag>线性代数笔记</tag>
+      </tags>
+  </entry>
 </search>

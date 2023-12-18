@@ -160,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">75</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -209,6 +209,91 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/cfe23d8c628f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/cfe23d8c628f/" class="post-title-link" itemprop="url">实现常用排序算法（一）快速排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-09 21:38:55" itemprop="dateCreated datePublished" datetime="2023-08-09T21:38:55+08:00">2023-08-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今天来徒手造轮子了，这次是快排！</p>
+<h2 id="简介">简介</h2>
+<p>快速排序(Quick Sort)是非常常用的排序算法，平均时间复杂度为<span
+class="math inline">\(O(n \log n)\)</span>，最坏复杂度<span
+class="math inline">\(O(n^2)\)</span>，是一种不稳定排序。虽然有<span
+class="math inline">\(O(n^2)\)</span>的最坏复杂度，但是快排在实践中的效率通常优于其他算法，这也是c++中的<code>std::sort</code><u>主要</u>使用快排进行排序的原因（<code>std::sort</code>是混合排序算法，并非单一的快排，有空会出一篇文章解析一下其源码）</p>
+<p>快排是典型的分治算法，快排选取一个基准值将数组按大小分成两份，一份大于基准值，一份小于基准值，然后对这两份分别递归地进行排序。</p>
+<p>在具体实现中，通常用双指针完成这个划分操作，维护两个指针i、j，1到i-1储存<span
+class="math inline">\(\leq\)</span>pivot的数，j+1到n储存<span
+class="math inline">\(\geq\)</span>pivot的数，然后让i往前，j往后，如果i、j指向的两个元素都不符合条件只需要让两个元素交换就行了，一直移动i、j指针直到两个指针相遇，即完成了划分，然后再递归地进行。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/cfe23d8c628f/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

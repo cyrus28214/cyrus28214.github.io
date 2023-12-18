@@ -160,13 +160,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">75</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -209,6 +209,87 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/0b3dbf26ccf5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/0b3dbf26ccf5/" class="post-title-link" itemprop="url">SymPy学习笔记（二）需要避免的坑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-12 21:43:13" itemprop="dateCreated datePublished" datetime="2023-10-12T21:43:13+08:00">2023-10-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="坑一符号与变量">坑一：符号与变量</h1>
+<p>符号（Symbol）指的是SymPy提供的，用<code>symbols()</code>定义的符号，而变量是Python提供的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = symbols(&#x27;x&#x27;)</span><br><span class="line">&gt;&gt;&gt; expr = x + 1</span><br><span class="line">&gt;&gt;&gt; x = 2</span><br><span class="line">&gt;&gt;&gt; print(expr)</span><br><span class="line">x + 1</span><br></pre></td></tr></table></figure>
+<p>以上这个程序，并没有输出<code>3</code>，而是输出了<code>x + 1</code>，这是因为<code>x = 2</code>只是将变量<code>x</code>的值，从符号<span
+class="math inline">\(x\)</span>，变成了数字2，而符号<span
+class="math inline">\(x\)</span>并没有发生改变，因此<code>expr</code>的值也就没有改变。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/0b3dbf26ccf5/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -926,121 +1007,6 @@ Malan教授主讲，它完全是面向对于计算机科学0基础的学习者�
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/post/9d100e533618/" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/6495a78f89c0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon512.png">
-      <meta itemprop="name" content="Cyrus28214">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/6495a78f89c0/" class="post-title-link" itemprop="url">SQL学习笔记（三）基本查询语句</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-03 20:37:15" itemprop="dateCreated datePublished" datetime="2023-10-03T20:37:15+08:00">2023-10-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="sql中的函数">SQL中的函数</h2>
-<p>SQL中自带了很多函数，常用的有这几种：</p>
-<table>
-<thead>
-<tr class="header">
-<th>函数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>AVG</td>
-<td>求平均数</td>
-</tr>
-<tr class="even">
-<td>COUNT</td>
-<td>计数</td>
-</tr>
-<tr class="odd">
-<td>DISTINCT</td>
-<td>去重</td>
-</tr>
-<tr class="even">
-<td>LOWER</td>
-<td>小写</td>
-</tr>
-<tr class="odd">
-<td>UPPER</td>
-<td>大写</td>
-</tr>
-<tr class="even">
-<td>MAX</td>
-<td>取最大值</td>
-</tr>
-<tr class="odd">
-<td>MIN</td>
-<td>取最小值</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/6495a78f89c0/" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
