@@ -3593,7 +3593,7 @@ class="math inline">\(0\)</span>，程序将会报错。</li>
 <summary>
 答案
 </summary>
-<p><code>(4, 5, 7)</code> 这是因为</p>
+<p><code>(4, 3, 7)</code> 这是因为</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">   (3, 5) @ (4, 5, 7) </span><br><span class="line">-&gt; (1, 3, 5) @ (4, 5, 7)</span><br><span class="line">-&gt; (4, 3, 5) @ (4, 5, 7)</span><br><span class="line">=  (4, 3, 7)</span><br></pre></td></tr></table></figure>
 </details>
 <p>这里，我引用一些官方文档中的图片来帮助你理解</p>
@@ -3814,7 +3814,7 @@ P^T &amp;= (A(A^T A)^{-1}A^T)^T \\
 <p>直观理解，就是将<span
 class="math inline">\(\boldsymbol{b}\)</span>投影到<span
 class="math inline">\(\mathcal{S}\)</span>后，再投影一次，没有任何变化，因为<span
-class="math inline">\(\boldsymbol{p}\)</span>，已经在<span
+class="math inline">\(\boldsymbol{p}\)</span>已经在<span
 class="math inline">\(\mathcal{S}\)</span>里了。</p>
 <h4 id="证明-1">证明</h4>
 <p>要证原命题，只需证<span class="math inline">\(P^2=P\)</span></p>
