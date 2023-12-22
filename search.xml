@@ -4032,4 +4032,236 @@ class="math inline">\(n\)</span>次多项式也是类似的。</p>
         <tag>线性代数笔记</tag>
       </tags>
   </entry>
+  <entry>
+    <title>谱定理（Spectral Theorem）的证明</title>
+    <url>/post/48b626d0dc2c/</url>
+    <content><![CDATA[<h2 id="回顾特征值分解对角化">回顾特征值分解/对角化</h2>
+<h3 id="定义">定义</h3>
+<p>对于<span class="math inline">\(n \times n\)</span>的方阵<span
+class="math inline">\(\boldsymbol{A}\)</span>，如果有下面的等式：</p>
+<p><span class="math display">\[\boldsymbol{Ax}=\lambda
+\boldsymbol{x}\]</span></p>
+<p>其中<span
+class="math inline">\(\boldsymbol{x}\)</span>为<strong>非零</strong>向量。</p>
+<p>我们就称<span class="math inline">\(\boldsymbol{x}\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征向量（eigenvector）</strong>，<span
+class="math inline">\(\lambda\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征值（eigenvalue）</strong>。</p>
+<h3 id="求解">求解</h3>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{Ax} &amp;= \lambda \boldsymbol{Ix} \\
+(\boldsymbol{A} - \lambda \boldsymbol{I})\boldsymbol{x} &amp;=
+\boldsymbol{0} \\
+\det(\boldsymbol{A} - \lambda \boldsymbol{I}) &amp;= 0 \\
+\end{align*}\]</span></p>
+<p>特征值可以通过解特征根方程<span
+class="math inline">\(\det(\boldsymbol{A}-\lambda
+\boldsymbol{I})=0\)</span>来求得。
+由代数基本定理，这个多项式方程一定有<span
+class="math inline">\(n\)</span>个复根（可能有重根）</p>
+<p>由于行列式为0，<span class="math inline">\((\boldsymbol{A}-\lambda
+\boldsymbol{I})\boldsymbol{x}=\boldsymbol{0}\)</span>一定有非零解，任取一非零解，即可得出特征向量<span
+class="math inline">\(\boldsymbol{x}\)</span>。</p>
+<p>如果<span class="math inline">\(\boldsymbol{A}\)</span>有<span
+class="math inline">\(n\)</span>个线性无关的特征向量<span
+class="math inline">\(\boldsymbol{x}_1, \boldsymbol{x}_2, \dots,
+\boldsymbol{x}_n\)</span>，对应的<span
+class="math inline">\(n\)</span>个特征值为<span
+class="math inline">\(\lambda_1, \lambda_2, \dots,
+\lambda_n\)</span>，令<span
+class="math inline">\(\boldsymbol{X}=(\boldsymbol{x}_1,
+\boldsymbol{x}_2, \dots, \boldsymbol{x}_n)\)</span>，<span
+class="math inline">\(\boldsymbol{\Lambda}=\mathrm{diag}(\lambda_1,
+\lambda_2, \dots, \lambda_n)\)</span>则</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{AX}&amp;=\boldsymbol{X \Lambda} \\
+\boldsymbol{A}&amp;=\boldsymbol{X \Lambda} \boldsymbol{X}^{-1} \tag{1}
+\end{align*}\]</span></p>
+<p><span class="math inline">\((1)\)</span>式称作<span
+class="math inline">\(\boldsymbol{A}\)</span>的<strong>特征值分解</strong>，此时<span
+class="math inline">\(\boldsymbol{A}\)</span>称作<strong>可对角化（diagonalizable）</strong>。</p>
+<span id="more"></span>
+<p>实对称矩阵<span
+class="math inline">\(\boldsymbol{S}\)</span>必定可对角化，且一定可以选取两两正交的的单位特征向量，使得<span
+class="math inline">\(\boldsymbol{X}\)</span>为正交矩阵<span
+class="math inline">\(\boldsymbol{Q}\)</span>，这时原式可以写成这样。</p>
+<figure>
+<img src="https://cyrus28214.top/images/eigvalue_decomposition.png"
+alt="图来自Github仓库The-Art-of-Linear-Algebra" />
+<figcaption
+aria-hidden="true">图来自Github仓库The-Art-of-Linear-Algebra</figcaption>
+</figure>
+<p>下面，我们将要把实对称矩阵推广到所有正交矩阵，将正交矩阵推广到复数域的酉矩阵。</p>
+<h2 id="通向svd的基础谱定理">通向SVD的基础：谱定理</h2>
+<p>定义：对称矩阵</p>
+<blockquote>
+<p>若<span
+class="math inline">\(\boldsymbol{A}=\boldsymbol{A}^*\)</span>，称<span
+class="math inline">\(\boldsymbol{A}\)</span>为对称矩阵（symmetric
+matrix）。 这里的<span
+class="math inline">\(\boldsymbol{A}^*=\overline{\boldsymbol{A}}^\mathrm{T}\)</span>，表示<span
+class="math inline">\(\boldsymbol{A}\)</span>的共轭转置（conjugate
+transpose）。</p>
+</blockquote>
+<p>定义：酉矩阵</p>
+<blockquote>
+<p>若<span
+class="math inline">\(\boldsymbol{U}^*\boldsymbol{U}=\boldsymbol{UU}^*=\boldsymbol{I}\)</span>，称方阵<span
+class="math inline">\(\boldsymbol{U}\)</span>为酉矩阵（unitary
+matrix）</p>
+<p>推论<span class="math inline">\(\boldsymbol{U}^* =
+\boldsymbol{U}^{-1}\)</span></p>
+</blockquote>
+<p>定义：正规矩阵</p>
+<blockquote>
+<p>若<span
+class="math inline">\(\boldsymbol{A}\boldsymbol{A}^*=\boldsymbol{A}^*
+\boldsymbol{A}\)</span>，称方阵<span
+class="math inline">\(\boldsymbol{A}\)</span>为正规矩阵（normal
+matrix）。</p>
+<p>显然，对称矩阵和酉矩阵都是正规矩阵</p>
+</blockquote>
+<h3 id="谱定理spectral-theorem">谱定理（Spectral Theorem）</h3>
+<p>谱定理在线性代数里可以这样表述</p>
+<blockquote>
+<p><span
+class="math inline">\(\boldsymbol{A}\)</span>是正规矩阵当且仅当存在酉矩阵<span
+class="math inline">\(\boldsymbol{U}\)</span>，使得 <span
+class="math display">\[\boldsymbol{A}=\boldsymbol{U \Lambda U}^*
+\tag{2}\]</span> 其中<span
+class="math inline">\(\boldsymbol{\Lambda}\)</span>为对角阵。</p>
+</blockquote>
+<p>结合特征值分解和酉矩阵的定义，不难发现<span
+class="math inline">\((2)\)</span>其实就是一种特殊的特征值分解<span
+class="math inline">\(\boldsymbol{A}=\boldsymbol{U \Lambda
+U}^{-1}\)</span>，<span
+class="math inline">\(\boldsymbol{\Lambda}\)</span>就是特征值组成的对角阵<span
+class="math inline">\(\boldsymbol{\Lambda}=\mathrm{diag}(\lambda_1,
+\lambda_2, \dots, \lambda_n)\)</span>。</p>
+<h3 id="证明">证明</h3>
+<h4 id="必要性">必要性</h4>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{A} &amp;= \boldsymbol{U \Lambda U}^* \\
+\boldsymbol{AA}^* &amp;= \boldsymbol{U \Lambda U}^*  \boldsymbol{U}
+\overline{\boldsymbol{\Lambda}}\boldsymbol{U}^* \\
+&amp;= \boldsymbol{U \Lambda \overline{\Lambda} U}^* \\
+\boldsymbol{A}^*\boldsymbol{A} &amp;= \boldsymbol{U \overline{\Lambda}
+U}^*  \boldsymbol{U} \boldsymbol{\Lambda}\boldsymbol{U}^* \\
+&amp;= \boldsymbol{U \overline{\Lambda} \Lambda U}^* \\
+\end{align*}\]</span></p>
+<p>其中<span class="math inline">\(\boldsymbol{\Lambda
+\overline{\Lambda}}=\boldsymbol{\overline{\Lambda}
+\Lambda}=\mathrm{diag}(|\lambda_1|^2, |\lambda_2|^2, \dots,
+|\lambda_n|^2)\)</span>。 故<span
+class="math inline">\(\boldsymbol{AA}^*=\boldsymbol{A}^*\boldsymbol{A}\)</span>，<span
+class="math inline">\(\boldsymbol{A}\)</span>为正规矩阵。</p>
+<h4 id="充分性">充分性</h4>
+<p>使用数学归纳法，当<span
+class="math inline">\(n=1\)</span>，结论显然成立。 若谱定理对<span
+class="math inline">\(n-1\)</span>成立，下面证明其对<span
+class="math inline">\(n\)</span>成立。</p>
+<p>取特征值<span
+class="math inline">\(\lambda_1\)</span>，和对应的特征向量<span
+class="math inline">\(\boldsymbol{x}_1\)</span>，标准化这个特征向量<span
+class="math inline">\(\boldsymbol{q}=\frac{\boldsymbol{x}_1}{|\boldsymbol{x}_1|}\)</span>，则<span
+class="math inline">\(\boldsymbol{q}^*\boldsymbol{q}=1\)</span>。</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{Aq}&amp;=\lambda_1\boldsymbol{q} \\
+\boldsymbol{q}^*\boldsymbol{Aq}&amp;=\lambda_1\boldsymbol{q}^*\boldsymbol{q}=\lambda_1
+\\
+\end{align*}\]</span></p>
+<p>任取一组包含<span
+class="math inline">\(\boldsymbol{q}\)</span>的基，经过Gram-Schmidt
+正交化，和标准化，得到酉矩阵<span class="math inline">\((\boldsymbol{q},
+\boldsymbol{q}_2, \dots, \boldsymbol{q}_n)=(\boldsymbol{q},
+\boldsymbol{Q})\)</span></p>
+<p>则</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{q}^*\boldsymbol{Q} = \boldsymbol{Q}^* \boldsymbol{q} &amp;=
+0 \tag{3} \\
+\boldsymbol{Q}^* \boldsymbol{Q} &amp;= \boldsymbol{I} \tag{4}
+\end{align*}\]</span></p>
+<p>为了对<span
+class="math inline">\(\boldsymbol{Q}^*\boldsymbol{AQ}\)</span>应用谱定理，需要证明<span
+class="math inline">\(\boldsymbol{Q}^*\boldsymbol{AQ}\)</span>为正规矩阵。</p>
+<p><span class="math display">\[\begin{align*}
+(\boldsymbol{Q}^*\boldsymbol{AQ})(\boldsymbol{Q}^*\boldsymbol{AQ})^*
+&amp;= \boldsymbol{Q}^* \boldsymbol{AA}^* \boldsymbol{Q} \\
+(\boldsymbol{Q}^*\boldsymbol{AQ})^*(\boldsymbol{Q}^*\boldsymbol{AQ})
+&amp;= \boldsymbol{Q}^* \boldsymbol{A}^*\boldsymbol{A} \boldsymbol{Q} \\
+\end{align*}\]</span></p>
+<p>由<span class="math inline">\(\boldsymbol{A}\)</span>正规<span
+class="math inline">\(\boldsymbol{AA}^* = \boldsymbol{A}^*
+\boldsymbol{A}\)</span>，得<span
+class="math inline">\(\boldsymbol{Q}^*\boldsymbol{AQ}\)</span>正规。</p>
+<p>由谱定理对于<span class="math inline">\(n-1\)</span>成立，应用<span
+class="math inline">\((2)\)</span>式，有</p>
+<p><span class="math display">\[\boldsymbol{Q}^* \boldsymbol{A}
+\boldsymbol{Q} = \boldsymbol{V} \boldsymbol{\Lambda}_1
+\boldsymbol{V}^*  \tag{5}\]</span></p>
+<p>其中<span
+class="math inline">\(\boldsymbol{\Lambda}_1,\boldsymbol{V}\)</span>均符合谱定理的描述的性质。</p>
+<p>令</p>
+<p><span class="math display">\[\boldsymbol{U} = \left(\begin{array}{c}
+\boldsymbol{q} &amp; \boldsymbol{QV} \\
+\end{array}\right)\]</span></p>
+<p>根据<span class="math inline">\((3),(4)\)</span></p>
+<p><span class="math display">\[\boldsymbol{U}^*\boldsymbol{U} = \left(
+\begin{array}{c}
+\boldsymbol{q}^*\boldsymbol{q} &amp; \boldsymbol{q}^* \boldsymbol{Q}
+\boldsymbol{V} \\
+\boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{q} &amp; \boldsymbol{V}^*
+\boldsymbol{Q}^* \boldsymbol{Q} \boldsymbol{V} \\
+\end{array}
+\right)=\boldsymbol{I}\]</span></p>
+<p>故<span class="math inline">\(\boldsymbol{U}\)</span>是酉矩阵</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{U}^* \boldsymbol{A} \boldsymbol{U} &amp;=
+\left(\begin{array}{c}
+\boldsymbol{q}^* \boldsymbol{A} \boldsymbol{q} &amp; \boldsymbol{q}^*
+\boldsymbol{A} \boldsymbol{Q} \boldsymbol{V} \\
+\boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{A} \boldsymbol{q} &amp;
+\boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{A} \boldsymbol{Q}
+\boldsymbol{V}
+\end{array}\right)
+\end{align*}
+\]</span></p>
+<p>根据<span class="math inline">\((5)\)</span>有</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{AQV} &amp;= \boldsymbol{QV\Lambda}_1 \\
+\boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{A} &amp;=
+\boldsymbol{\Lambda}_1 \boldsymbol{V}^* \boldsymbol{Q}^* \\
+\boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{AQV} &amp;=
+\boldsymbol{\Lambda}_1
+\end{align*}\]</span></p>
+<p>则</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{U}^*\boldsymbol{AU} &amp;= \left(\begin{array}{c}
+\lambda_1 \boldsymbol{q}^* \boldsymbol{q} &amp; \boldsymbol{q}^*
+\boldsymbol{QV\Lambda}_1 \\
+\boldsymbol{\Lambda}_1 \boldsymbol{V}^* \boldsymbol{Q}^* \boldsymbol{q}
+&amp; \boldsymbol{\Lambda}_1
+\end{array}\right)\\
+&amp;= \left(\begin{array}{c}
+\lambda_1 &amp;  \\
+&amp; \boldsymbol{\Lambda}_1 \\
+\end{array}\right) \\
+&amp;= \boldsymbol{\Lambda}
+\end{align*}\]</span></p>
+<p>故原命题<span
+class="math inline">\(\boldsymbol{A}=\boldsymbol{U}\boldsymbol{\Lambda}\boldsymbol{U}^*\)</span>得证。</p>
+<h2 id="参考">参考</h2>
+<p><a
+href="https://github.com/kenjihiranabe/The-Art-of-Linear-Algebra/tree/main">https://github.com/kenjihiranabe/The-Art-of-Linear-Algebra/tree/main</a></p>
+<p><a
+href="https://inst.eecs.berkeley.edu/~ee127/sp21/livebook/thm_sed.html">https://inst.eecs.berkeley.edu/~ee127/sp21/livebook/thm_sed.html</a></p>
+<p>Introduction to Linear Algebra, 5th edition, by Gilbert Strang</p>
+]]></content>
+      <tags>
+        <tag>线性代数</tag>
+        <tag>数学</tag>
+        <tag>笔记</tag>
+        <tag>线性代数笔记</tag>
+      </tags>
+  </entry>
 </search>

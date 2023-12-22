@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -209,6 +209,126 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/48b626d0dc2c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/48b626d0dc2c/" class="post-title-link" itemprop="url">谱定理（Spectral Theorem）的证明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-22 10:23:24" itemprop="dateCreated datePublished" datetime="2023-12-22T10:23:24+08:00">2023-12-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="回顾特征值分解对角化">回顾特征值分解/对角化</h2>
+<h3 id="定义">定义</h3>
+<p>对于<span class="math inline">\(n \times n\)</span>的方阵<span
+class="math inline">\(\boldsymbol{A}\)</span>，如果有下面的等式：</p>
+<p><span class="math display">\[\boldsymbol{Ax}=\lambda
+\boldsymbol{x}\]</span></p>
+<p>其中<span
+class="math inline">\(\boldsymbol{x}\)</span>为<strong>非零</strong>向量。</p>
+<p>我们就称<span class="math inline">\(\boldsymbol{x}\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征向量（eigenvector）</strong>，<span
+class="math inline">\(\lambda\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征值（eigenvalue）</strong>。</p>
+<h3 id="求解">求解</h3>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{Ax} &amp;= \lambda \boldsymbol{Ix} \\
+(\boldsymbol{A} - \lambda \boldsymbol{I})\boldsymbol{x} &amp;=
+\boldsymbol{0} \\
+\det(\boldsymbol{A} - \lambda \boldsymbol{I}) &amp;= 0 \\
+\end{align*}\]</span></p>
+<p>特征值可以通过解特征根方程<span
+class="math inline">\(\det(\boldsymbol{A}-\lambda
+\boldsymbol{I})=0\)</span>来求得。
+由代数基本定理，这个多项式方程一定有<span
+class="math inline">\(n\)</span>个复根（可能有重根）</p>
+<p>由于行列式为0，<span class="math inline">\((\boldsymbol{A}-\lambda
+\boldsymbol{I})\boldsymbol{x}=\boldsymbol{0}\)</span>一定有非零解，任取一非零解，即可得出特征向量<span
+class="math inline">\(\boldsymbol{x}\)</span>。</p>
+<p>如果<span class="math inline">\(\boldsymbol{A}\)</span>有<span
+class="math inline">\(n\)</span>个线性无关的特征向量<span
+class="math inline">\(\boldsymbol{x}_1, \boldsymbol{x}_2, \dots,
+\boldsymbol{x}_n\)</span>，对应的<span
+class="math inline">\(n\)</span>个特征值为<span
+class="math inline">\(\lambda_1, \lambda_2, \dots,
+\lambda_n\)</span>，令<span
+class="math inline">\(\boldsymbol{X}=(\boldsymbol{x}_1,
+\boldsymbol{x}_2, \dots, \boldsymbol{x}_n)\)</span>，<span
+class="math inline">\(\boldsymbol{\Lambda}=\mathrm{diag}(\lambda_1,
+\lambda_2, \dots, \lambda_n)\)</span>则</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{AX}&amp;=\boldsymbol{X \Lambda} \\
+\boldsymbol{A}&amp;=\boldsymbol{X \Lambda} \boldsymbol{X}^{-1} \tag{1}
+\end{align*}\]</span></p>
+<p><span class="math inline">\((1)\)</span>式称作<span
+class="math inline">\(\boldsymbol{A}\)</span>的<strong>特征值分解</strong>，此时<span
+class="math inline">\(\boldsymbol{A}\)</span>称作<strong>可对角化（diagonalizable）</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/48b626d0dc2c/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -944,108 +1064,6 @@ C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/cccf6f3d6d50/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon512.png">
-      <meta itemprop="name" content="Cyrus28214">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cyrus' Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/cccf6f3d6d50/" class="post-title-link" itemprop="url">Linux中的三种时间戳：atime、mtime、ctime</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-11-07 19:29:25" itemprop="dateCreated datePublished" datetime="2023-11-07T19:29:25+08:00">2023-11-07</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>标准的 POSIX 文件有三个时间戳：</p>
-<table>
-<thead>
-<tr class="header">
-<th>简称</th>
-<th>全称</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>atime</td>
-<td>access timestamp</td>
-<td>最后一次读取的时间</td>
-</tr>
-<tr class="even">
-<td>mtime</td>
-<td>modification timestamp</td>
-<td>最后一次写入的时间戳</td>
-</tr>
-<tr class="odd">
-<td>ctime</td>
-<td>status change timestamp</td>
-<td>最后一次更改文件元信息的时间戳</td>
-</tr>
-</tbody>
-</table>
-<p>这里面的atime和mtime很好理解，分别对应了读取和写入文件，但是ctime就比较不好理解了。</p>
-<p>文件元信息是关于文件本身的信息，比如文件的大小、权限许可、所有者这些，不在文件的内容里的信息。比如修改文件的访问权限的时候，atime和mtime都不会改变，但是ctime会改变。</p>
-<p>要查看文件的元信息，包括（atime、mtime、ctime）可以使用<code>stat</code>。</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ touch new_file</span><br><span class="line">cyrus:~$ stat new_file</span><br><span class="line">  File: new_file</span><br><span class="line">  Size: 0               Blocks: 0          IO Block: 4096   regular empty file</span><br><span class="line">Device: 820h/2080d      Inode: 67376       Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: ( 1000/   cyrus)   Gid: ( 1000/   cyrus)</span><br><span class="line">Access: 2023-11-02 20:57:28.696325828 +0800</span><br><span class="line">Modify: 2023-11-02 20:57:28.696325828 +0800</span><br><span class="line">Change: 2023-11-02 20:57:28.696325828 +0800</span><br><span class="line"> Birth: 2023-11-02 20:57:28.696325828 +0800</span><br></pre></td></tr></table></figure>
-<h2 id="参考链接">参考链接</h2>
-<p><a
-target="_blank" rel="noopener" href="https://www.gnu.org/software/coreutils/manual/html_node/File-timestamps.html">https://www.gnu.org/software/coreutils/manual/html_node/File-timestamps.html</a></p>
-
       
     </div>
 
