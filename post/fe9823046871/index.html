@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="脚本 bash不仅可以直接输入到命令行执行，也可以作为一种脚本语言。作为一种脚本语言，Bash也拥有变量、分支语句、循环语句等。 可以在某个文件里写bash脚本，然后运行它，不必每次都在命令行里输入。将以下代码保存到hello.sh里，.sh后缀代表这是一个bash脚本，当然，使用其他后缀也不影响脚本正常运行。 12#!&#x2F;bin&#x2F;bashecho &quot;Hello World!&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一看就懂的Linux Shell的基础使用（二）">
+<meta property="og:url" content="http://cyrus28214.top/post/fe9823046871/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="脚本 bash不仅可以直接输入到命令行执行，也可以作为一种脚本语言。作为一种脚本语言，Bash也拥有变量、分支语句、循环语句等。 可以在某个文件里写bash脚本，然后运行它，不必每次都在命令行里输入。将以下代码保存到hello.sh里，.sh后缀代表这是一个bash脚本，当然，使用其他后缀也不影响脚本正常运行。 12#!&#x2F;bin&#x2F;bashecho &quot;Hello World!&amp;quo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-30T10:53:59.000Z">
+<meta property="article:modified_time" content="2023-12-04T17:12:19.751Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="系列">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="MIT Missing Semester学习笔记">
+<meta property="article:tag" content="Bash">
+<meta property="article:tag" content="一看就懂的Linux Shell的基础使用">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/fe9823046871/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/fe9823046871/","path":"post/fe9823046871/","title":"一看就懂的Linux Shell的基础使用（二）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一看就懂的Linux Shell的基础使用（二） | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">4.</span> <span class="nav-text">(())</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-1"><span class="nav-number">4.1.</span> <span class="nav-text">[]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">定义函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">6.</span> <span class="nav-text">?、*、{}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">7.</span> <span class="nav-text">流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-number">7.1.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-number">7.2.</span> <span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while"><span class="nav-number">7.3.</span> <span class="nav-text">while</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case"><span class="nav-number">7.4.</span> <span class="nav-text">case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#break%E5%92%8Ccontinue"><span class="nav-number">7.5.</span> <span class="nav-text">break和continue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E7%BB%84%E5%90%88%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">用$()组合命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-number">9.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">10.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alias"><span class="nav-number">11.</span> <span class="nav-text">alias</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">12.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/fe9823046871/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一看就懂的Linux Shell的基础使用（二） | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一看就懂的Linux Shell的基础使用（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-30 18:53:59" itemprop="dateCreated datePublished" datetime="2023-11-30T18:53:59+08:00">2023-11-30</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="脚本">脚本</h2>
+<p>bash不仅可以直接输入到命令行执行，也可以作为一种脚本语言。作为一种脚本语言，Bash也拥有变量、分支语句、循环语句等。</p>
+<p>可以在某个文件里写bash脚本，然后运行它，不必每次都在命令行里输入。将以下代码保存到<code>hello.sh</code>里，<code>.sh</code>后缀代表这是一个bash脚本，当然，使用其他后缀也不影响脚本正常运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello World!&quot;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>文件的第一行是<code>#!/bin/bash</code>，以<code>#</code>开始的内容是注释，意味着不会被运行。但是在文件的最开始，以<code>#!</code>开头的注释有个特别的名字，它被称作“shebang”，可以提示系统，使用什么程序来解析下面的代码。这里的<code>#!/bin/bash</code>，告诉操作系统使用<code>/bin/bash</code>解释下面的代码，也可以写作<code>#!/bin/sh</code>，因为<code>/bin/sh</code>是一个指向<code>bin/bash</code>的软链接。</p>
+<p>在执行之前，请先向这个文件添加执行的权限，因为Linux默认的新文件权限是<code>644</code>，即<code>rw-r--r--</code>，任何人都无法执行。使用<code>chmod +x hello.sh</code>来添加执行权限。</p>
+<p>然后，有两种方式可以运行脚本，第一种是输入<code>./hello.sh</code>，这里不能写成<code>hello.sh</code>，因为对于这样的命令，Linux会在PATH变量中查找，而不从当前文件夹中查找。这种方式没有指定运行脚本的解释器，因此系统会读取Shebang，然后使用<code>/bin/bash</code>解释代码</p>
+<p>第二种方式就是指定解释器，将文件作为参数传入，输入<code>sh hello.sh</code>，就可以看到一行<code>Hello World!</code>。这种情况显式指定了使用<code>sh</code>解释运行，因此shebang不会生效</p>
+<h2 id="变量">变量</h2>
+<p>在bash中，给变量赋值使用<code>foo=bar</code>，<strong>请注意，这里的等号前后不能加上任何空格</strong>，这是因为bash脚本会用空格来分割命令和命令的参数，如果输入<code>foo = bar</code>，解释器会调用<code>foo</code>命令，并传递<code>=</code>和<code>bar</code></p>
+<p>在上一节中已经提到过了，bash中的字符串使用<code>'</code>或<code>"</code>包裹，但这两个记号的含义并不相同，前者会保留原始字符串，而后者会进行转义。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ foo=bar</span><br><span class="line">cyrus:~$ <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$foo</span>&quot;</span></span><br><span class="line">bar</span><br><span class="line">cyrus:~$ <span class="built_in">echo</span> <span class="string">&#x27;$foo&#x27;</span></span><br><span class="line"><span class="variable">$foo</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>$</code>代表引用相应的变量，但是在<code>'</code>字符串内部并不会生效。</p>
+<p>引用变量也可以写成<code>$&#123;foo&#125;</code>，和<code>$foo</code>并无不同，但是<code>$&#123;foo&#125;</code>的写法可以更精确地界定变量名的范围，防止歧义。</p>
+<h2 id="数组">数组</h2>
+<p>bash也支持定义数组，下标和其他大多数编程语言一样是从0开始的</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ array=(a o e i u)</span><br><span class="line">cyrus:~$ echo $&#123;array[2]&#125;</span><br><span class="line">e</span><br></pre></td></tr></table></figure>
+<h2 id="section"><code>(())</code></h2>
+<p>bash为了方便作为命令行使用，变量都是字符串类型的，因此命令<code>foo=1+1</code>只会将字符串<code>1+1</code>赋值给<code>foo</code>，而不会计算出<code>2</code>，要进行数学运算，应使用<code>(())</code>双括号包裹，在双括号里引用变量是不需要加<code>$</code>的。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ foo=1+1</span><br><span class="line">cyrus:~$ echo $foo</span><br><span class="line">1+1</span><br><span class="line">cyrus:~$ echo $((1+2))</span><br><span class="line">3</span><br><span class="line">cyrus:~$ foo=$((1+2))</span><br><span class="line">cyrus:~$ echo $foo</span><br><span class="line">3</span><br><span class="line">cyrus:~$ ((foo=1+3))</span><br><span class="line">cyrus:~$ echo $foo</span><br><span class="line">4</span><br><span class="line">cyrue:~$ echo $((foo*2))</span><br><span class="line">8</span><br></pre></td></tr></table></figure>
+<p>可以使用的运算和C语言的语法是一致的：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>（注意是<strong>整除</strong>，不支持小数）、<code>%</code>、<code>=</code>（、<code>==</code>、<code>!=</code>、<code>&lt;</code>、<code>&gt;</code>、<code>foo++</code>、<code>++foo</code>、<code>foo--</code>、<code>--foo</code>、<code>!</code>、<code>||</code>、<code>&amp;&amp;</code>、<code>~</code>、<code>|</code>、<code>&amp;</code>、<code>&lt;&lt;</code>、<code>&gt;&gt;</code>、</p>
+<p>另外还有一个符号<code>#</code>，可以用来进制转换</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ echo $((8#123))</span><br><span class="line">83</span><br><span class="line">cyrus:~$ echo $((16#abc))</span><br><span class="line">2748</span><br></pre></td></tr></table></figure>
+<p>两条命令分别计算出了 <span class="math inline">\((123)_8\)</span> 和
+<span class="math inline">\((abc)_{16}\)</span> 的10进制表示。</p>
+<h3 id="section-1"><code>[]</code></h3>
+<p>还有一个语法是<code>[ 表达式 ]</code>，但实际上这么说并不准确，因为这其实不是一个语法，<code>[</code>是一个程序的名字，可以试着运行<code>which [</code>，会发现<code>[</code>其实是放在<code>/usr/bin/[</code>的一个程序，它的运行效果和命令<code>test</code>是一样的，具体使用细节可以输入<code>man [</code>查询。</p>
+<p><code>[</code>是一个程序，而<code>]</code>只不过是传入的最后一个参数罢了（这个参数是必须的，否则会报错）。正因如此，必须写成<code>[ 表达式 ]</code>，而不是<code>[表达式]</code>。即<strong>表达式前后必须加空格</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>表达式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>!表达式</td>
+<td>逻辑非</td>
+</tr>
+<tr class="even">
+<td>表达式 -a 表达式</td>
+<td>逻辑且 And</td>
+</tr>
+<tr class="odd">
+<td>表达式 -o 表达式</td>
+<td>逻辑或 Or</td>
+</tr>
+<tr class="even">
+<td>-n 字符串</td>
+<td>字符串长度非0 Non-zero</td>
+</tr>
+<tr class="odd">
+<td>-z 字符串</td>
+<td>字符串长度为0 Zero</td>
+</tr>
+<tr class="even">
+<td>字符串 = 字符串</td>
+<td>字符串相等</td>
+</tr>
+<tr class="odd">
+<td>字符串 != 字符串</td>
+<td>字符串不相等</td>
+</tr>
+<tr class="even">
+<td>字符串 &gt; 字符串</td>
+<td>字符串大于，需要转义，写成<code>\&gt;</code>而不是<code>&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>字符串 &lt; 字符串</td>
+<td>字符串小于，同样需要转义，因为<code>&lt;</code>、<code>&gt;</code>都有特殊含义</td>
+</tr>
+<tr class="even">
+<td>( 表达式 )</td>
+<td>就是括号的意思，表达式分组</td>
+</tr>
+<tr class="odd">
+<td>整数 -eq 整数</td>
+<td>整数相等 EQual to</td>
+</tr>
+<tr class="even">
+<td>整数 -ge 整数</td>
+<td>整数大于等于 Greater than or Equal to</td>
+</tr>
+<tr class="odd">
+<td>整数 -gt 整数</td>
+<td>整数大于 Greater Than</td>
+</tr>
+<tr class="even">
+<td>整数 -le 整数</td>
+<td>整数小于等于 Less than or Equal to</td>
+</tr>
+<tr class="odd">
+<td>整数 -lt 整数</td>
+<td>整数小于 Less Than</td>
+</tr>
+<tr class="even">
+<td>整数 -nq 整数</td>
+<td>整数小于 Not Equal to</td>
+</tr>
+<tr class="odd">
+<td>-f 文件</td>
+<td>文件存在，并且类型为常规文件</td>
+</tr>
+<tr class="even">
+<td>-d 文件</td>
+<td>文件存在，并且类型为目录</td>
+</tr>
+</tbody>
+</table>
+<p>更多用法请输入<code>man [</code>或<code>man test</code>查看帮助文档。</p>
+<p>还有一个指令是双方括号<code>[[ 表达式 ]]</code>，双方括号除了支持以上特性，还支持了更多高级的特性，例如<code>&lt;</code>、<code>&gt;</code>、<code>(</code>、<code>)</code>不需要转义等。双方括号表达式不支持所有POSIX系统，但是大多数时候都是可用的，为了避免犯错，建议使用双方括号表达式。</p>
+<h2 id="定义函数">定义函数</h2>
+<p>在bash中定义一个函数，它的作用是创建一个文件夹并进入，可以这样写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mcd</span></span> () &#123;</span><br><span class="line">    <span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>$1</code>是一个特殊的变量，代表传入的第一个参数，例如我们定义以上函数后，输入<code>mcd example</code>，就会有以下效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ <span class="function"><span class="title">mcd</span></span> () &#123;</span><br><span class="line">    <span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">cyrus:~$ mcd example</span><br><span class="line">cyrus:~/example$</span><br></pre></td></tr></table></figure>
+<p>像这样的特殊变量还有很多，以下是常用的一些：</p>
+<ul>
+<li><code>$0</code>：脚本名</li>
+<li><code>$1</code>到<code>$9</code>：脚本的参数。<code>$1</code>是第一个参数，依此类推，超过第9个时，应该加上大括号，如<code>$&#123;14&#125;</code>是第14个参数。</li>
+<li><code>$@</code>：所有参数</li>
+<li><code>$#</code>：参数个数</li>
+<li><code>$?</code>：前一个命令的返回值</li>
+<li><code>$$</code>：当前脚本的<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8BID">进程ID（Process
+Identification, PID）</a></li>
+<li><code>!!</code> -
+完整的上一条命令，包括参数。常见应用：当你因为权限不足执行命令失败（会出现<code>Permission denied</code>）时，可以使用
+<code>sudo !!</code>再尝试一次。</li>
+<li><code>$_</code> - 上一条命令的最后一个参数。</li>
+</ul>
+<p>更多请参见<a
+target="_blank" rel="noopener" href="https://www.tldp.org/LDP/abs/html/special-chars.html">这里</a></p>
+<p>上面需要特殊解释的是<code>$?</code>，它给出上一个命令的返回值，如果为<code>0</code>，就意味着程序正常退出，如果非0，就代表程序异常退出。<code>true</code>和<code>false</code>，也是两个程序，其中<code>true</code>永远返回<code>0</code>，<code>false</code>永远返回<code>1</code></p>
+<p>这个返回码可以搭配<code>&amp;&amp;</code>、<code>||</code>这两个运算符使用，它们都是<strong>短路运算符</strong>。</p>
+<ul>
+<li><code>&amp;&amp;</code>其实是逻辑与运算，也可以用来连接两条命令，当前面的命令执行成功时才执行后面的命令。用<code>&amp;&amp;</code>连接多个命令，假如中间发生了错误，就不会继续执行，引发一连串的错误。</li>
+<li><code>||</code>相应的，逻辑或运算是当前面的命令执行失败时才执行后面的命令。可以用于设置一个“Plan
+B”，当前面的命令执行失败，就执行“Plan B”。</li>
+<li><code>;</code>就是单纯的先后执行两条命令，无论成功与否，两条命令都会执行。</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">false || echo &quot;Oops, fail&quot;</span><br><span class="line"># Oops, fail</span><br><span class="line"></span><br><span class="line">true || echo &quot;Will not be printed&quot;</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">true &amp;&amp; echo &quot;Things went well&quot;</span><br><span class="line"># Things went well</span><br><span class="line"></span><br><span class="line">false &amp;&amp; echo &quot;Will not be printed&quot;</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">false ; echo &quot;This will always run&quot;</span><br><span class="line"># This will always run</span><br></pre></td></tr></table></figure>
+<h2 id="section-2"><code>?</code>、<code>*</code>、<code>&#123;&#125;</code></h2>
+<p><code>?</code>和<code>*</code>分别可以匹配一个任意字符和多个任意字符，而<code>&#123;&#125;</code>可以展开一个字符串列表，如：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rm foo? # 会删除foo1、foo2、foob，不会删除foo、foo12</span><br><span class="line">rm foo* # 会删除foo1、foo2、foob、foo、foo12，不会删除bar</span><br><span class="line"></span><br><span class="line">cp *.png folder # 会复制所有.png后缀的文件</span><br><span class="line"></span><br><span class="line">mv &#123;dog,cat&#125;.png folder # 会移动dog.png和cat.png</span><br><span class="line">mv dog.png cat.png folder # 上面那句等价于这个</span><br><span class="line"></span><br><span class="line">mkdir *.&#123;png,jpg,jpeg,gif&#125; # 将两种语法组合起来使用</span><br><span class="line"></span><br><span class="line">touch &#123;foo,bar&#125;/&#123;a..h&#125; # 会创建foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h这些文件</span><br></pre></td></tr></table></figure>
+<h2 id="流程控制语句">流程控制语句</h2>
+<h3 id="if"><code>if</code></h3>
+<p>bash中<code>if</code>的格式是这样的：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if 条件</span><br><span class="line">then</span><br><span class="line">    命令1</span><br><span class="line">    命令2</span><br><span class="line">    ...</span><br><span class="line">    命令n</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>或者写成一行（适用于在命令行界面下使用）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if 条件; then 命令1; 命令2; ...; 命令n; fi</span><br></pre></td></tr></table></figure>
+<p>if-else语法，和if-elif-else语法是类似的：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if 条件</span><br><span class="line">then</span><br><span class="line">    命令1</span><br><span class="line">    命令2</span><br><span class="line">else</span><br><span class="line">    命令3</span><br><span class="line">    命令4</span><br><span class="line">    </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if 条件; then 命令1; 命令2; else 命令3; 命令4; fi</span><br></pre></td></tr></table></figure>
+<p>if-elif-else：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if 条件1</span><br><span class="line">then</span><br><span class="line">    命令1</span><br><span class="line">elif 条件2 </span><br><span class="line">then </span><br><span class="line">    命令2</span><br><span class="line">else</span><br><span class="line">    命令3</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if 条件1; then 命令1; elif 条件2; then 命令2; else 命令3; fi</span><br></pre></td></tr></table></figure>
+<p>（这么复杂的语句还是写在脚本文件里吧，不建议写成一行了）</p>
+<p>具体示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">compare</span></span>() &#123;</span><br><span class="line">    <span class="keyword">if</span> ((<span class="variable">$1</span> &gt; <span class="variable">$2</span>)); <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> 大于 <span class="variable">$2</span>&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> ((<span class="variable">$1</span> &lt; <span class="variable">$2</span>)); <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> 小于 <span class="variable">$2</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> 等于 <span class="variable">$2</span>&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">compare 282 14</span><br><span class="line">compare 28 214</span><br><span class="line">compare 123 123</span><br></pre></td></tr></table></figure>
+<p>运行脚本，输出</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">282 大于 14</span><br><span class="line">28 小于 214</span><br><span class="line">123 等于 123</span><br></pre></td></tr></table></figure>
+<h3 id="for"><code>for</code></h3>
+<p><code>for</code>循环语句的语法如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for i in 列表项1 列表项2 ... 列表项n</span><br><span class="line">do</span><br><span class="line">    命令1</span><br><span class="line">    命令2</span><br><span class="line">    ...</span><br><span class="line">    命令n</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>写成一行</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for i in 列表项1 列表项2 ... 列表项n; do 命令1; 命令2; ...; 命令n done</span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo=bar</span><br><span class="line">for i in 1 &quot;2&quot; &#x27;3&#x27; apple 5 $foo</span><br><span class="line">do</span><br><span class="line">    echo &quot;i is $i now.&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i is 1 now.</span><br><span class="line">i is 2 now.</span><br><span class="line">i is 3 now.</span><br><span class="line">i is apple now.</span><br><span class="line">i is 5 now.</span><br><span class="line">i is bar now.</span><br></pre></td></tr></table></figure>
+<h3 id="while"><code>while</code></h3>
+<p><code>while</code>的语法如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while 条件</span><br><span class="line">do</span><br><span class="line">    命令</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="case"><code>case</code></h3>
+<p><code>case</code>其实就是其他编程语言中的<code>switch</code>语句,<code>case</code>的语法比较奇怪，结束<code>case</code>语句要使用<code>case</code>这个单词反过来拼写的<code>esac</code>，这个和<code>if</code>-&gt;<code>fi</code>是一样的。然后，每个子块里面需要用<code>匹配式) 命令 ;;</code>的格式来写。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;请选择 a~e 之间的一个英文字母&#x27;</span></span><br><span class="line"><span class="built_in">read</span> letter</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$letter</span> <span class="keyword">in</span></span><br><span class="line">    a)</span><br><span class="line">        <span class="built_in">echo</span> ALPHA</span><br><span class="line">    ;;</span><br><span class="line">    b)</span><br><span class="line">        <span class="built_in">echo</span> BRAVO</span><br><span class="line">    ;;</span><br><span class="line">    c)</span><br><span class="line">        <span class="built_in">echo</span> CHARLIE</span><br><span class="line">    ;;</span><br><span class="line">    d)</span><br><span class="line">        <span class="built_in">echo</span> DELTA</span><br><span class="line">    ;;</span><br><span class="line">    e)</span><br><span class="line">        <span class="built_in">echo</span> ECHO</span><br><span class="line">    ;;</span><br><span class="line">    *) </span><br><span class="line">        <span class="built_in">echo</span> 您的输入不是 a~e 之间的一个英文字母</span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+<h3 id="break和continue"><code>break</code>和<code>continue</code></h3>
+<p>当然，bash也是支持<code>break</code>和<code>continue</code>的，它们的用法也和大多数编程语言一样。</p>
+<h2 id="用组合命令">用<code>$()</code>组合命令</h2>
+<p><code>$()</code>可以获得一个命令的输出并用它替换，例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">ls</span>); <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;我有一个文件，它叫做<span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">我有一个文件，它叫做Downloads</span><br><span class="line">我有一个文件，它叫做temp</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="find"><code>find</code></h2>
+<p><code>find</code>指令可以用来查找文件，示例如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找所有名称为src的文件夹</span></span><br><span class="line">find . -name src -<span class="built_in">type</span> d</span><br><span class="line"><span class="comment"># 查找所有文件夹路径中包含test的python文件</span></span><br><span class="line">find . -path <span class="string">&#x27;*/test/*.py&#x27;</span> -<span class="built_in">type</span> f</span><br><span class="line"><span class="comment"># 查找前一天修改的所有文件</span></span><br><span class="line">find . -mtime -1</span><br><span class="line"><span class="comment"># 查找所有大小在500k至10M的tar.gz文件</span></span><br><span class="line">find . -size +500k -size -10M -name <span class="string">&#x27;*.tar.gz&#x27;</span></span><br><span class="line"><span class="comment"># 删除全部扩展名为.tmp 的文件</span></span><br><span class="line">find . -name <span class="string">&#x27;*.tmp&#x27;</span> -<span class="built_in">exec</span> <span class="built_in">rm</span> &#123;&#125; \;</span><br><span class="line"><span class="comment"># 查找全部的 PNG 文件并将其转换为 JPG</span></span><br><span class="line">find . -name <span class="string">&#x27;*.png&#x27;</span> -<span class="built_in">exec</span> convert &#123;&#125; &#123;&#125;.jpg \;</span><br></pre></td></tr></table></figure>
+<h2 id="grep"><code>grep</code></h2>
+<p><code>grep</code>命令可以用来从一段文本里面查找想要的字符串，比如</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">cyrus:~$ cat poem.txt</span><br><span class="line">Do not go gentle into that good night</span><br><span class="line"></span><br><span class="line">Dylan Thomas</span><br><span class="line"></span><br><span class="line">Do not go gentle into that good night,</span><br><span class="line">Old age should burn and rave at close of day;</span><br><span class="line">Rage, rage against the dying of the light.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">cyrus:~$ grep light &lt; poem.txt # 获取所有含有“light”的行</span><br><span class="line">Rage, rage against the dying of the light.</span><br><span class="line">Because their words had forked no lightning they</span><br><span class="line">Rage, rage against the dying of the light.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">cyrus:~$ grep eye -C 1 &lt; poem.txt # 获取含有“eye”的行，并同时打印出上下文（Context），往上往下各一行</span><br><span class="line">Grave men, near death, who see with blinding sight</span><br><span class="line">Blind eyes could blaze like meteors and be gay,</span><br><span class="line">Rage, rage against the dying of the light.</span><br><span class="line"></span><br><span class="line">cyrus:~$ grep the -v &lt; poem.txt # -v代表反选，获得所有不含“the”的行</span><br><span class="line">Do not go gentle into that good night</span><br><span class="line"></span><br><span class="line">Dylan Thomas</span><br><span class="line"></span><br><span class="line">Do not go gentle into that good night,</span><br><span class="line">Old age should burn and rave at close of day;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="alias">alias</h2>
+<p><code>alias</code>命令可以创建别名</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 创建常用命令的缩写</span><br><span class="line">alias ll=&quot;ls -lh&quot;</span><br><span class="line"></span><br><span class="line"># 能够少输入很多</span><br><span class="line">alias gs=&quot;git status&quot;</span><br><span class="line">alias gc=&quot;git commit&quot;</span><br><span class="line">alias v=&quot;vim&quot;</span><br><span class="line"></span><br><span class="line"># 手误打错命令也没关系</span><br><span class="line">alias sl=ls</span><br><span class="line"></span><br><span class="line"># 重新定义一些命令行的默认行为</span><br><span class="line">alias mv=&quot;mv -i&quot;           # -i prompts before overwrite</span><br><span class="line">alias mkdir=&quot;mkdir -p&quot;     # -p make parent dirs as needed</span><br><span class="line">alias df=&quot;df -h&quot;           # -h prints human readable format</span><br><span class="line"></span><br><span class="line"># 别名可以组合使用</span><br><span class="line">alias la=&quot;ls -A&quot;</span><br><span class="line">alias lla=&quot;la -l&quot;</span><br><span class="line"></span><br><span class="line"># 在忽略某个别名</span><br><span class="line">\ls</span><br><span class="line"># 或者禁用别名</span><br><span class="line">unalias la</span><br><span class="line"></span><br><span class="line"># 获取别名的定义</span><br><span class="line">alias ll</span><br><span class="line"># 会打印 ll=&#x27;ls -lh&#x27;</span><br></pre></td></tr></table></figure>
+<p>这些别名并不会持续生效，如果想要保存他们，需要在<code>~/.bashrc</code>里面添加对应的配置，就可以每次启动bash的时候都加载这些配置。</p>
+<h2 id="参考链接">参考链接</h2>
+<p><a
+target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/">https://missing.csail.mit.edu/2020/</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell.html">https://www.runoob.com/linux/linux-shell.html</a></p>
+<p>本文属于系列文章：<a
+href="https://cyrus28214.top/tags/%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E7%9A%84Linux-Shell%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/">一看就懂的Linux
+Shell的基础使用</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Shell/" rel="tag"># Shell</a>
+              <a href="/tags/MIT-Missing-Semester%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># MIT Missing Semester学习笔记</a>
+              <a href="/tags/Bash/" rel="tag"># Bash</a>
+              <a href="/tags/%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E7%9A%84Linux-Shell%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" rel="tag"># 一看就懂的Linux Shell的基础使用</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/b161510a6684/" rel="prev" title="非对称加密算法与RSA">
+                  <i class="fa fa-chevron-left"></i> 非对称加密算法与RSA
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/273aaceb4fa7/" rel="next" title="NumPy学习笔记">
+                  NumPy学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介 通常，一个程序的内存布局包括以下部分  代码段 初始化数据段 未初始化数据段（bss） 堆 栈  它们的位置如图所示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序的内存布局">
+<meta property="og:url" content="http://cyrus28214.top/post/38f6f91d6364/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="简介 通常，一个程序的内存布局包括以下部分  代码段 初始化数据段 未初始化数据段（bss） 堆 栈  它们的位置如图所示">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-30T08:01:24.000Z">
+<meta property="article:modified_time" content="2023-12-04T15:39:29.031Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="图解">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="内存">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/38f6f91d6364/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/38f6f91d6364/","path":"post/38f6f91d6364/","title":"程序的内存布局"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>程序的内存布局 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5textcode-segment"><span class="nav-number">2.</span> <span class="nav-text">代码段（Text&#x2F;Code Segment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">数据段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.1.</span> <span class="nav-text">初始化数据段（Initialized
+Data Segment）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E6%AE%B5initialized-data-segment"><span class="nav-number">3.2.</span> <span class="nav-text">未初始化数据段（Initialized
+Data Segment）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88stack"><span class="nav-number">4.</span> <span class="nav-text">栈（Stack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86heap"><span class="nav-number">5.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">6.1.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">6.2.</span> <span class="nav-text">静态变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F"><span class="nav-number">6.3.</span> <span class="nav-text">初始化的变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">6.4.</span> <span class="nav-text">局部变量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/38f6f91d6364/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="程序的内存布局 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          程序的内存布局
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-30 16:01:24" itemprop="dateCreated datePublished" datetime="2023-09-30T16:01:24+08:00">2023-09-30</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="简介">简介</h2>
+<p>通常，一个程序的内存布局包括以下部分</p>
+<ol type="1">
+<li>代码段</li>
+<li>初始化数据段</li>
+<li>未初始化数据段（bss）</li>
+<li>堆</li>
+<li>栈</li>
+</ol>
+<p>它们的位置如图所示</p>
+<p><img
+src="https://cyrus28214.top/images/s/6516efb5c458853aef15f8fb.png" /></p>
+<span id="more"></span>
+<h2 id="代码段textcode-segment">代码段（Text/Code Segment）</h2>
+<p>代码段就是程序代码编译后的机器码储存的位置，储存着计算机可执行的指令。</p>
+<p>代码段通常是<strong>只读</strong>的，防止程序在运行的时候意外修改到自身的代码。</p>
+<h2 id="数据段">数据段</h2>
+<p>数据段只包含全局变量和静态变量，局部变量并不在这块区域里，而是在栈里。</p>
+<h3 id="初始化数据段initialized-data-segment">初始化数据段（Initialized
+Data Segment）</h3>
+<p>顾名思义，就是被程序员手动初始化的全局变量和静态变量。</p>
+<h3
+id="未初始化数据段initialized-data-segment">未初始化数据段（Initialized
+Data Segment）</h3>
+<p>由于一些历史原因，也被叫做bss段，这个名字是“block started by
+symbol”的简称，感兴趣的可以在<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/.bss">wiki百科</a>（需要魔法）上了解。</p>
+<p>未初始化的全局变量和静态变量会被默认置0。</p>
+<h2 id="栈stack">栈（Stack）</h2>
+<p>开头的图中可以看出，栈区和堆区在程序运行的时候朝着不同的方向增长，当两个区域碰上的时候，程序的可分配内存就耗尽了，可能造成程序异常、崩溃等。</p>
+<p>假如向栈内写入了过多数据（如调用函数层数过多，函数使用的局部数据太大），就会造成栈溢出（Stack
+Overflow），使程序报错。有趣的是，那个世界著名的<a
+target="_blank" rel="noopener" href="https://stackoverflow.com/">程序员问答网站StackOverflow</a>名字正源于此，或许正是因为栈溢出错误很常见吧。</p>
+<p>内存中所说的栈，确实和数据结构中的栈类似，它也是一个先入后出（LIFO）的结构，每当调用一个函数，就会把函数运行所需要的值压栈（Push），包括实参、返回地址，形成一个<strong>栈帧（Stack
+Frame）</strong>，然后为程序运行中可能的局部变量分配空间。</p>
+<p>每个栈帧保存着函数运行所需要的环境，当函数被调用，新的栈帧被压入栈，当函数返回了，栈帧被弹出（Pop），程序恢复到上一个栈帧对应的环境。因此，每一个栈帧对应着一个未执行完的函数。</p>
+<p>递归函数也不特殊的，每当进行一层递归，就将栈帧压栈，每一层递归的栈帧之间相互独立，不同层间的变量不会相互影响。</p>
+<p>例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">times2</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> add(x, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, times2(<span class="number">3</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一开始我们的程序只有<code>main</code>在执行</p>
+<p><img
+src="https://cyrus28214.top/images/s/6517d488c458853aef4a0006.png" /></p>
+<p>当<code>times2</code>被调用，新的栈帧入栈，保存了传入的值<code>3</code>，以及将返回值返回地址（图上未画出）等。</p>
+<p><img
+src="https://cyrus28214.top/images/s/6517d488c458853aef49fffc.png" /></p>
+<p><code>add</code>被调用。</p>
+<p><img
+src="https://cyrus28214.top/images/s/6517d488c458853aef49fff0.png" /></p>
+<p><code>add</code>返回了，弹栈，恢复到执行<code>times2</code>的上下文。</p>
+<p><img
+src="https://cyrus28214.top/images/s/6517d488c458853aef49fffc.png" /></p>
+<p><code>times2</code>返回。</p>
+<p><img
+src="https://cyrus28214.top/images/s/6517d488c458853aef4a0006.png" /></p>
+<h2 id="堆heap">堆（Heap）</h2>
+<p>和栈不同的是，堆这个名字和数据结构的堆没有任何关系，他只是一个分配动态内存的空间，堆从bss段结尾开始，朝向栈的方向增长。在C语言中，使用<code>malloc</code>、<code>realloc</code>、<code>free</code>命令所管理的内存就是这块区域。</p>
+<hr />
+<h2 id="例子">例子</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example # 使用-c让编译器只编译不链接，这样用size看到的程序大小就只包括我们自己写的代码</span><br><span class="line">size example</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">   text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">     67       0       0      67      43 example</span></span><br></pre></td></tr></table></figure>
+<h3 id="全局变量">全局变量</h3>
+<p>使用<code>gcc</code>编译后，可以用<code>size</code>命令查看可执行程序的内存布局，其中“text”就是代码段，“data”就是已初始化数据段，“bss”就是未初始化数据段，“dec”是十进制下的程序总大小，“hex”是十六进制下的程序总大小。</p>
+<p>我们为程序增加一个全局变量，且不初始化它。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global;</span><br><span class="line"><span class="comment">/*一般来说，全局变量是不需要添加static的</span></span><br><span class="line"><span class="comment">这里添加static是为了让编译器知道这个变量定义在当前文件里，立即分配bss空间</span></span><br><span class="line"><span class="comment">而不是把他当做一个弱声明（weak declaration），在链接的时候再一起分配空间。</span></span><br><span class="line"><span class="comment">可以自己试一下如果不加static有什么不同，想想为什么。</span></span><br><span class="line"><span class="comment">如果无法理解可以先跳过，这不是本文的重点*/</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       4      71      47 example</span></span><br></pre></td></tr></table></figure>
+<p>可以看到bss字段大小增加了4个字节，恰好是一个int变量的大小。</p>
+<h3 id="静态变量">静态变量</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> static_variable;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       8      75      4b example</span></span><br></pre></td></tr></table></figure>
+<p>添加一个变量后，bss又增加了4个字节</p>
+<h3 id="初始化的变量">初始化的变量</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> global = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> static_variable;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       4       4      75      4b example</span></span><br></pre></td></tr></table></figure>
+<p>我们将<code>global</code>初始化为1，可以看到，现在<code>global</code>被放到了.data里而不是.bss里。对于静态变量<code>static_variable</code>，效果一样，就不展示了。</p>
+<h3 id="局部变量">局部变量</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//example.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> local[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -c example.c -o example &amp;&amp; size example</span><br><span class="line"><span class="comment">#    text    data     bss     dec     hex filename</span></span><br><span class="line"><span class="comment">#      67       0       0      67      43 example</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，局部变量既不在.data里，又不在.bss里，那么他在哪里呢，前文讲过，局部变量在<strong>栈</strong>里，当函数调用时动态分配空间，并不是编译时确定的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E8%A7%A3/" rel="tag"># 图解</a>
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
+              <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/a67f2adf2678/" rel="prev" title="实现常用排序算法（三）堆排序">
+                  <i class="fa fa-chevron-left"></i> 实现常用排序算法（三）堆排序
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/4e56adf6545c/" rel="next" title="环境变量path是什么">
+                  环境变量path是什么 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

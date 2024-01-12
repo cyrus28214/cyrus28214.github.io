@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="非对称加密 以下内容引自维基百科：非对称加密  公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非对称加密算法与RSA">
+<meta property="og:url" content="http://cyrus28214.top/post/b161510a6684/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="非对称加密 以下内容引自维基百科：非对称加密  公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-27T16:31:38.000Z">
+<meta property="article:modified_time" content="2023-12-24T13:36:39.291Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="信息安全">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="数论">
+<meta property="article:tag" content="非对称加密">
+<meta property="article:tag" content="RSA">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/b161510a6684/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/b161510a6684/","path":"post/b161510a6684/","title":"非对称加密算法与RSA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>非对称加密算法与RSA | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="nav-number">1.</span> <span class="nav-text">非对称加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsa%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">RSA算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC"><span class="nav-number">2.1.</span> <span class="nav-text">数学推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/b161510a6684/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="非对称加密算法与RSA | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          非对称加密算法与RSA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-28 00:31:38" itemprop="dateCreated datePublished" datetime="2023-11-28T00:31:38+08:00">2023-11-28</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="非对称加密">非对称加密</h2>
+<p>以下内容引自维基百科：<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86">非对称加密</a></p>
+<blockquote>
+<p>公开密钥密码学（英语：Public-key
+cryptography）也称非对称式密码学（英语：Asymmetric
+cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。由于加密和解密需要两个不同的密钥，故被称为非对称加密；不同于加密和解密都使用同一个密钥的对称加密。公钥可以公开，可任意向外发布；私钥不可以公开，必须由用户自行严格秘密保管，绝不透过任何途径向任何人提供，也不会透露给被信任的要通信的另一方。</p>
+</blockquote>
+<span id="more"></span>
+<blockquote>
+<p>基于公开密钥加密的特性，它还能提供数字签名的功能，使电子文件可以得到如同在纸本文件上亲笔签署的效果。</p>
+<p>对称密码是指在加密和解密时使用同一个密钥的方式，公钥密码则是指在加密和解密时使用不同密钥的方式。</p>
+<p>对称密钥加密牵涉到密钥管理的问题，尤其是密钥交换，它需要通信双方在通信之前先透过另一个安全的渠道交换共享的密钥，才可以安全地把密文透过不安全的渠道发送；对称密钥一旦被窃，其所作的加密将即时失效；而在互联网，如果通信双方分隔异地而素未谋面，则对称加密事先所需要的“安全渠道”变得不可行；非对称加密则容许加密公钥随便散布，解密的私钥不发往任何用户，只在单方保管；如此，即使公钥在网上被截获，如果没有与其匹配的私钥，也无法解密，极为适合在互联网上使用。</p>
+<p>另一方面，公钥解密的特性可以形成数字签名，使数据和文件受到保护并可信赖；如果公钥透过数字证书认证机构签授成为电子证书，更可作为数字身份的认证，这都是对称密钥加密无法实现的。</p>
+<p>不过，公钥加密在在计算上相当复杂，性能欠佳、远远不比对称加密；因此，在一般实际情况下，往往通过公钥加密来随机建立临时的对称秘钥，亦即对话键，然后才通过对称加密来传输大量、主体的数据。</p>
+</blockquote>
+<p>对称加密很符合直觉，就和我们日常生活中的一把钥匙开一把锁，需要使用同一把钥匙加锁和开锁。但是这有一个问题：</p>
+<p>假设有两个人分别叫做Alice和Bob，他们想要交换信息，但是不想要让第三人Eve知道他们在交流什么。Alice使用对称加密生成了一把钥匙，然后将信件用钥匙锁在箱子里，再把箱子寄给Bob。</p>
+<p>问题是，Bob需也要钥匙来打开箱子，Alice如果把钥匙也寄给Bob，没准Eve就会截获这个快递，拿到钥匙，进而知道一切。</p>
+<p>而非对称加密是一种神奇的加密方式，它会给你两把钥匙，用一把锁上箱子，就必须使用另一把打开。</p>
+<p>Alice使用非对称加密生成了一对密钥，将其中一把钥匙公开，称作
+<strong>公钥</strong> ，另一把Alice自己好好保管，不让别人得到，称作
+<strong>私钥</strong> 。那么这两把钥匙就可以完成这些神奇的操作：</p>
+<ul>
+<li>验证身份：
+Alice在发布消息的时候使用私钥加密，将密文发送给Bob，如果Bob可以使用公钥成功解密密文，说明这个消息就是Alice发来的。其他人无法冒充Alice发消息，因为他们没有Alice的私钥。这里非对称加密起到了
+<strong>数字签名</strong> 的效果。</li>
+<li>加密通信：
+现在Bob要给Alice发消息，但是Bob不想要让别人知道他给Alice发了什么，Bob可以将明文用公钥加密，这样只有掌握了私钥的Alice可以看到明文。</li>
+</ul>
+<p>非对称加密一般需要耗费更长的时间，使用非对称加密交换大量的信息会拖慢传递信息的速度。因此在实践中，会先使用非对称加密传递对称加密的密钥，再使用对称加密传递信息。</p>
+<h2 id="rsa算法">RSA算法</h2>
+<p>而RSA是非对称加密的一种实现方法，它的可靠性建立于大数的质因数分解的计算难度，要理解RSA算法的实现，你需要先了解一些数论的前置知识。</p>
+<p>以下内容引自维基百科：<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95">RSA加密算法</a></p>
+<blockquote>
+<p>RSA加密算法是一种 <strong>非对称加密算法</strong>
+，在公开密钥加密和电子商业中被广泛使用。</p>
+<p>对极大整数做因数分解的难度决定了 RSA
+算法的可靠性。换言之，对一极大整数做因数分解愈困难，RSA
+算法愈可靠。假如有人找到一种快速因数分解的算法的话，那么用 RSA
+加密的信息的可靠性就会极度下降。但找到这样的算法的可能性是非常小的。今天只有短的
+RSA
+钥匙才可能被强力方式破解。到2020年为止，世界上还没有任何可靠的攻击RSA算法的方式。只要其钥匙的长度足够长，用RSA加密的信息实际上是不能被破解的。</p>
+</blockquote>
+<h3 id="数学推导">数学推导</h3>
+<p>前置知识：<a
+href="https://cyrus28214.top/post/7bd4548aa0da/">费马小定理和欧拉定理</a></p>
+<p>先找到两个大质数 <span class="math inline">\(p,q\)</span>
+（这两个数越大加密越安全，但相应地，计算也会变慢）</p>
+<p>计算它们的积 <span class="math inline">\(n=pq\)</span></p>
+<p>计算 <span class="math inline">\(n\)</span> 的欧拉函数 <span
+class="math inline">\(\varphi(n)=(p-1)(q-1)\)</span></p>
+<p>找到一个 <span class="math inline">\(e\)</span> 满足 <span
+class="math inline">\(e \leq n\)</span> 且 <span
+class="math inline">\(\gcd(e,n)=1\)</span> （<span
+class="math inline">\(e\)</span> 的选取要让 <span
+class="math inline">\(m^e &gt; n\)</span>，否则直接对密文 <span
+class="math inline">\(c\)</span> 开 <span
+class="math inline">\(e\)</span> 次根就会得到明文）</p>
+<p>计算 <span class="math inline">\(e\)</span> 模 <span
+class="math inline">\(\varphi(n)\)</span> 的逆元 <span
+class="math inline">\(d\)</span>，即</p>
+<p><span class="math display">\[ed \equiv 1
+\pmod{\varphi(n)}\]</span></p>
+<p>则两个二元组 <span class="math inline">\((e,n),\;(d,n)\)</span>
+就为一对密钥。</p>
+<p>加密和解密的过程是一样的，只需要将文本转化为一个正整数，然后进行模
+<span class="math inline">\(n\)</span> 意义下的指数运算。</p>
+<p>取假设需要加密的明文为 <span class="math inline">\(m\)</span> ，<span
+class="math inline">\(m\)</span> 需要满足 <span class="math inline">\(m
+&lt; n\)</span>，这样才能保证模 <span class="math inline">\(n\)</span>
+之后 <span class="math inline">\(m\)</span> 不变。</p>
+<p>则用 <span class="math inline">\((e,n)\)</span> 加密 <span
+class="math inline">\(m\)</span> 后的密文为</p>
+<p><span class="math display">\[c\equiv m^e\pmod{n}\]</span></p>
+<p>再使用 <span class="math inline">\((d,n)\)</span> 解密</p>
+<p><span class="math display">\[c^d\equiv m^{ed}\equiv
+m^{ed\bmod\varphi(n)}\equiv m\pmod{n}\]</span></p>
+<p>就得到了明文。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>代码实现只作为示范，实际运用请使用一些密码学的库，它们经过验证、功能更丰富、效率更高，比如
+Python 的 pycrypto、JS 的 cryptico 库等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅供理解RSA使用，请不要用在真正的加密场景</span></span><br><span class="line"><span class="keyword">import</span> math, random</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">millerRabin</span>(<span class="params">n, test_time</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    使用 miller rabin 素性测试检验是否是一个素数</span></span><br><span class="line"><span class="string">    test_set 是用来进行测试的 a 的集合</span></span><br><span class="line"><span class="string">    miller rabin 是一个概率算法，有概率将合数误判为素数，</span></span><br><span class="line"><span class="string">    但是只要测试次数足够多，出错的可能性非常低，</span></span><br><span class="line"><span class="string">    因此这里可以使用 miller rabin 素性测试</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> n == <span class="number">2</span></span><br><span class="line">    r, s = <span class="number">0</span>, n - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> s % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">        s //= <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(test_time):</span><br><span class="line">        a = random.randint(<span class="number">2</span>, n-<span class="number">1</span>)</span><br><span class="line">        x = <span class="built_in">pow</span>(a, s, n)</span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">1</span> <span class="keyword">or</span> x == n - <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(r - <span class="number">1</span>):</span><br><span class="line">            x = x * x % n</span><br><span class="line">            <span class="keyword">if</span> x == n - <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isPrime</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">return</span> millerRabin(n, <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">randCond</span>(<span class="params">l, r, cond</span>):</span><br><span class="line">    n = random.randint(l, r)</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> cond(n):</span><br><span class="line">        n = random.randint(l, r)</span><br><span class="line">    <span class="keyword">return</span> n</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">genPrime</span>(<span class="params">l</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    返回二进制长度为 l 的随机素数</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> randCond(<span class="number">1</span>&lt;&lt;l-<span class="number">1</span>, (<span class="number">1</span>&lt;&lt;l)-<span class="number">1</span>, isPrime)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">genRsaKey</span>(<span class="params">l</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    返回二元组，分别是公钥和私钥</span></span><br><span class="line"><span class="string">    l: n 的二进制长度</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    p = genPrime(l//<span class="number">2</span> + <span class="number">1</span>)</span><br><span class="line">    q = genPrime(l//<span class="number">2</span> + <span class="number">1</span>)</span><br><span class="line">    n = p * q </span><br><span class="line">    phin = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># e 可以取任意小于 phi(n)=(p-1)*(q-1) 且与 phi(n) 互质的数，为了方便可以直接取一个固定的质数如65537，这里使用随机数</span></span><br><span class="line">    e = randCond(<span class="number">3</span>, phin - <span class="number">1</span>, <span class="keyword">lambda</span> x: math.gcd(x, phin) == <span class="number">1</span>)</span><br><span class="line">    d = <span class="built_in">pow</span>(e, -<span class="number">1</span>, phin)</span><br><span class="line">    <span class="keyword">return</span> (e, n), (d, n)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Rsa</span>(<span class="params">m, key</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(m, *key)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">LENGTH = <span class="number">512</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Test</span>(<span class="params">test_time</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(test_time):</span><br><span class="line">        pub, pri = genRsaKey(LENGTH)</span><br><span class="line">        m = random.randint(<span class="number">2</span>, (<span class="number">1</span>&lt;&lt;LENGTH-<span class="number">1</span>)-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">assert</span> Rsa(Rsa(m, pub), pri) == m</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pub_key, pri_key = genRsaKey(LENGTH)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;e: <span class="subst">&#123;<span class="built_in">hex</span>(pub_key[<span class="number">0</span>])[<span class="number">2</span>:]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;d: <span class="subst">&#123;<span class="built_in">hex</span>(pri_key[<span class="number">0</span>])[<span class="number">2</span>:]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;n: <span class="subst">&#123;<span class="built_in">hex</span>(pub_key[<span class="number">1</span>])[<span class="number">2</span>:]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    m = <span class="built_in">input</span>(<span class="string">f&#x27;enter a message (no more than <span class="subst">&#123;LENGTH//<span class="number">8</span>&#125;</span> ascii characters): &#x27;</span>).encode(<span class="string">&#x27;ascii&#x27;</span>)</span><br><span class="line">    l = <span class="built_in">len</span>(m)</span><br><span class="line">    m = <span class="built_in">int</span>.from_bytes(m, <span class="string">&#x27;big&#x27;</span>) <span class="comment"># 转成 int</span></span><br><span class="line"></span><br><span class="line">    c = Rsa(m, pub_key)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;ciphertext: <span class="subst">&#123;<span class="built_in">hex</span>(c)[<span class="number">2</span>:]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    m2 = Rsa(c, pri_key)</span><br><span class="line">    m2 = m2.to_bytes(l, <span class="string">&#x27;big&#x27;</span>).decode(<span class="string">&#x27;ascii&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;plaintext: <span class="subst">&#123;m2&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运行程序</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">e: 408f68187d69b88ea64d0b516864d19a98daa137d8a9fdbc54aa38290252ac9bfc7a4d4b366b2da3b8cff0ab658676d41652c3f899455db438ff22d29a799f21</span><br><span class="line">d: 251672123c6a1bf9aa22fc171ed58905d205404864c1ae0ab9b586911d43c5334e2664d0db813b0225b66088405e523569c083986ff299b3b03777f2822c4e831</span><br><span class="line">n: 2ab2a544ef5a7f5b701b6cb80fb5fffc8a6509f5f2d03ceeefa4190134a393d239914166d31a53a24a124e7cf54b15e3b82644f0c0d4cae9b7f66bf9b41277f6f</span><br><span class="line">enter a message (no more than 64 ascii characters): cyrus28214.top | Think twice, code once.</span><br><span class="line">ciphertext: 16f3fd561d9cc07dd7420f993de007a171a6661f4475d7f0ad4264279c393741e1c0f19089ed60536bc4796c4917ed8887ec60ff4847b61c5a9b4ce7e7829c830</span><br><span class="line">plaintext: cyrus28214.top | Think twice, code once.</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 信息安全</a>
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+              <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+              <a href="/tags/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/" rel="tag"># 非对称加密</a>
+              <a href="/tags/RSA/" rel="tag"># RSA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/f8fb80356e75/" rel="prev" title="用Python写爬虫的实例一则">
+                  <i class="fa fa-chevron-left"></i> 用Python写爬虫的实例一则
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/fe9823046871/" rel="next" title="一看就懂的Linux Shell的基础使用（二）">
+                  一看就懂的Linux Shell的基础使用（二） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

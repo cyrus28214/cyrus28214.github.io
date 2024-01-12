@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在命令行里键入以下命令： 1sqlite3 如果你按照上一个章节中那样配置好了环境，应该可以看到以下输出。 123# SQLite version 3.43.1 2023-09-11 12:01:27# Enter &quot;.help&quot; for usage hints.# sqlite&gt; 看到输入提示符变成“sqlite&gt;”，我们就进入了sqlite的命令行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL学习笔记（二）创建一个表">
+<meta property="og:url" content="http://cyrus28214.top/post/3f6aa83f99ff/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="在命令行里键入以下命令： 1sqlite3 如果你按照上一个章节中那样配置好了环境，应该可以看到以下输出。 123# SQLite version 3.43.1 2023-09-11 12:01:27# Enter &quot;.help&quot; for usage hints.# sqlite&gt; 看到输入提示符变成“sqlite&gt;”，我们就进入了sqlite的命令行。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-02T06:29:55.000Z">
+<meta property="article:modified_time" content="2023-12-04T16:01:46.686Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="系列">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="SQL学习笔记">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="SQLite">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/3f6aa83f99ff/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/3f6aa83f99ff/","path":"post/3f6aa83f99ff/","title":"SQL学习笔记（二）创建一个表"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SQL学习笔记（二）创建一个表 | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">基本语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">查看表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">打开数据库</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/3f6aa83f99ff/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SQL学习笔记（二）创建一个表 | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQL学习笔记（二）创建一个表
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-02 14:29:55" itemprop="dateCreated datePublished" datetime="2023-10-02T14:29:55+08:00">2023-10-02</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在命令行里键入以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite3</span><br></pre></td></tr></table></figure>
+<p>如果你按照上一个章节中那样配置好了环境，应该可以看到以下输出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SQLite version 3.43.1 2023-09-11 12:01:27</span></span><br><span class="line"><span class="comment"># Enter &quot;.help&quot; for usage hints.</span></span><br><span class="line"><span class="comment"># sqlite&gt;</span></span><br></pre></td></tr></table></figure>
+<p>看到输入提示符变成“sqlite&gt;”，我们就进入了sqlite的命令行。</p>
+<h2 id="基本语句">基本语句</h2>
+<p>数据库有四个基本操作<span style="color:#DC143C">CRUD</span>，即<span
+style="color:#DC143C">C</span>reate增、<span
+style="color:#DC143C">R</span>ead查、<span
+style="color:#DC143C">U</span>pdate改、<span
+style="color:#DC143C">D</span>elete删，在SQL中分别对应以下语句。</p>
+<ul>
+<li>增：CREATE, INSERT</li>
+<li>查：SELECT</li>
+<li>改：UPDATE</li>
+<li>删：DELETE, DROP</li>
+</ul>
+<span id="more"></span>
+<h3 id="创建一个表">创建一个表</h3>
+<p>使用以下命令来创建一个表，注意所有的SQL语句末尾都要有分号。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (<span class="string">&#x27;列名&#x27;</span> 数据类型, ...);</span><br></pre></td></tr></table></figure>
+<p><em>不同的数据库可能对相同的类型有不同的名称、不同的长度、数据范围</em>
+以sqlite为例，常用的数据类型有以下几种：</p>
+<table>
+<thead>
+<tr class="header">
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NULL</td>
+<td>空值NULL</td>
+</tr>
+<tr class="even">
+<td>INTEGER</td>
+<td>整数，具体位数取决于插入数据的大小</td>
+</tr>
+<tr class="odd">
+<td>REAL</td>
+<td>8位IEEE浮点数</td>
+</tr>
+<tr class="even">
+<td>TEXT</td>
+<td>字符串</td>
+</tr>
+<tr class="odd">
+<td>BLOB</td>
+<td>二进制大对象（Binary Large Object）</td>
+</tr>
+</tbody>
+</table>
+<p>另外，SQLite还提供了两个修饰符：<code>NOT NULL</code>和<code>UNIQUE</code>，分别表示这个字段不能为空，以及这个字段必须唯一。</p>
+<p>根据我们的需求，创建一个这样的表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> books (<span class="string">&#x27;title&#x27;</span> TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span>, <span class="string">&#x27;price&#x27;</span> <span class="type">REAL</span>, <span class="string">&#x27;sales&#x27;</span> <span class="type">INTEGER</span>, <span class="string">&#x27;category&#x27;</span> TEXT);</span><br></pre></td></tr></table></figure>
+<p>我们先把一些数据拷贝到books.csv中（csv是Comma-Separated
+Values，逗号分隔的值的缩写）</p>
+<p><em>数据是ChatGPT生成的，所以不要在意一些不合理的小细节</em></p>
+<p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">The Great Gatsby,50.99,4,Fiction</span><br><span class="line">To Kill a Mockingbird,25.99,3,Fiction</span><br><span class="line">Pride and Prejudice,40.99,2,Fiction</span><br><span class="line">1984,35.99,1,Science Fiction</span><br><span class="line">The Catcher in the Rye,60.99,5,Fiction</span><br><span class="line">Animal Farm,30.5,2,Fiction</span><br><span class="line">The Hobbit,45,4,Fantasy</span><br><span class="line">The Lord of the Rings,55.99,3,Fantasy</span><br><span class="line">Harry Potter and the Sorcerer&#x27;s Stone,20,1,Fantasy</span><br><span class="line">The Chronicles of Narnia,15.98,5,Fantasy</span><br><span class="line">Moby Dick,45.99,3,Fiction</span><br><span class="line">The Odyssey,30.99,2,Classic</span><br><span class="line">To the Lighthouse,40,4,Classic</span><br><span class="line">The Adventures of Tom Sawyer,25.1,2,Classic</span><br><span class="line">War and Peace,50.99,4,Classic</span><br><span class="line">Crime and Punishment,35.99,1,Classic</span><br><span class="line">The Alchemist,55.99,2,Fiction</span><br><span class="line">Fahrenheit 451,20.99,4,Science Fiction</span><br><span class="line">The Picture of Dorian Gray,15.98,5,Classic</span><br><span class="line">Brave New World,60.3,3,Science Fiction</span><br></pre></td></tr></table></figure></p>
+<p>将sqlite切换为csv模式并导入这个.csv文件。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.mode csv</span><br><span class="line">.import books.csv books</span><br></pre></td></tr></table></figure>
+<p><em>所有以逗号开头的命令都不属于SQL，而是SQLite的语法</em></p>
+<h3 id="查看表">查看表</h3>
+<p>这样可以查看有哪些表，每个表有哪些字段：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.schema</span><br></pre></td></tr></table></figure>
+<p>这样查看表的内容：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名,... <span class="keyword">FROM</span> 表名;</span><br></pre></td></tr></table></figure>
+<p>切换到box模式，这样的输出比较好看，然后我们用<code>SELECT</code>命令查看一下导入的数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.mode box</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> books;</span><br></pre></td></tr></table></figure>
+<p>“*”表示通配符，即选择所有的列，在这里相当于<code>SELECT name, price, sales FROM books;</code></p>
+<p>可以看到输出了刚刚导入的表格</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────────────────────┬───────┬───────┬─────────────────┐</span><br><span class="line">│                 title                 │ price │ sales │    category     │</span><br><span class="line">├───────────────────────────────────────┼───────┼───────┼─────────────────┤</span><br><span class="line">│ The Great Gatsby                      │ 50.99 │ 4     │ Fiction         │</span><br><span class="line">│ To Kill a Mockingbird                 │ 25.99 │ 3     │ Fiction         │</span><br><span class="line">│ Pride and Prejudice                   │ 40.99 │ 2     │ Fiction         │</span><br><span class="line">│ 1984                                  │ 35.99 │ 1     │ Science Fiction │</span><br><span class="line">│ The Catcher in the Rye                │ 60.99 │ 5     │ Fiction         │</span><br><span class="line">│ Animal Farm                           │ 30.5  │ 2     │ Fiction         │</span><br><span class="line">│ The Hobbit                            │ 45.0  │ 4     │ Fantasy         │</span><br><span class="line">│ The Lord of the Rings                 │ 55.99 │ 3     │ Fantasy         │</span><br><span class="line">│ Harry Potter and the Sorcerer&#x27;s Stone │ 20.0  │ 1     │ Fantasy         │</span><br><span class="line">│ The Chronicles of Narnia              │ 15.98 │ 5     │ Fantasy         │</span><br><span class="line">│ Moby Dick                             │ 45.99 │ 3     │ Fiction         │</span><br><span class="line">│ The Odyssey                           │ 30.99 │ 2     │ Classic         │</span><br><span class="line">│ To the Lighthouse                     │ 40.0  │ 4     │ Classic         │</span><br><span class="line">│ The Adventures of Tom Sawyer          │ 25.1  │ 2     │ Classic         │</span><br><span class="line">│ War and Peace                         │ 50.99 │ 4     │ Classic         │</span><br><span class="line">│ Crime and Punishment                  │ 35.99 │ 1     │ Classic         │</span><br><span class="line">│ The Alchemist                         │ 55.99 │ 2     │ Fiction         │</span><br><span class="line">│ Fahrenheit 451                        │ 20.99 │ 4     │ Science Fiction │</span><br><span class="line">│ The Picture of Dorian Gray            │ 15.98 │ 5     │ Classic         │</span><br><span class="line">│ Brave New World                       │ 60.3  │ 3     │ Science Fiction │</span><br><span class="line">└───────────────────────────────────────┴───────┴───────┴─────────────────┘</span><br></pre></td></tr></table></figure>
+<p>当然，不一定要选择所有的列，如果输入<code>SELECT name FROM books;</code>就只会显示所有的书名。试一试吧！</p>
+<h2 id="打开数据库">打开数据库</h2>
+<p>输入<code>.quit</code>退出SQLite。</p>
+<p>你会发现，SQLite为你在目录下自动创建了一个名为“books.db”的文件。</p>
+<p>下一次打开数据库只需要输入<code>sqlite3 books.db</code>即可恢复原来的数据。</p>
+<p>本文属于系列文章：<a
+href="https://cyrus28214.top/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">SQL学习笔记</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SQL学习笔记</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+              <a href="/tags/SQLite/" rel="tag"># SQLite</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/0e8d2ef41193/" rel="prev" title="SQL学习笔记（一）安装SQLite">
+                  <i class="fa fa-chevron-left"></i> SQL学习笔记（一）安装SQLite
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/6495a78f89c0/" rel="next" title="SQL学习笔记（三）基本查询语句">
+                  SQL学习笔记（三）基本查询语句 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

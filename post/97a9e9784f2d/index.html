@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、 C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。 Python中内置了SQLite3，你只需要执行 1import sqlite3 就可以开始使用了，不需要安装任何第三方库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL学习笔记（九）在Python中使用SQL">
+<meta property="og:url" content="http://cyrus28214.top/post/97a9e9784f2d/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、 C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。 Python中内置了SQLite3，你只需要执行 1import sqlite3 就可以开始使用了，不需要安装任何第三方库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-10T04:12:22.000Z">
+<meta property="article:modified_time" content="2023-12-04T16:46:09.513Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="系列">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="SQL学习笔记">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="SQLite">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/97a9e9784f2d/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/97a9e9784f2d/","path":"post/97a9e9784f2d/","title":"SQL学习笔记（九）在Python中使用SQL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SQL学习笔记（九）在Python中使用SQL | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/97a9e9784f2d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SQL学习笔记（九）在Python中使用SQL | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQL学习笔记（九）在Python中使用SQL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-10 12:12:22" itemprop="dateCreated datePublished" datetime="2023-11-10T12:12:22+08:00">2023-11-10</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、
+C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。</p>
+<p>Python中内置了SQLite3，你只需要执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3</span><br></pre></td></tr></table></figure>
+<p>就可以开始使用了，不需要安装任何第三方库。</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">db = sqlite3.connect(<span class="string">&quot;database.db&quot;</span>) </span><br><span class="line"><span class="comment"># 连接到一个现有的数据库，如果没有这个文件就创建它</span></span><br><span class="line"></span><br><span class="line">cur = db.cursor() </span><br><span class="line"><span class="comment"># 创建一个cursor，才能执行SQL语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cur.execute(你想执行的SQL语句)</span></span><br><span class="line">cur.execute(<span class="string">&quot;CREATE TABLE books (&#x27;title&#x27; TEXT NOT NULL, &#x27;price&#x27; REAL, &#x27;sales&#x27; INTEGER, &#x27;category&#x27; TEXT);&quot;</span>)  </span><br><span class="line"><span class="comment"># 创建一个表</span></span><br><span class="line"></span><br><span class="line">res = cur.execute(<span class="string">&quot;SELECT name FROM sqlite_master&quot;</span>)</span><br><span class="line"><span class="comment"># SQLite内置了一个名叫“sqlite_master”的表，储存了所有已创建的表</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res.fetchone())</span><br><span class="line"><span class="comment"># 输出(&#x27;books&#x27;,)</span></span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    INSERT INTO books VALUES</span></span><br><span class="line"><span class="string">        (&#x27;The Great Gatsby&#x27;, 50.99, 4, &#x27;Fiction&#x27;),</span></span><br><span class="line"><span class="string">        (&#x27;The Lord of the Rings&#x27;, 55.99, 3, &#x27;Fantasy&#x27;)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line">db.commit()</span><br><span class="line"><span class="comment"># 插入两名学生</span></span><br><span class="line"><span class="comment"># 会自动地创建事务，无需手动加上“BEGIN TRANSACTION”</span></span><br><span class="line"><span class="comment"># 需要手动db.commit()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">category = <span class="built_in">input</span>(<span class="string">&quot;category:&quot;</span>)</span><br><span class="line">res = cur.execute(<span class="string">&quot;SELECT title FROM books WHERE category = ?&quot;</span>, (category, ))</span><br><span class="line"><span class="comment"># 注意传入的第二个参数是一个元组，不能直接传category</span></span><br><span class="line"><span class="comment"># 请使用“?”占位符，不要使用 f&quot;SELECT title FROM books WHERE category = &#123;category&#125;&quot;或者其他任何方式</span></span><br><span class="line"><span class="comment"># 否则可能会受到SQL注入攻击（SQL injection attacks）</span></span><br><span class="line"><span class="comment"># “?”占位符会自动处理传入的字符串，防止SQL注入</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># cur.executemany可以批量执行SQL语句，推荐使用executemany而不是for循环嵌套execute</span></span><br><span class="line">cur.executemany(<span class="string">&quot;INSERT INTO books VALUES(?, ?, ?, ?);&quot;</span>, data)</span><br><span class="line">db.commit()</span><br><span class="line"></span><br><span class="line">res = cur.execute(<span class="string">&#x27;SELECT title, price FROM books&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> res:</span><br><span class="line">    <span class="built_in">print</span>(row)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">输出</span></span><br><span class="line"><span class="string">(&#x27;The Great Gatsby&#x27;, 50.99)</span></span><br><span class="line"><span class="string">(&#x27;The Lord of the Rings&#x27;, 55.99)</span></span><br><span class="line"><span class="string">(&#x27;To Kill a Mockingbird&#x27;, 25.99)</span></span><br><span class="line"><span class="string">(&#x27;Pride and Prejudice&#x27;, 40.99)</span></span><br><span class="line"><span class="string">(&#x27;To Kill a Mockingbird&#x27;, 25.99)</span></span><br><span class="line"><span class="string">(&#x27;Pride and Prejudice&#x27;, 40.99)</span></span><br><span class="line"><span class="string">(&#x27;1984&#x27;, 35.99)</span></span><br><span class="line"><span class="string">(&#x27;The Catcher in the Rye&#x27;, 60.99)</span></span><br><span class="line"><span class="string">(&#x27;Animal Farm&#x27;, 30.5)</span></span><br><span class="line"><span class="string">(&#x27;The Hobbit&#x27;, 45.0)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">db.close()</span><br><span class="line"><span class="comment"># 关闭数据库连接，现在可以连接别的数据库</span></span><br></pre></td></tr></table></figure>
+<p>本文属于系列文章：<a
+href="https://cyrus28214.top/tags/%E5%AE%9E%E7%8E%B0%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">SQL学习笔记</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E7%B3%BB%E5%88%97/" rel="tag"># 系列</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/SQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># SQL学习笔记</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+              <a href="/tags/SQLite/" rel="tag"># SQLite</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/cccf6f3d6d50/" rel="prev" title="Linux中的三种时间戳：atime、mtime、ctime">
+                  <i class="fa fa-chevron-left"></i> Linux中的三种时间戳：atime、mtime、ctime
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/7bd4548aa0da/" rel="next" title="费马小定理和欧拉定理">
+                  费马小定理和欧拉定理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

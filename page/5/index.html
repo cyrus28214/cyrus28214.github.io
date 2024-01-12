@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Cyrus&#39; Blog">
+<meta property="og:url" content="http://cyrus28214.top/page/5/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="计算机">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="个人博客">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/page/5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/5/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cyrus' Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/96d2515a01ca/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/96d2515a01ca/" class="post-title-link" itemprop="url">主定理的应用范例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-14 21:35:10" itemprop="dateCreated datePublished" datetime="2023-09-14T21:35:10+08:00">2023-09-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前置知识渐进复杂度记号">前置知识——渐进复杂度记号</h2>
+<p>本文假设你已经掌握了渐进复杂度的含义，并且熟悉大O记号表示复杂度。除了大O记号外，这里再简单介绍一下其他的复杂度记号。<strong>如果你掌握了这些符号，可以跳过本段。</strong></p>
+<p>渐进复杂度的记号有<span class="math inline">\(\Theta\)</span>、<span
+class="math inline">\(O\)</span>、<span
+class="math inline">\(\Omega\)</span>、<span
+class="math inline">\(o\)</span>、<span
+class="math inline">\(\omega\)</span>，主定理用到了前三个，但为了完整性这里全部介绍。</p>
+<h3 id="theta"><span class="math inline">\(\Theta\)</span></h3>
+<p>若<span class="math inline">\(\exists c_1,c_2,n_0 \gt
+0\)</span>，使得<span class="math inline">\(\forall n \geq
+n_0\)</span>有<span class="math inline">\(c_1 \cdot g(n) \leq f(n) \leq
+c_2 \cdot g(n)\)</span>，则称<span class="math inline">\(f(n) =
+\Theta(g(n))\)</span></p>
+<p><span
+class="math inline">\(\Theta\)</span>可以精确的表示算法的渐进复杂度，相应地，使用时也要注意严谨性。</p>
+<p>用表示大小的符号类比的话，<span
+class="math inline">\(\Theta\)</span>就相当于<span
+class="math inline">\(=\)</span>等于号。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/96d2515a01ca/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/0281cead953c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/0281cead953c/" class="post-title-link" itemprop="url">图解基础数据结构——堆</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-24 21:10:26" itemprop="dateCreated datePublished" datetime="2023-08-24T21:10:26+08:00">2023-08-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言">前言</h2>
+<p>原本打算写“实现常用排序算法（三）堆排序”，结果用了太多的篇幅讲解堆，于是单独出来写成专门讲解堆的博客，后面在简短的写一写堆排序的实现。</p>
+<h2 id="简介">简介</h2>
+<p>堆其实是很基础的数据结构，堆往往是初学者学习的第一个树形数据结构，排在数组、链表、队列、栈等线形数据结构之后。但其实堆并没有那么好理解，而且也常常被忽略（特别是对于OIer来说），因为经常可以直接调包使用，不需要手写堆，C++内置了<code>std::priority_queue</code>，python也有<code>import heapq</code>。</p>
+<p>堆的思想简洁明了——大的在上面；堆的实现高效优雅——只需要维护一个数组；堆的插入、删除、修改的时间复杂度都是一样的
+<span class="math inline">\(O(\log n)\)</span>
+，因此堆绝对值得好好地理解并且手写一个出来。</p>
+<p>一般来说，只要满足父节点的值比子节点大就可以称作堆，但是在具体实现上，最常用的还是<strong>二叉堆</strong>，也就是同时满足堆性质和二叉树性质的堆，除了二叉堆以外，还有二项堆、斐波那契堆等。通常说的堆指的都是二叉堆。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/0281cead953c/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/680891d992d0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/680891d992d0/" class="post-title-link" itemprop="url">实现常用排序算法（二）归并排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-21 21:19:25" itemprop="dateCreated datePublished" datetime="2023-08-21T21:19:25+08:00">2023-08-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="简介">简介</h2>
+<p>归并排序排序(Merge Sort)与快速排序不同，它是一种稳定排序（Stable
+Sort），也就是说，对于数组中相等的元素，归并排序可以保证它们排序后相对位置不改变。由于我们用整数int的数组的排序作例子，这个特点并不能很好地表现出来，实际上在某些场景中这个性质很重要，因此c++特别地在<code>std::sort</code>之外提供了一个稳定排序算法<code>std::stable_sort</code>。</p>
+<p>归并排序也是分治算法，归并排序重复进行合并操作，不断地将两个排序好的数组合并成一个排序好的数组，最终完成整个数组的排序。归并排序有两种实现，一种是空间复杂度<span
+class="math inline">\(O(1)\)</span>的原地（In-place）算法，另一种需要额外<span
+class="math inline">\(O(n)\)</span>的空间。</p>
+<p>不使用额外空间的归并排序需要用到一个叫做手摇算法（Block Swap
+Algorithm/内存反转算法/三重反转算法）的技巧来交换数组中的两块内存，这会引入大量的变量交换操作从而增加算法消耗的时间，甚至有可能使归并排序退化到<span
+class="math inline">\(O(n^2)\)</span>，本质上是一种时间换空间的方法，这里不多做介绍。较为常用的还是非原地的常规写法，这里也用这种实现方法来演示。</p>
+<p>非原地版本的归并排序的平均、最坏时间复杂度都是<span
+class="math inline">\(O(n \log
+n)\)</span>，非常优秀，但是实践中往往比快速排序慢上不少。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/680891d992d0/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/cfe23d8c628f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/cfe23d8c628f/" class="post-title-link" itemprop="url">实现常用排序算法（一）快速排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-09 21:38:55" itemprop="dateCreated datePublished" datetime="2023-08-09T21:38:55+08:00">2023-08-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今天来徒手造轮子了，这次是快排！</p>
+<h2 id="简介">简介</h2>
+<p>快速排序(Quick Sort)是非常常用的排序算法，平均时间复杂度为<span
+class="math inline">\(O(n \log n)\)</span>，最坏复杂度<span
+class="math inline">\(O(n^2)\)</span>，是一种不稳定排序。虽然有<span
+class="math inline">\(O(n^2)\)</span>的最坏复杂度，但是快排在实践中的效率通常优于其他算法，这也是c++中的<code>std::sort</code><u>主要</u>使用快排进行排序的原因（<code>std::sort</code>是混合排序算法，并非单一的快排，有空会出一篇文章解析一下其源码）</p>
+<p>快排是典型的分治算法，快排选取一个基准值将数组按大小分成两份，一份大于基准值，一份小于基准值，然后对这两份分别递归地进行排序。</p>
+<p>在具体实现中，通常用双指针完成这个划分操作，维护两个指针i、j，1到i-1储存<span
+class="math inline">\(\leq\)</span>pivot的数，j+1到n储存<span
+class="math inline">\(\geq\)</span>pivot的数，然后让i往前，j往后，如果i、j指向的两个元素都不符合条件只需要让两个元素交换就行了，一直移动i、j指针直到两个指针相遇，即完成了划分，然后再递归地进行。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/cfe23d8c628f/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/4bf52f688958/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/4bf52f688958/" class="post-title-link" itemprop="url">什么时候可以使用滚动数组优化？</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-31 16:28:03" itemprop="dateCreated datePublished" datetime="2023-07-31T16:28:03+08:00">2023-07-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="floyd">Floyd</h2>
+<p>求全源最短路最常用的就是Floyd算法，代码十分简单，仅需三个for循环。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(k = <span class="number">1</span>; k &lt;= n; k++)</span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">      f[i][j] = <span class="built_in">min</span>(f[i][j], f[i][k] + f[k][j]);</span><br></pre></td></tr></table></figure>
+<p>但是，Floyd算法为什么能这么写。为什么枚举k就能算出两点间的最短路？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/4bf52f688958/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/5638b4fb1b83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/5638b4fb1b83/" class="post-title-link" itemprop="url">剑指 Offer 20. 表示数值的字符串 题解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-27 22:57:02" itemprop="dateCreated datePublished" datetime="2023-07-27T22:57:02+08:00">2023-07-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题面">题面</h2>
+<blockquote>
+<p>请实现一个函数用来判断字符串是否表示<strong>数值</strong>（包括整数和小数）。</p>
+<p><strong>数值</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li>若干空格</li>
+<li>一个 小数 或者 整数</li>
+<li>（可选）一个 <code>'e'</code> 或 <code>'E'</code> ，后面跟着一个 整数</li>
+<li>若干空格</li>
+</ol>
+<p><strong>小数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li><p>（可选）一个符号字符（<code>'+'</code> 或
+<code>'-'</code>）</p></li>
+<li><p>下述格式之一：</p>
+<ol type="1">
+<li>至少一位数字，后面跟着一个点 <code>'.'</code></li>
+<li>至少一位数字，后面跟着一个点 <code>'.'</code>
+，后面再跟着至少一位数字</li>
+<li>一个点 <code>'.'</code> ，后面跟着至少一位数字</li>
+</ol></li>
+</ol>
+<p><strong>整数</strong>（按顺序）可以分成以下几个部分：</p>
+<ol type="1">
+<li>（可选）一个符号字符（<code>'+'</code> 或 <code>'-'</code>）</li>
+<li>至少一位数字</li>
+</ol>
+<p>部分数值列举如下：</p>
+<ul>
+<li><code>["+100", "5e2", "-123", "3.1416", "-1E-16", "0123"]</code></li>
+</ul>
+<p>部分非数值列举如下：</p>
+<ul>
+<li><code>["12e", "1a3.14", "1.2.3", "+-5", "12e+5.4"]</code></li>
+</ul>
+<p>示例 1：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：s = &quot;0&quot;</span><br><span class="line">&gt;输出：true</span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：s = &quot;e&quot;</span><br><span class="line">&gt;输出：false</span><br><span class="line"></span><br><span class="line">&gt;```txt</span><br><span class="line">&gt;示例 3：</span><br><span class="line"></span><br><span class="line">&gt;```txt</span><br><span class="line">&gt;输入：s = &quot;.&quot;</span><br><span class="line">&gt;输出：false</span><br><span class="line"></span><br><span class="line">&gt;```txt</span><br><span class="line">&gt;示例 4：</span><br><span class="line"></span><br><span class="line">&gt;```txt</span><br><span class="line">&gt;输入：s = &quot;    .1  &quot;</span><br><span class="line">&gt;输出：true</span><br></pre></td></tr></table></figure>
+<p>提示：</p>
+<ul>
+<li><p><code>1 &lt;= s.length &lt;= 20</code></p></li>
+<li><p><code>s</code>
+仅含英文字母（大写和小写），数字（<code>0-9</code>），加号
+<code>'+'</code> ，减号 <code>'-'</code> ，空格 <code>' '</code> 或者点
+<code>'.'</code> 。</p></li>
+</ul>
+</blockquote>
+<h2 id="题解">题解</h2>
+<p>要匹配格式化字符串，首先想到的就是利用正则表达式，构造这样的表达式也很容易。</p>
+<p>首先，根据题面，首位可能有空格，正则表达式里面可以直接用空格<code>' '</code>或者用能够匹配所有空白字符的<code>\s</code>，要0个或多个就用<code>*</code>字符。</p>
+<p>然后匹配正负号0次或1次，注意<code>+</code>需要转义<code>[\+-]?</code></p>
+<p>假如是整数或者有整数部分的小数，就用<code>\d+\.?\d*</code>，<code>\d</code>可以匹配任意数字，相当于<code>[0-9]</code>。</p>
+<p>假如是没有整数部分的小数，就用<code>\.\d+</code>。</p>
+<p>这两个之间使用<code>|</code>或符号连接在一起就是<code>(\d+\.?\d*|\.\d+)</code></p>
+<p>然后是指数部分，首先是字母<code>E</code>或者<code>e</code>，然后是整数部分<code>\d+</code>，指数部分是可选的，所以括号括起来加上<code>?</code>。</p>
+<p>最后因为我们需要匹配整个字符串，加上匹配首尾的符号<code>^</code>和<code>$</code>就大功告成了，表达式为<code>^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$</code>代码非常简单，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="function">regex <span class="title">r</span><span class="params">(<span class="string">R&quot;(^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$)&quot;</span>)</span></span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">regex_match</span>(s</span><br><span class="line">  - r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然而，他竟然TLE了 <img
+src="https://cyrus28214.top/images/s/64c28e0a1ddac507ccd4aed1.jpg"
+alt="TLE" /></p>
+<p>不信邪的我又写了Python版和JS版的代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isNumber</span>(<span class="params">c, s</span>):</span><br><span class="line">        <span class="keyword">return</span> re.<span class="keyword">match</span>(<span class="string">r&quot;^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$&quot;</span>, s) != <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isNumber = <span class="keyword">function</span>(<span class="params">s</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/^\s*[\+-]?(\d+\.?\d*|\.\d+)([Ee][\+-]?\d+)?\s*$/i</span>.<span class="title function_">test</span>(s)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>结果惊奇的发现：竟然过了，还挺快的。难道是我在C++程序中使用正则表达式的姿势不对？</p>
+<figure>
+<img src="https://cyrus28214.top/images/s/64c28eb11ddac507ccd62dc1.jpg"
+alt="换成Python和JS就过了" />
+<figcaption aria-hidden="true">换成Python和JS就过了</figcaption>
+</figure>
+<p>在我的印象中C++在性能方面应该是强于Python的，有空研究一下到底为什么会出现这种现象。</p>
+<p>我准备想第二种方法，来完成C++版本的程序</p>
+<p>实际上正则表达式的本质就是构建了一个自动机在字符串上跑，如果不使用正则表达式，也可以直接用有限状态自动机（FSM,
+finite state machine 又称FSA, finite state automaton ）来搞。</p>
+<p>我自己推导的FSM用了太多的节点，这里贴出力扣的官方题解配的图。</p>
+<figure>
+<img src="https://cyrus28214.top/images/s/64c290421ddac507ccd9866b.png"
+alt="FSM" />
+<figcaption aria-hidden="true">FSM</figcaption>
+</figure>
+<p>根据这个转移箭头，可以直接用数组模拟自动机</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> mapping[<span class="number">256</span>], FSM[<span class="number">16</span>][<span class="number">8</span>] = &#123;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isNumber</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> ch = <span class="string">&#x27;0&#x27;</span>; ch &lt;= <span class="string">&#x27;9&#x27;</span>; ++ch) mapping[ch] = <span class="number">1</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;.&#x27;</span>] = <span class="number">2</span>;</span><br><span class="line">        mapping[<span class="string">&#x27; &#x27;</span>] = <span class="number">3</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;e&#x27;</span>] = mapping[<span class="string">&#x27;E&#x27;</span>] = <span class="number">4</span>;</span><br><span class="line">        mapping[<span class="string">&#x27;+&#x27;</span>] = mapping[<span class="string">&#x27;-&#x27;</span>] = <span class="number">5</span>;</span><br><span class="line">        <span class="type">int</span> st = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">char</span> ch : s)</span><br><span class="line">            st = FSM[st][mapping[ch]];</span><br><span class="line">        <span class="keyword">return</span> st == <span class="number">3</span> || st == <span class="number">4</span> || st == <span class="number">5</span> || st == <span class="number">8</span> || st == <span class="number">9</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>mapping</code>数组将ASCII字符转化为1-5，分别对应图上的数字、小数点、空格、字符e、+/-号，其余没填充的0会把引入第0节点，即匹配失败。</p>
+<p><code>FSM</code>数组定义了图中10个节点之间的转移关系，当自动机跑到字符串的末尾，如果st处于图中双边缘线圆的节点内就是匹配成功。</p>
+<p>程序速度很快，因为除了查询数组没有什么其他的开销。</p>
+<p>比起使用if-else嵌套，自动机极大地降低了心智负担，避免了逻辑混乱。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/f0b740837a37/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/f0b740837a37/" class="post-title-link" itemprop="url">编译的四个步骤：预编译、编译、汇编、链接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-14 12:23:25" itemprop="dateCreated datePublished" datetime="2023-07-14T12:23:25+08:00">2023-07-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>假设我们有以下文件：</p>
+<p>main.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们执行一条命令<code>g++ main.cpp -o main</code>时，实际上g++共完成了四个步骤：
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/f0b740837a37/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/ff71490d5ed7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/ff71490d5ed7/" class="post-title-link" itemprop="url">C++11方便又常用的特性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-01 15:05:55" itemprop="dateCreated datePublished" datetime="2023-07-01T15:05:55+08:00">2023-07-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>不会吧，C++20都出了，不会还有人在学C++11的新特性吧（就是我）。这篇文章介绍一些C++11的方便的语法糖/特性。</p>
+<h2 id="auto类型推导">auto类型推导</h2>
+<p>这可以说是C++11中最方便最常用的特性了，一旦开始用就再也回不去了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">float</span> <span class="title">foo</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">auto</span> a = <span class="number">3</span>; <span class="comment">//a的类型是int</span></span><br><span class="line"><span class="keyword">auto</span> b = <span class="built_in">foo</span>(); <span class="comment">//b的类型是float</span></span><br><span class="line"><span class="keyword">auto</span> c; <span class="comment">//报错，因为编译器无法推断出c的类型</span></span><br></pre></td></tr></table></figure>
+<p>这个特性在遍历stl容器的时候很好用，例：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/ff71490d5ed7/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/5941ab677246/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/5941ab677246/" class="post-title-link" itemprop="url">半加器、全加器与超前进位加法器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-30 11:30:14" itemprop="dateCreated datePublished" datetime="2023-06-30T11:30:14+08:00">2023-06-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="半加器half-adder">半加器(Half Adder)</h2>
+<p>半加器接受两个输入A、B，输出加法的计算结果S和进位C，表达式及真值表如下：</p>
+<p><span class="math display">\[\begin{align*}
+S &amp;= A \oplus B \\
+C &amp;= AB
+\end{align*}\]</span></p>
+<table>
+<thead>
+<tr class="header">
+<th>A</th>
+<th>B</th>
+<th></th>
+<th>S</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td></td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td></td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/5941ab677246/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/bfdce4f7f9f8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/bfdce4f7f9f8/" class="post-title-link" itemprop="url">建站心得</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-29 21:24:00" itemprop="dateCreated datePublished" datetime="2023-06-29T21:24:00+08:00">2023-06-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用Github
+Pages和Hexo建立了我的个人博客，本来是打算整个博客全部用React自己写，奈何技艺不精，还是决定使用Hexo这样方便的框架。</p>
+<p>建站还是非常方便的，一个晚上就搞好了，也没有遇到什么奇怪的问题，参考<a
+target="_blank" rel="noopener" href="https://pages.github.com/">Github Pages</a>和<a
+target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a>的官网一步一步地做下来就是了，简单、方便、快捷。最重要的是一分钱不花，连买云服务器和域名的钱都省下来了，唯一的缺点是Hexo是静态博客，不过无伤大雅。</p>
+<p>这个博客主要是自己写给自己看的，作为学习笔记or备忘录。当然如果能帮到有需要的人就最好了:D。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Cyrus&#39; Blog">
+<meta property="og:url" content="http://cyrus28214.top/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="计算机">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="个人博客">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://cyrus28214.top/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cyrus' Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/ffabb25ef332/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/ffabb25ef332/" class="post-title-link" itemprop="url">基于SVD的图像压缩算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-11 23:11:54" itemprop="dateCreated datePublished" datetime="2024-01-11T23:11:54+08:00">2024-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="理论基础">理论基础</h2>
+<p>详见<a
+href="https://cyrus28214.top/post/b66a1454c550/">奇异值分解</a></p>
+<p>奇异值分解（SVD）可以将任意矩阵分解为<span
+class="math inline">\(\boldsymbol{A}=\boldsymbol{u}_1\sigma_1\boldsymbol{v}^*
+_1 + \boldsymbol{u}_2\sigma_2\boldsymbol{v}^* _2 + \dots +
+\boldsymbol{u}_r\sigma_r\boldsymbol{v}^*_r=\boldsymbol{U \Sigma
+V}^\mathrm{T}\)</span>的形式。并且越靠近后面的项越不重要，去除它们就可以用更小的空间储存一个与原来矩阵相近的矩阵。</p>
+<p>若将图像看作RGB三通道的三个矩阵，对图像SVD并保留前<span
+class="math inline">\(k\)</span>项，就可以实现图像压缩。</p>
+<h2 id="效果展示分析">效果展示&amp;分析</h2>
+<figure>
+<img src="https://cyrus28214.top/images/SVD_image.png" alt="压缩效果" />
+<figcaption aria-hidden="true">压缩效果</figcaption>
+</figure>
+<p>可以看到，当压缩率在0.5以上时，图像基本保持原本的细节，压缩率0.5以下时，逐渐丢失了细节。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/ffabb25ef332/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/b66a1454c550/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/b66a1454c550/" class="post-title-link" itemprop="url">奇异值分解（SVD）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-09 11:13:21" itemprop="dateCreated datePublished" datetime="2024-01-09T11:13:21+08:00">2024-01-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前置知识">前置知识</h2>
+<p>见另一篇博客：<a
+href="https://cyrus28214.top/post/48b626d0dc2c/">谱定理的证明</a></p>
+<h2 id="奇异值分解svd">奇异值分解（SVD）</h2>
+<p>奇异值分解（singular value decomposition, SVD），说的是任意矩阵<span
+class="math inline">\(\boldsymbol{A} \in \mathbb{C}^{m\times
+n}\)</span>，都可以分解成以下形式</p>
+<blockquote>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{A}&amp;=\boldsymbol{u}_1\sigma_1\boldsymbol{v}^* _1 +
+\boldsymbol{u}_2\sigma_2\boldsymbol{v}^* _2 + \dots +
+\boldsymbol{u}_r\sigma_r\boldsymbol{v}^*_r \\
+&amp;= \left(\begin{array}{c}
+\boldsymbol{u}_1 &amp; \dots &amp; \boldsymbol{u}_2 &amp;
+\boldsymbol{u}_m \\
+\end{array}\right)
+\left(\begin{array}{c}
+\mathrm{diag}(\sigma_1, \sigma_2, \dots, \sigma_r) &amp; 0\\
+0 &amp; 0\\
+\end{array}\right)
+\left(\begin{array}{c}
+\boldsymbol{v}_1^* \\
+\boldsymbol{v}_2^* \\
+\vdots \\
+\boldsymbol{v}_n^*
+\end{array}\right)\\
+&amp;= \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^*
+\end{align*}\]</span></p>
+</blockquote>
+<p>其中<span class="math inline">\(r\)</span>是矩阵<span
+class="math inline">\(A\)</span>的秩，<span
+class="math inline">\(\boldsymbol{u} _1 , \boldsymbol{u} _2 , \dots ,
+\boldsymbol{u} _m\)</span>为<span
+class="math inline">\(\boldsymbol{A}\boldsymbol{A}^*\)</span>的特征向量，<span
+class="math inline">\(\boldsymbol{v} _1, \boldsymbol{v} _2, \dots
+\boldsymbol{v} _n\)</span>为<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>的特征向量</p>
+<p><span class="math inline">\(\boldsymbol{U}\)</span>和<span
+class="math inline">\(\boldsymbol{V}\)</span>满足</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{U}^*\boldsymbol{U}&amp;=\boldsymbol{I}\\
+\boldsymbol{V}^*\boldsymbol{V}&amp;=\boldsymbol{I}
+\end{align*}\]</span></p>
+<p>即<span class="math inline">\(\boldsymbol{U}\)</span>和<span
+class="math inline">\(\boldsymbol{V}\)</span>均为酉矩阵。</p>
+<p>且<span class="math inline">\(\sigma_1 \geq \sigma_2 \geq \cdots \geq
+\sigma_r &gt; \sigma_{r+1} = \sigma_{r+2} = \cdots = \sigma_n =
+0\)</span>。</p>
+<figure>
+<img src="https://cyrus28214.top/images/SVD.png"
+alt="图来自Github仓库The-Art-of-Linear-Algebra" />
+<figcaption
+aria-hidden="true">图来自Github仓库The-Art-of-Linear-Algebra</figcaption>
+</figure>
+<p>奇异值分解表明了任意矩阵都可以拆分成<span
+class="math inline">\(r\)</span>个秩为<span
+class="math inline">\(1\)</span>的矩阵之和。酉矩阵表明<span
+class="math inline">\(\boldsymbol{u}_1\)</span>和<span
+class="math inline">\(\boldsymbol{v}_1\)</span>的长度均为<span
+class="math inline">\(1\)</span>。则<span
+class="math inline">\(\sigma_i\)</span>的大小描述了拆分成的这个矩阵的重要程度，<span
+class="math inline">\(\sigma_i\)</span>越大，说明<span
+class="math inline">\(\boldsymbol{u}_i\sigma_i\boldsymbol{v}_i^*\)</span>这一项越重要。这就揭示了奇异值分解在数据降维、图像压缩、统计分析（如：主成分分析）方面大有用处。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/b66a1454c550/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/48b626d0dc2c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/48b626d0dc2c/" class="post-title-link" itemprop="url">谱定理（Spectral Theorem）的证明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-22 10:23:24" itemprop="dateCreated datePublished" datetime="2023-12-22T10:23:24+08:00">2023-12-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="回顾特征值分解对角化">回顾特征值分解/对角化</h2>
+<h3 id="定义">定义</h3>
+<p>对于<span class="math inline">\(n \times n\)</span>的方阵<span
+class="math inline">\(\boldsymbol{A}\)</span>，如果有下面的等式：</p>
+<p><span class="math display">\[\boldsymbol{Ax}=\lambda
+\boldsymbol{x}\]</span></p>
+<p>其中<span
+class="math inline">\(\boldsymbol{x}\)</span>为<strong>非零</strong>向量。</p>
+<p>我们就称<span class="math inline">\(\boldsymbol{x}\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征向量（eigenvector）</strong>，<span
+class="math inline">\(\lambda\)</span>是<span
+class="math inline">\(\boldsymbol{x}\)</span>的一个<strong>特征值（eigenvalue）</strong>。</p>
+<h3 id="求解">求解</h3>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{Ax} &amp;= \lambda \boldsymbol{Ix} \\
+(\boldsymbol{A} - \lambda \boldsymbol{I})\boldsymbol{x} &amp;=
+\boldsymbol{0} \\
+\det(\boldsymbol{A} - \lambda \boldsymbol{I}) &amp;= 0 \\
+\end{align*}\]</span></p>
+<p>特征值可以通过解特征根方程<span
+class="math inline">\(\det(\boldsymbol{A}-\lambda
+\boldsymbol{I})=0\)</span>来求得。
+由代数基本定理，这个多项式方程一定有<span
+class="math inline">\(n\)</span>个复根（可能有重根）</p>
+<p>由于行列式为0，<span class="math inline">\((\boldsymbol{A}-\lambda
+\boldsymbol{I})\boldsymbol{x}=\boldsymbol{0}\)</span>一定有非零解，任取一非零解，即可得出特征向量<span
+class="math inline">\(\boldsymbol{x}\)</span>。</p>
+<p>如果<span class="math inline">\(\boldsymbol{A}\)</span>有<span
+class="math inline">\(n\)</span>个线性无关的特征向量<span
+class="math inline">\(\boldsymbol{x}_1, \boldsymbol{x}_2, \dots,
+\boldsymbol{x}_n\)</span>，对应的<span
+class="math inline">\(n\)</span>个特征值为<span
+class="math inline">\(\lambda_1, \lambda_2, \dots,
+\lambda_n\)</span>，令<span
+class="math inline">\(\boldsymbol{X}=(\boldsymbol{x}_1,
+\boldsymbol{x}_2, \dots, \boldsymbol{x}_n)\)</span>，<span
+class="math inline">\(\boldsymbol{\Lambda}=\mathrm{diag}(\lambda_1,
+\lambda_2, \dots, \lambda_n)\)</span>则</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{AX}&amp;=\boldsymbol{X \Lambda} \\
+\boldsymbol{A}&amp;=\boldsymbol{X \Lambda} \boldsymbol{X}^{-1} \tag{1}
+\end{align*}\]</span></p>
+<p><span class="math inline">\((1)\)</span>式称作<span
+class="math inline">\(\boldsymbol{A}\)</span>的<strong>特征值分解</strong>，此时<span
+class="math inline">\(\boldsymbol{A}\)</span>称作<strong>可对角化（diagonalizable）</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/48b626d0dc2c/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/bb0633eb563b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/bb0633eb563b/" class="post-title-link" itemprop="url">线性代数中的投影</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-18 09:45:12" itemprop="dateCreated datePublished" datetime="2023-12-18T09:45:12+08:00">2023-12-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="投影矩阵的推导">投影矩阵的推导</h2>
+<p>假设我们想把一个向量<span
+class="math inline">\(\boldsymbol{b}\)</span>投影到线性空间<span
+class="math inline">\(\mathcal{S}\)</span>中，应该怎么做呢。</p>
+<p>设投影后的向量为<span
+class="math inline">\(\boldsymbol{p}\)</span>，则有<span
+class="math inline">\(\boldsymbol{p}\in
+\mathcal{S}\)</span>，设误差向量（error vector）<span
+class="math inline">\(\boldsymbol{e}=\boldsymbol{b}-\boldsymbol{p}\)</span>，则<span
+class="math inline">\(\boldsymbol{e}\)</span>应与<span
+class="math inline">\(\mathcal{S}\)</span>正交。投影就是将向量分为两部分<span
+class="math inline">\(\boldsymbol{b}=\boldsymbol{p}+\boldsymbol{e}\)</span>，一部分在<span
+class="math inline">\(\mathcal{S}\)</span>中，另一部分与<span
+class="math inline">\(\mathcal{S}\)</span>正交，然后取其中的<span
+class="math inline">\(\boldsymbol{p}\)</span>。也可以用图像直观理解：</p>
+<p><img src="https://cyrus28214.top/images/Projection.png" /></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/bb0633eb563b/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/273aaceb4fa7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/273aaceb4fa7/" class="post-title-link" itemprop="url">NumPy学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-06 12:16:40" itemprop="dateCreated datePublished" datetime="2023-12-06T12:16:40+08:00">2023-12-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>NumPy是一个广泛使用的Python库，NumPy是Numerical
+Python的缩写，用于多维数组的计算，并且支持对多维数组进行各种数学处理，同时保持非常高的性能。Pandas,
+SciPy, Matplotlib,
+scikit-learn等一系列库都使用了NumPy提供的多维数组。</p>
+<h2 id="安装">安装</h2>
+<h3 id="使用anaconda推荐">使用Anaconda（推荐）</h3>
+<p>推荐使用<a target="_blank" rel="noopener" href="https://www.anaconda.com/">Anaconda</a>安装NumPy</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install numpy</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/273aaceb4fa7/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/fe9823046871/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/fe9823046871/" class="post-title-link" itemprop="url">一看就懂的Linux Shell的基础使用（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-30 18:53:59" itemprop="dateCreated datePublished" datetime="2023-11-30T18:53:59+08:00">2023-11-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="脚本">脚本</h2>
+<p>bash不仅可以直接输入到命令行执行，也可以作为一种脚本语言。作为一种脚本语言，Bash也拥有变量、分支语句、循环语句等。</p>
+<p>可以在某个文件里写bash脚本，然后运行它，不必每次都在命令行里输入。将以下代码保存到<code>hello.sh</code>里，<code>.sh</code>后缀代表这是一个bash脚本，当然，使用其他后缀也不影响脚本正常运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello World!&quot;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/fe9823046871/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/b161510a6684/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/b161510a6684/" class="post-title-link" itemprop="url">非对称加密算法与RSA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-28 00:31:38" itemprop="dateCreated datePublished" datetime="2023-11-28T00:31:38+08:00">2023-11-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="非对称加密">非对称加密</h2>
+<p>以下内容引自维基百科：<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86">非对称加密</a></p>
+<blockquote>
+<p>公开密钥密码学（英语：Public-key
+cryptography）也称非对称式密码学（英语：Asymmetric
+cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。由于加密和解密需要两个不同的密钥，故被称为非对称加密；不同于加密和解密都使用同一个密钥的对称加密。公钥可以公开，可任意向外发布；私钥不可以公开，必须由用户自行严格秘密保管，绝不透过任何途径向任何人提供，也不会透露给被信任的要通信的另一方。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/b161510a6684/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/f8fb80356e75/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/f8fb80356e75/" class="post-title-link" itemprop="url">用Python写爬虫的实例一则</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-22 17:19:04" itemprop="dateCreated datePublished" datetime="2023-11-22T17:19:04+08:00">2023-11-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- TODO:添加正则表达式博客链接 -->
+<p>将学到的爬虫知识运用到实践中去吧！</p>
+<p>要爬的网站是<a
+target="_blank" rel="noopener" href="https://quanben-xiaoshuo.com/">https://quanben-xiaoshuo.com/</a>，这是一个小说网站，目标是可以下载给定小说的所有章节，并保存到本地文件。</p>
+<h2 id="开始">开始</h2>
+<p>首先，我选择的 Python 库是 <code>requests</code> 和
+<code>lxml</code>，如果你没有安装这两个库，可以使用
+<code>pip install requests</code> 和 <code>pip install lxml</code>
+来安装</p>
+<p><code>requests</code> 用来发送请求并获得网页，<code>lxml</code>
+用来解析网页，并使用 XPath 找到要获取的数据的位置，如果你不熟悉
+XPath，可以看看我的这一篇文章 <a
+href="https://cyrus28214.top/post/64e4e3d61f56/">XPath语法参考</a></p>
+<p>假如你更喜欢css选择器的风格，可以使用 <code>beautifulsoup</code>
+这个库，两个库都很方便的</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/f8fb80356e75/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/bb59eff0fad1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/bb59eff0fad1/" class="post-title-link" itemprop="url">一看就懂的Linux Shell的基础使用（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-14 20:26:45" itemprop="dateCreated datePublished" datetime="2023-11-14T20:26:45+08:00">2023-11-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言">前言</h2>
+<p>最近在学习MIT的“计算机科学教育中缺失的一课（The Missing Semester of
+Your CS
+Education）”，这篇博客既是shell常用命令的备忘，也是这门课程的学习笔记。</p>
+<h2 id="shell">shell</h2>
+<p>shell是操作系统为用户提供交互界面的命令行解释器的统称，例如Windows中的cmd就是一种shell。Bash
+是其中最流行的一种。Bash 是 Bourne Again shell
+的简称，其他的shell还有：zsh、fish、csh等。</p>
+<p>你需要使用一个类Unix shell来完成文中所提到的操作。你可以：</p>
+<ul>
+<li>使用安装了Linux的电脑</li>
+<li>使用Linux虚拟机</li>
+<li>使用<a
+target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/">WSL(Windows
+Subsystem for Linux)</a>。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/bb59eff0fad1/" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/8beffd240c93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/8beffd240c93/" class="post-title-link" itemprop="url">博客新添加了搜索功能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-12 10:35:09" itemprop="dateCreated datePublished" datetime="2023-11-12T10:35:09+08:00">2023-11-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>随着写的博文越来越多。博客也急需一个搜索工具，我使用的Hexo主题NexT刚好对
+local search 功能有比较好的支持，就简单配置了一下，添加了搜索功能。</p>
+<p>如果你之前访问过我的博客，浏览器可能缓存了旧版的CSS文件，旧版的CSS文件没有搜索功能所需要的样式，搜索功能可能会出现排版错误。只需要按Ctrl+F5强制刷新缓存即可恢复正常（Chrome下是这个快捷键，其他浏览器没有试过）。移动端浏览器如果没有强制刷新缓存的功能，清除浏览器缓存即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

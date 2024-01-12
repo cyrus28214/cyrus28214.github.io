@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon128.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon32.png">
+  <link rel="mask-icon" href="/images/icon128.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cyrus28214.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前置知识 见另一篇博客：谱定理的证明 奇异值分解（SVD） 奇异值分解（singular value decomposition, SVD），说的是任意矩阵\(\boldsymbol{A} \in \mathbb{C}^{m\times n}\)，都可以分解成以下形式  \[\begin{align*} \boldsymbol{A}&amp;&#x3D;\boldsymbol{u}_1\sig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="奇异值分解（SVD）">
+<meta property="og:url" content="http://cyrus28214.top/post/b66a1454c550/index.html">
+<meta property="og:site_name" content="Cyrus&#39; Blog">
+<meta property="og:description" content="前置知识 见另一篇博客：谱定理的证明 奇异值分解（SVD） 奇异值分解（singular value decomposition, SVD），说的是任意矩阵\(\boldsymbol{A} \in \mathbb{C}^{m\times n}\)，都可以分解成以下形式  \[\begin{align*} \boldsymbol{A}&amp;&#x3D;\boldsymbol{u}_1\sig">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cyrus28214.top/images/SVD.png">
+<meta property="og:image" content="https://cyrus28214.top/images/least_square_line.png">
+<meta property="article:published_time" content="2024-01-09T03:13:21.000Z">
+<meta property="article:modified_time" content="2024-01-11T15:12:35.136Z">
+<meta property="article:author" content="Cyrus28214">
+<meta property="article:tag" content="线性代数">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="线性代数笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cyrus28214.top/images/SVD.png">
+
+
+<link rel="canonical" href="http://cyrus28214.top/post/b66a1454c550/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://cyrus28214.top/post/b66a1454c550/","path":"post/b66a1454c550/","title":"奇异值分解（SVD）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>奇异值分解（SVD） | Cyrus' Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cyrus' Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3svd"><span class="nav-number">2.</span> <span class="nav-text">奇异值分解（SVD）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%AA%E5%8F%96k%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">截取k项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">2.3.</span> <span class="nav-text">存在性证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#section"><span class="nav-number">2.3.1.</span> <span class="nav-text">1.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#section-1"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">2.</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#section-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E5%9B%9B%E4%B8%AA%E5%9F%BA%E6%9C%AC%E5%AD%90%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.4.</span> <span class="nav-text">与四个基本子空间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">2.5.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cyrus28214"
+      src="/images/icon512.png">
+  <p class="site-author-name" itemprop="name">Cyrus28214</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Cyrus28214" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Cyrus28214" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-user-group fa-fw"></i>
+          友情链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://herveyb3b4.github.io/" title="https:&#x2F;&#x2F;herveyb3b4.github.io" rel="noopener" target="_blank">Hervey's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://dicsec.github.io/" title="https:&#x2F;&#x2F;dicsec.github.io&#x2F;" rel="noopener" target="_blank">DSC's Blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://qs-sg.github.io/my-world/" title="https:&#x2F;&#x2F;qs-sg.github.io&#x2F;my-world&#x2F;" rel="noopener" target="_blank">浅碎时光 の 小世界</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://csfufu.life/" title="https:&#x2F;&#x2F;csfufu.life&#x2F;" rel="noopener" target="_blank">fufu酱のNoteBook</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cyrus28214.top/post/b66a1454c550/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon512.png">
+      <meta itemprop="name" content="Cyrus28214">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="奇异值分解（SVD） | Cyrus' Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          奇异值分解（SVD）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-09 11:13:21" itemprop="dateCreated datePublished" datetime="2024-01-09T11:13:21+08:00">2024-01-09</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前置知识">前置知识</h2>
+<p>见另一篇博客：<a
+href="https://cyrus28214.top/post/48b626d0dc2c/">谱定理的证明</a></p>
+<h2 id="奇异值分解svd">奇异值分解（SVD）</h2>
+<p>奇异值分解（singular value decomposition, SVD），说的是任意矩阵<span
+class="math inline">\(\boldsymbol{A} \in \mathbb{C}^{m\times
+n}\)</span>，都可以分解成以下形式</p>
+<blockquote>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{A}&amp;=\boldsymbol{u}_1\sigma_1\boldsymbol{v}^* _1 +
+\boldsymbol{u}_2\sigma_2\boldsymbol{v}^* _2 + \dots +
+\boldsymbol{u}_r\sigma_r\boldsymbol{v}^*_r \\
+&amp;= \left(\begin{array}{c}
+\boldsymbol{u}_1 &amp; \dots &amp; \boldsymbol{u}_2 &amp;
+\boldsymbol{u}_m \\
+\end{array}\right)
+\left(\begin{array}{c}
+\mathrm{diag}(\sigma_1, \sigma_2, \dots, \sigma_r) &amp; 0\\
+0 &amp; 0\\
+\end{array}\right)
+\left(\begin{array}{c}
+\boldsymbol{v}_1^* \\
+\boldsymbol{v}_2^* \\
+\vdots \\
+\boldsymbol{v}_n^*
+\end{array}\right)\\
+&amp;= \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^*
+\end{align*}\]</span></p>
+</blockquote>
+<p>其中<span class="math inline">\(r\)</span>是矩阵<span
+class="math inline">\(A\)</span>的秩，<span
+class="math inline">\(\boldsymbol{u} _1 , \boldsymbol{u} _2 , \dots ,
+\boldsymbol{u} _m\)</span>为<span
+class="math inline">\(\boldsymbol{A}\boldsymbol{A}^*\)</span>的特征向量，<span
+class="math inline">\(\boldsymbol{v} _1, \boldsymbol{v} _2, \dots
+\boldsymbol{v} _n\)</span>为<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>的特征向量</p>
+<p><span class="math inline">\(\boldsymbol{U}\)</span>和<span
+class="math inline">\(\boldsymbol{V}\)</span>满足</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{U}^*\boldsymbol{U}&amp;=\boldsymbol{I}\\
+\boldsymbol{V}^*\boldsymbol{V}&amp;=\boldsymbol{I}
+\end{align*}\]</span></p>
+<p>即<span class="math inline">\(\boldsymbol{U}\)</span>和<span
+class="math inline">\(\boldsymbol{V}\)</span>均为酉矩阵。</p>
+<p>且<span class="math inline">\(\sigma_1 \geq \sigma_2 \geq \cdots \geq
+\sigma_r &gt; \sigma_{r+1} = \sigma_{r+2} = \cdots = \sigma_n =
+0\)</span>。</p>
+<figure>
+<img src="https://cyrus28214.top/images/SVD.png"
+alt="图来自Github仓库The-Art-of-Linear-Algebra" />
+<figcaption
+aria-hidden="true">图来自Github仓库The-Art-of-Linear-Algebra</figcaption>
+</figure>
+<p>奇异值分解表明了任意矩阵都可以拆分成<span
+class="math inline">\(r\)</span>个秩为<span
+class="math inline">\(1\)</span>的矩阵之和。酉矩阵表明<span
+class="math inline">\(\boldsymbol{u}_1\)</span>和<span
+class="math inline">\(\boldsymbol{v}_1\)</span>的长度均为<span
+class="math inline">\(1\)</span>。则<span
+class="math inline">\(\sigma_i\)</span>的大小描述了拆分成的这个矩阵的重要程度，<span
+class="math inline">\(\sigma_i\)</span>越大，说明<span
+class="math inline">\(\boldsymbol{u}_i\sigma_i\boldsymbol{v}_i^*\)</span>这一项越重要。这就揭示了奇异值分解在数据降维、图像压缩、统计分析（如：主成分分析）方面大有用处。</p>
+<span id="more"></span>
+<h3 id="优势">优势</h3>
+<p>相比于特征值分解，奇异值分解的优势多多。</p>
+<ol type="1">
+<li>对矩阵的要求少 特征值分解要求<span
+class="math inline">\(\boldsymbol{A}\)</span>为方阵，且可对角化。而奇异值分解对<span
+class="math inline">\(\boldsymbol{A}\)</span>没有什么限制。</li>
+<li>稳定性 当<span
+class="math inline">\(\boldsymbol{A}\)</span>中一个值微小的改变时，特征值分解的<span
+class="math inline">\(\boldsymbol{\Lambda}\)</span>可能会发生比较大的改变。但是奇异值分解的<span
+class="math inline">\(\boldsymbol{\Sigma}\)</span>只会发生很小的改变。并且这些改变都发生在靠后的、<span
+class="math inline">\(\sigma_i\)</span>更小的项里。</li>
+</ol>
+<h3 id="截取k项">截取k项</h3>
+<p>由于<span
+class="math inline">\(\sigma_i\)</span>的大小是从大到小排列，因此我们可以只取前面<span
+class="math inline">\(k\)</span>项，得到</p>
+<p><span class="math display">\[\begin{align*}
+&amp;\boldsymbol{u}_1\sigma_1\boldsymbol{v}^* _1 +
+\boldsymbol{u}_2\sigma_2\boldsymbol{v}^* _2 + \dots +
+\boldsymbol{u}_k\sigma_k\boldsymbol{v}^*_k \\
+&amp;=\boldsymbol{U}_k \boldsymbol{\Sigma}_k \boldsymbol{V}_k^*
+\end{align*}\]</span></p>
+<p>其中<span class="math inline">\(\boldsymbol{U}_k\)</span>为<span
+class="math inline">\(m\!\times\!k\)</span>矩阵，<span
+class="math inline">\(\boldsymbol{\Sigma}_k\)</span>为<span
+class="math inline">\(k\!\times\!k\)</span>对角阵，<span
+class="math inline">\(\boldsymbol{V}\)</span>为<span
+class="math inline">\(n\!\times\!k\)</span>矩阵。</p>
+<p>当<span class="math inline">\(k=r\)</span>时，则</p>
+<p><span
+class="math display">\[\boldsymbol{A}=\boldsymbol{U}_k\boldsymbol{\Sigma}_k
+\boldsymbol{V}_k^*\]</span></p>
+<p>仍然成立，此时相当于对<span
+class="math inline">\(\boldsymbol{A}\)</span>进行了无损压缩。</p>
+<p>当<span class="math inline">\(k\lt r\)</span>时，<span
+class="math inline">\(\sigma_1\)</span>最小的<span
+class="math inline">\(r-k\)</span>项被舍弃了，但是得到的新矩阵和原来的矩阵仍然是相近的，相当于一个有损压缩。</p>
+<p><span
+class="math display">\[\boldsymbol{A}\approx\boldsymbol{U}_k\boldsymbol{\Sigma}_k
+\boldsymbol{V}_k^*\]</span></p>
+<p>显然，新矩阵的秩为<span
+class="math inline">\(k\)</span>，此时相当于做了一个数据降维。</p>
+<figure>
+<img src="https://cyrus28214.top/images/least_square_line.png"
+alt="数据降维：从二维到一维" />
+<figcaption aria-hidden="true">数据降维：从二维到一维</figcaption>
+</figure>
+<h3 id="存在性证明">存在性证明</h3>
+<p>引理1：对称矩阵均为半正定矩阵（半正定矩阵：特征值均非负的矩阵）</p>
+<blockquote>
+<p>先证明<span class="math inline">\(\lambda\)</span>为实数 <span
+class="math display">\[\begin{align*}
+\boldsymbol{S}^* &amp;= \boldsymbol{S} \\
+\boldsymbol{Sx} &amp;= \lambda \boldsymbol{x}\\
+\Rightarrow\\
+\boldsymbol{x}^*\boldsymbol{S} &amp;= \overline{\lambda}\boldsymbol{x}^*
+\\
+\boldsymbol{x}^*(\boldsymbol{S}\boldsymbol{x}) &amp;=
+\overline{\lambda}\boldsymbol{x}^*\boldsymbol{x}=\overline{\lambda}|\boldsymbol{x}|^2\\
+(\boldsymbol{x}^*\boldsymbol{S})\boldsymbol{x}&amp;=\lambda
+\boldsymbol{x}^* \boldsymbol{x} = \lambda|\boldsymbol{x}|^2\\
+(\lambda - \overline{\lambda})|\boldsymbol{x}|^2 &amp;= 0\\
+\end{align*}\]</span></p>
+<p>又因为特征向量<span
+class="math inline">\(\boldsymbol{x}\)</span>非零，得<span
+class="math inline">\(\lambda = \overline{\lambda}\)</span>，即<span
+class="math inline">\(\lambda\)</span>为实数</p>
+<p>再证明<span class="math inline">\(\lambda\)</span>非负</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{x}^*\boldsymbol{A}^*\boldsymbol{Ax}&amp;=(\overline{\lambda}\boldsymbol{x}^*)(\lambda
+\boldsymbol{x})\\|\boldsymbol{Ax}|^2&amp;=|\lambda|^2|\boldsymbol{x}^2|\\|\lambda|^2&amp;=\frac{|\boldsymbol{Ax}|^2}{|\boldsymbol{x}|^2}\geq
+0
+\end{align*}\]</span></p>
+</blockquote>
+<p>引理2：<span
+class="math inline">\(\mathrm{rank}(\boldsymbol{A}^*\boldsymbol{A})=\mathrm{rank}(\boldsymbol{AA}^*)=r\)</span></p>
+<blockquote>
+<p>由<span class="math inline">\(\boldsymbol{Ax}=0 \Rightarrow
+\boldsymbol{A}^*\boldsymbol{Ax}=0\)</span>得</p>
+<p><span class="math display">\[\mathrm{N}(\boldsymbol{A}
+^*\boldsymbol{A}) \subset \mathrm{N}(\boldsymbol{A})\]</span> 若<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{Ax}=0\)</span>，则</p>
+<p><span
+class="math display">\[\boldsymbol{x}^*\boldsymbol{A}^*\boldsymbol{AX}=(\boldsymbol{Ax})^*\boldsymbol{Ax}=|\boldsymbol{Ax}|^2=0\]</span></p>
+<p><span class="math display">\[\boldsymbol{Ax}=0\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[\mathrm{N}(\boldsymbol{A}) \subset
+\mathrm{N}(\boldsymbol{A}^*\boldsymbol{A})\]</span></p>
+<p>有</p>
+<p><span
+class="math display">\[\begin{align*}\mathrm{N}(\boldsymbol{A})&amp;=\mathrm{N}(\boldsymbol{A}^*\boldsymbol{A})\\\dim\mathrm{N}(\boldsymbol{A})&amp;=\dim\mathrm{N}(\boldsymbol{A}^*\boldsymbol{A})\\n-\mathrm{rank}(\boldsymbol{A})&amp;=n-\mathrm{rank}(\boldsymbol{A}^*\boldsymbol{A})\\\mathrm{rank}(\boldsymbol{A})&amp;=\mathrm{rank}(\boldsymbol{A}^*\boldsymbol{A})
+\end{align*}\]</span></p>
+<p>同理可证明<span
+class="math inline">\(\mathrm{rank}(\boldsymbol{A}^*)=\mathrm{rank}(\boldsymbol{AA}^*)\)</span>，故原式成立</p>
+</blockquote>
+<p>引理3：<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>和<span
+class="math inline">\(\boldsymbol{AA}^*\)</span>均有<span
+class="math inline">\(r\)</span>个相同的正特征值。</p>
+<blockquote>
+<p>首先证明均有<span class="math inline">\(r\)</span>个特征值：</p>
+<p>由于<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>为对称矩阵，由于对称矩阵一定是正规矩阵，由谱定理有</p>
+<p><span
+class="math display">\[\boldsymbol{A}^*\boldsymbol{A}=\boldsymbol{U\Lambda}\boldsymbol{U}^*\]</span></p>
+<p>由引理1，特征值不可能为负。且<span
+class="math inline">\(\boldsymbol{\Lambda}\)</span>中非零元素个数其实就是<span
+class="math inline">\(\mathrm{rank}(\boldsymbol{\Lambda})\)</span></p>
+<p>则正特征值个数<span
+class="math inline">\(\mathrm{rank}(\boldsymbol{\Lambda})=\mathrm{rank}(\boldsymbol{A}^*\boldsymbol{A})\)</span>&gt;
+对<span class="math inline">\(\boldsymbol{AA}^*\)</span>同理 ___
+再证明<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>的正特征值也是<span
+class="math inline">\(\boldsymbol{AA}^*\)</span>的正特征值：</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{A}^*\boldsymbol{Ax}&amp;=\lambda\boldsymbol{x}\\
+\boldsymbol{A}\boldsymbol{A}^*\boldsymbol{Ax}&amp;=\lambda\boldsymbol{Ax}\\
+\boldsymbol{A}\boldsymbol{A}^*(\boldsymbol{Ax})&amp;=\lambda(\boldsymbol{Ax})\\
+\end{align*}\]</span></p>
+<p>由<span class="math inline">\(\lambda \neq 0\)</span>得<span
+class="math inline">\(\boldsymbol{Ax}\neq 0\)</span>，故<span
+class="math inline">\(\boldsymbol{Ax}\)</span>是<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>的一个特征向量，对应的特征值为<span
+class="math inline">\(\lambda\)</span>。</p>
+<p>反之可证<span
+class="math inline">\(\boldsymbol{A}\boldsymbol{A}\)</span>的正特征值也是<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>的特征值，则两矩阵拥有相同的一组正特征值。</p>
+</blockquote>
+<p>由引理3，我们设这一组相同的特征值为<span
+class="math inline">\(\lambda_i\quad(i \leq
+r)\)</span>并从大到小排列，<span class="math inline">\(\lambda_1 \geq
+\lambda_2 \geq \dots \geq \lambda_r &gt; \lambda_{r+1} = \lambda_{r+2} =
+\dots = \lambda_m = 0\)</span>。</p>
+<p>证明是构造性的</p>
+<p>对<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{A}\)</span>谱分解可以求出<span
+class="math inline">\(\boldsymbol{V}\)</span>和<span
+class="math inline">\(\lambda_i\)</span>，设<span
+class="math inline">\(\boldsymbol{V}\)</span>的第<span
+class="math inline">\(i\)</span>列为<span
+class="math inline">\(\boldsymbol{v}_i\)</span>，对应特征值<span
+class="math inline">\(\lambda_i\)</span>。</p>
+<p>设<span class="math inline">\(\boldsymbol{V}=\left(\begin{array}{c}
+\boldsymbol{V}_r &amp; \boldsymbol{V}_0 \\
+\end{array}\right)\)</span>，前<span
+class="math inline">\(r\)</span>列为<span
+class="math inline">\(\boldsymbol{V}_r\)</span>，剩下<span
+class="math inline">\(m-r\)</span>列为<span
+class="math inline">\(\boldsymbol{V}_0\)</span>。</p>
+<p><span class="math inline">\(\boldsymbol{U}=\left(\begin{array}{c}
+\boldsymbol{U}_r &amp; \boldsymbol{U}_0 \\
+\end{array}\right)\)</span>，前<span
+class="math inline">\(r\)</span>列为<span
+class="math inline">\(\boldsymbol{U}_r\)</span>，剩下<span
+class="math inline">\(n-r\)</span>列为<span
+class="math inline">\(\boldsymbol{U}_0\)</span>。</p>
+<p>当<span class="math inline">\(i&gt;r\)</span>时，由<span
+class="math inline">\(\boldsymbol{A}^*\boldsymbol{Av}_i=0\)</span>两边左乘以<span
+class="math inline">\(\boldsymbol{v}_i^*\)</span>，易得<span
+class="math inline">\(\boldsymbol{Av}_i=0\)</span>，故有<span
+class="math inline">\(\boldsymbol{AV}_0 = 0\)</span>。</p>
+<p>等价变换原式</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{A} &amp;= \boldsymbol{U\Sigma V}^*\\
+\boldsymbol{AV} &amp;= \boldsymbol{U \Sigma}\\
+\boldsymbol{A}\left(\begin{array}{c}
+\boldsymbol{V}_r\\
+\boldsymbol{V}_0\\
+\end{array}\right)&amp;=\left(\begin{array}{c}
+\boldsymbol{U}_r &amp; \boldsymbol{U}_0\\
+\end{array}\right)
+\left(\begin{array}{c}
+\boldsymbol{\Sigma}_r &amp; 0 \\
+0 &amp; 0 \\
+\end{array}\right) \tag{1}\\
+\boldsymbol{AV}_r &amp;= \boldsymbol{U}_r \boldsymbol{\Sigma}_r
+\tag{2}\\
+\end{align*}\]</span></p>
+<p>再令</p>
+<p><span class="math display">\[\begin{align*}
+\sigma_i &amp;= \sqrt{\lambda_i}\\
+\boldsymbol{\Sigma}_r &amp;= \mathrm{diag}(\sigma _1,  \sigma
+_2,  \dots,  \sigma _r)\\
+\end{align*}\]</span></p>
+<p><span class="math inline">\(\boldsymbol{V}_r\)</span>、<span
+class="math inline">\(\boldsymbol{\Sigma}_r\)</span>均已构造出来，则只需构造符合<span
+class="math inline">\((1)\)</span>的<span
+class="math inline">\(\boldsymbol{U}_r\)</span>，且<span
+class="math inline">\(\boldsymbol{u}_i\)</span>（<span
+class="math inline">\(i\leq r\)</span>）满足以下条件：</p>
+<ol type="1">
+<li><span
+class="math inline">\(\boldsymbol{u}_i\)</span>为单位向量。</li>
+<li><span class="math inline">\(\boldsymbol{u}_i \perp
+\boldsymbol{u}_j\)</span>（<span class="math inline">\(i \neq
+j\)</span>）。</li>
+<li><span class="math inline">\(\boldsymbol{u}_i\)</span>是<span
+class="math inline">\(\boldsymbol{AA}^*\)</span>的特征向量。</li>
+</ol>
+<p>令<span
+class="math inline">\(\boldsymbol{u}_i=\frac{1}{\sigma_i}\boldsymbol{Av}_i\)</span>，下面证明其满足三个条件</p>
+<h4 id="section">1.</h4>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{u}_i^*\boldsymbol{u}_i &amp;=
+\frac{1}{\sigma_i^2}\boldsymbol{v}_i^*\boldsymbol{A}^*\boldsymbol{Av}_i\\
+&amp;=\frac{1}{\lambda_i}\boldsymbol{v}_i^*\lambda_i \boldsymbol{v}_i\\
+&amp;=1\\
+\end{align*}\]</span></p>
+<h5 id="section-1">2.</h5>
+<p><span class="math display">\[\begin{align*}
+\newcommand\ui{\boldsymbol{u}_i}
+\boldsymbol{u}_i^*\boldsymbol{u}_j &amp;=
+\frac{1}{\sigma_i\sigma_j}\boldsymbol{v}_i^*\boldsymbol{A}^*\boldsymbol{Av}_j\\
+&amp;=\frac{1}{\sigma_i\sigma_j}\boldsymbol{v}_i^*\boldsymbol{v}_j\\
+\end{align*}\]</span></p>
+<p>由<span class="math inline">\(\boldsymbol{v}_i\)</span>和<span
+class="math inline">\(\boldsymbol{v}_j\)</span>正交知上式等于<span
+class="math inline">\(0\)</span>，即<span
+class="math inline">\(\boldsymbol{u}_i\)</span>和<span
+class="math inline">\(\boldsymbol{u}_j\)</span>也正交。</p>
+<h4 id="section-2">3.</h4>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{AA}^*\boldsymbol{u}_i &amp;=
+\frac{1}{\sigma_i}\boldsymbol{AA}^*\boldsymbol{A}\boldsymbol{v}_i\\
+&amp;= \sigma_i\boldsymbol{Av}_i\\
+&amp;=\lambda_i \boldsymbol{u}_i\\
+\end{align*}\]</span></p>
+<p>证毕。</p>
+<h3 id="与四个基本子空间的关系">与四个基本子空间的关系</h3>
+<p><span class="math inline">\(\boldsymbol{V}_r=(\boldsymbol{v} _1,
+\boldsymbol{v} _2, \dots, \boldsymbol{v} _n)\)</span>是<span
+class="math inline">\(\boldsymbol{A}\)</span>的行空间<span
+class="math inline">\(\mathrm{C}(\boldsymbol{A}^*)\)</span>的一组标准正交基；
+<span class="math inline">\(\boldsymbol{V}_0=(\boldsymbol{v} _r,
+\boldsymbol{v} _{r+1}, \dots, \boldsymbol{v} _n)\)</span>是<span
+class="math inline">\(\boldsymbol{A}\)</span>的零空间<span
+class="math inline">\(\mathrm{N}(\boldsymbol{A})\)</span>的一组标准正交基；
+<span class="math inline">\(\boldsymbol{U}_r=(\boldsymbol{u} _1,
+\boldsymbol{u} _2, \dots, \boldsymbol{u} _u)\)</span>是<span
+class="math inline">\(\boldsymbol{A}\)</span>的列空间<span
+class="math inline">\(\mathrm{C}(\boldsymbol{A})\)</span>的一组标准正交基；
+<span class="math inline">\(\boldsymbol{U}_0=(\boldsymbol{u} _r,
+\boldsymbol{u} _{r+1}, \dots, \boldsymbol{u} _n)\)</span>是<span
+class="math inline">\(\boldsymbol{A}\)</span>的左零空间<span
+class="math inline">\(\mathrm{N}(\boldsymbol{A}^*)\)</span>的一组标准正交基。</p>
+<p>线性代数中非常重要的子空间，和SVD就这样巧妙地联系在一起了，由<span
+class="math inline">\(\boldsymbol{V}^*\boldsymbol{V} =
+\boldsymbol{I}\)</span>和<span
+class="math inline">\(\boldsymbol{U}^*\boldsymbol{U} =
+\boldsymbol{I}\)</span>，又能再次验证四个基本子空间的两组垂直关系：</p>
+<p><span class="math display">\[\begin{align*}
+\mathrm{C}(\boldsymbol{A}) \perp \mathrm{N}(\boldsymbol{A}^*)\\
+\mathrm{C}(\boldsymbol{A}^*) \perp \mathrm{N}(\boldsymbol{A})\\
+\end{align*}\]</span></p>
+<h3 id="补充">补充</h3>
+<p>为了结论的泛用性，上面的证明是在复数域<span
+class="math inline">\(\mathbb{C}\)</span>下进行的，当然换成实数域也是同理的，只要将<span
+class="math inline">\(\boldsymbol{A}^*\)</span>换成<span
+class="math inline">\(\boldsymbol{A}^\mathrm{T}\)</span>即可。</p>
+<h2 id="参考">参考</h2>
+<p>Introduction to Linear Algebra, 5th edition, by Gilbert Strang</p>
+<p><a
+target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~ee127/sp21/livebook/thm_sed.html">https://inst.eecs.berkeley.edu/~ee127/sp21/livebook/thm_sed.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag"># 线性代数</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/" rel="tag"># 线性代数笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/48b626d0dc2c/" rel="prev" title="谱定理（Spectral Theorem）的证明">
+                  <i class="fa fa-chevron-left"></i> 谱定理（Spectral Theorem）的证明
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/ffabb25ef332/" rel="next" title="基于SVD的图像压缩算法">
+                  基于SVD的图像压缩算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cyrus28214</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
