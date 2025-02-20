@@ -223,7 +223,7 @@ drwxr-xr-x  13 root root    4096 May  2  2023 var
 `touch 文件名`有两个作用：
 
 - 若文件不存在，创建这个文件
-- 若文件存在，将文件的[atime](/post/cccf6f3d6d50/)和[mtime](/post/cccf6f3d6d50/)设置为现在的时间。
+- 若文件存在，将文件的[atime](/posts/linux-file-timestamps/)和[mtime](/posts/linux-file-timestamps/)设置为现在的时间。
 
 `mkdir 目录名`（make directory）可以创建新的文件夹，例：
 
