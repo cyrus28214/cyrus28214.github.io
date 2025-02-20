@@ -1,6 +1,6 @@
 ---
 title: ZJU校巴::Reverse1 writeup
-published: 2023-10-09
+published: 2023-10-09 14:59:56
 slug: zju-school-bus-reverse1-writeup
 image: ./Ollydbg.png
 category: CTF
@@ -17,11 +17,11 @@ tags: [CTF, 逆向工程, 信息安全, ZJU校巴, writeup]
 
 题目给了一个二进制可执行程序，执行这个程序，会显示“Please input flag:”，尝随便输入几个字符，结果会输出“Your flag is not right.”。
 
-![](./please-input-flag.png)
+![please input flag](./please-input-flag.png)
 
 使用Ollydbg打开这个程序，找到以下这段需要逆向分析的主要内容
 
-![](./Ollydbg.png)
+![ollydbg](./Ollydbg.png)
 
 在这段代码之前，还有一系列的赋值操作，以ASCII的形式读取，可以获得 “MMMwjau\`S]]S}ybS?4:;5:<4<q” 这串神秘的字符串，猜测与flag的值有关。
 
@@ -79,7 +79,7 @@ printf("You are right!");
 
 现在分析 JE 之前， LEA 之后的内容。首先，将 ESP+14 地址赋给 EDX 。从Ollydbg的堆栈区中可以查看到 ESP 指向 0061FF20 ， ESP+14 也就是 0061FF34 ， EDX 储存的是读取到的字符串地址。
 
-![](./stack.png)
+![stack](./stack.png)
 
 `MOV EAX,DWORD PTR SS:[ESP+4C]`，其中 ESP+4C 就是刚刚初始化为0的循环变量地址。这句就是把循环变量取出来放到`EAX`里。
 
@@ -99,7 +99,7 @@ ADD EAX,EDX
 MOVZX EAX,BYTE PTR DS:[EAX]
 ```
 
-这几句先是把前面的 in[i] 放到 ECX 里，之后与上面一样的，就是取出了 (ESP+32)[i] ，放到 EAX 里，而这个 (ESP+32) 是什么呢，就是那一段神秘字符串 “MMMwjau\`S]]S}ybS?4:;5:<4<q” 的首地址。也就是 s[i] 。
+这几句先是把前面的 in[i] 放到 ECX 里，之后与上面一样的，就是取出了 [ESP+32](i) ，放到 EAX 里，而这个 (ESP+32) 是什么呢，就是那一段神秘字符串 “MMMwjau\`S]]S}ybS?4:;5:<4<q” 的首地址。也就是 s[i] 。
 
 `CMP CL,AL`比较了A寄存器和C寄存器的最低字节即 in[i] 和 s[i] ，如果不相等就输出"Your flag is not right."并直接退出。
 
@@ -139,4 +139,3 @@ int main() {
 ## 总结
 
 这道题还是比较简单的，作为我这样的CTF小白的第一题Reverse刚刚好。
-

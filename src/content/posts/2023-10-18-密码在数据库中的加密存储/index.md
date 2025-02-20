@@ -1,6 +1,6 @@
 ---
 title: 密码在数据库中的加密存储
-published: 2023-10-18
+published: 2023-10-18 23:19:27
 slug: password-encryption-in-database
 image: ./plain-text-password.png
 category: 信息安全
@@ -15,7 +15,7 @@ tags: [信息安全, 密码学, 数据库]
 
 我们都知道不应该在数据库中明文储存密码，假设有个粗心的程序员忘记了这一点怎么办呢？
 
-![](./plain-text-password.png)
+![plain text password](./plain-text-password.png)
 
 有两种可能，攻击者可能可以在密码传递的过程中截取密码（假如传递的过程没有其他的保护），或者数据库泄露给了攻击者。
 
@@ -49,12 +49,12 @@ tags: [信息安全, 密码学, 数据库]
 $$
 Rainbow=\left[
 \begin{array}{c}
-	Hash(\text{12345678})\\
-	Hash(\text{qwerty})\\
-	Hash(\text{Password})\\
-	Hash(\text{20030101})\\
-	Hash(\text{00000000})\\
-	\cdots
+    Hash(\text{12345678})\\
+    Hash(\text{qwerty})\\
+    Hash(\text{Password})\\
+    Hash(\text{20030101})\\
+    Hash(\text{00000000})\\
+    \cdots
 \end{array}\right]
 $$
 

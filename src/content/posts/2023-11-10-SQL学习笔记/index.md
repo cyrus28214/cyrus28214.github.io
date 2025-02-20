@@ -1,9 +1,9 @@
 ---
 title: SQL学习笔记
-published: 2023-10-02
+published: 2023-11-10 12:12:22
 slug: sql-learning-notes
 category: 数据库
-tags: [笔记, SQL, 数据库, SQLite, 环境配置]
+tags: [SQL, 数据库, SQLite, 环境配置]
 ---
 
 ## 1. 引入
@@ -243,7 +243,7 @@ SELECT COUNT(DISTINCT(category)) FROM books;
 
 SQL中有一个关键字`AS`可以实现这个功能。
 
-```SQL
+```sql
 SELECT COUNT(DISTINCT(category)) AS n FROM books; 
 ```
 
@@ -298,7 +298,6 @@ SELECT * FROM books WHERE category = 'Classic' AND price >= 30;
 
 也可以自己试试把`AND`换成`OR`。
 
-
 :::note
 容易注意到，上面写的SQL语句的关键字都是使用全大写的，其实小写的命令也能被识别，大写的风格是一种传统的风格。
 :::
@@ -306,7 +305,6 @@ SELECT * FROM books WHERE category = 'Classic' AND price >= 30;
 ## 5. 条件与分组
 
 上一节里我们使用了`WHERE`关键字进行了条件的筛选，实际上这样的关键字还有很多，以下是常用的一些。
-
 
 ### GROUP BY
 
@@ -424,7 +422,6 @@ SELECT title FROM books WHERE title LIKE 'The%';
 
 ## 6. 插入、更新与删除
 
-
 ### INSERT
 
 ```sql
@@ -481,7 +478,6 @@ DELETE FROM books WHERE sales <= 2;
 ```
 
 ## 7. 主键与外键
-
 
 ### 准备
 
@@ -690,7 +686,6 @@ COMMIT
 
 ## 10. 在Python中使用SQL
 
-
 SQL很少被单独使用，通常SQL会与其他的一些语言结合使用，比如Python、Java、 C#等等。这篇文章里，我们关注如何在Python中使用SQL操作数据库。
 
 Python中内置了SQLite3，你只需要执行
@@ -761,4 +756,3 @@ for row in res:
 db.close()
 # 关闭数据库连接，现在可以连接别的数据库
 ```
-

@@ -1,6 +1,6 @@
 ---
 title: 费马小定理和欧拉定理
-published: 2023-11-11
+published: 2023-11-11 19:54:16
 slug: fermat-and-euler-theorem
 category: 数理
 tags: [数学, 数论]
@@ -11,10 +11,14 @@ tags: [数学, 数论]
 ### 定义
 
 若 $p$ 是素数，且 $\gcd(a,p) = 1$ ，则
-$$a^{p-1} \equiv 1 \pmod{p}$$
+$$
+a^{p-1} \equiv 1 \pmod{p}
+$$
 
 另一种形式：若 $p$ 是素数，则
-$$a^p \equiv a \pmod{p}$$
+$$
+a^p \equiv a \pmod{p}
+$$
 
 ### 证明
 
@@ -25,14 +29,18 @@ $$a^p \equiv a \pmod{p}$$
 于是就得到了 $B$ 其实也是 $\{1,2,\dots,p-1\}$，和 $A$ 一样。
 
 所以
-$$ 
+
+$$
 1\times 2\times\dots\times(p-1)
 \equiv a\times 2a\times\dots\times(p-1)a \pmod{p}
 $$
+
 即
+
 $$
 (p-1)! \equiv (p-1)!\times a^{p-1} \pmod{p}
 $$
+
 因为 $(p-1)!$ 与 $p$ 互质，可以两边都除以 $(p-1)!$ 即得证。
 
 ## 欧拉函数
@@ -55,8 +63,11 @@ $$
 
 ### 定义
 
-若 $\gcd(a,m)=1$ ，则 
-$$a^{\varphi(m)}\equiv1\pmod{m}$$
+若 $\gcd(a,m)=1$ ，则
+
+$$
+a^{\varphi(m)}\equiv1\pmod{m}
+$$
 
 不难发现欧拉定理是费马小定理的推广，费马小定理是欧拉定理当 $m$ 为质数的特例。
 
@@ -68,18 +79,25 @@ $$a^{\varphi(m)}\equiv1\pmod{m}$$
 
 同上，不难验证 $c_n$ 也是互异的，且 $c_n$ 与 $m$ 互质， $a\Phi$ 也是所有小于 $m$ 与 $m$ 互质的数的集合。所以
 
-$$a\Phi=\Phi$$
+$$
+a\Phi=\Phi
+$$
 
 接下来就顺理成章了
 
-$$\prod_{i=1}^{\varphi(m)}i\equiv\prod_{i=1}^{\varphi(m)}ai\pmod{m}$$
-$$a^{\varphi(m)}\equiv1\pmod{m}$$
+$$
+\prod_{i=1}^{\varphi(m)}i\equiv\prod_{i=1}^{\varphi(m)}ai\pmod{m}
+$$
+
+$$
+a^{\varphi(m)}\equiv 1\pmod{m}
+$$
 
 *拓展学习：群论中的拉格朗日定理*
 
 ### 应用
 
-由 $a^{\varphi(m)}\equiv1\pmod{m}$ 可以得到 
+由 $a^{\varphi(m)}\equiv1\pmod{m}$ 可以得到
 $$
 a^n\equiv a^{n\bmod\varphi(m)}\pmod{m}
 $$

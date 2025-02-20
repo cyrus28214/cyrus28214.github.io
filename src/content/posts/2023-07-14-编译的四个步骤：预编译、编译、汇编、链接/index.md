@@ -1,7 +1,7 @@
 ---
 title: 编译的四个步骤：预编译、编译、汇编、链接
-published: 2023-07-14
-slug: the-four-steps-of-compilation-preprocessing-compilation-assembling-and-linking
+published: 2023-07-14 12:23:25
+slug: preprocessing-compilation-assembling-and-linking
 draft: false
 category: 编译原理
 tags: [编译, C/C++]
@@ -39,27 +39,27 @@ int main(){
 ```asm
 main:
 .LFB2211:
-	pushq	%rbp
-	.seh_pushreg	%rbp
-	movq	%rsp, %rbp
-	.seh_setframe	%rbp, 0
-	subq	$32, %rsp
-	.seh_stackalloc	32
-	.seh_endprologue
-	call	__main
-	leaq	.LC0(%rip), %rax
-	movq	%rax, %rdx
-	movq	.refptr._ZSt4cout(%rip), %rax
-	movq	%rax, %rcx
-	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
-	movq	%rax, %rcx
-	movq	.refptr._ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(%rip), %rax
-	movq	%rax, %rdx
-	call	_ZNSolsEPFRSoS_E
-	movl	$0, %eax
-	addq	$32, %rsp
-	popq	%rbp
-	ret
+    pushq   %rbp
+    .seh_pushreg  %rbp
+    movq    %rsp, %rbp
+    .seh_setframe %rbp, 0
+    subq    $32,  %rsp
+    .seh_stackalloc    32
+    .seh_endprologue
+    call    __main
+    leaq    .LC0(%rip), %rax
+    movq    %rax, %rdx
+    movq    .refptr._ZSt4cout(%rip), %rax
+    movq    %rax, %rcx
+    call    _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+    movq    %rax, %rcx
+    movq    .refptr._ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(%rip), %rax
+    movq    %rax, %rdx
+    call    _ZNSolsEPFRSoS_E
+    movl    $0,   %eax
+    addq    $32,  %rsp
+    popq    %rbp
+    ret
 ```
 
 ## 3. 汇编(Assembling)

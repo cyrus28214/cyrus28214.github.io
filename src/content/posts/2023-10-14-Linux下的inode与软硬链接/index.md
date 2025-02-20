@@ -1,6 +1,6 @@
 ---
 title: Linux下的inode与软硬链接
-published: 2023-10-14
+published: 2023-10-14 14:18:49
 slug: linux-inode-and-soft-and-hard-links
 image: ./soft-link.png
 category: 操作系统

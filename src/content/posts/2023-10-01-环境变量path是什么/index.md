@@ -1,6 +1,6 @@
 ---
 title: 环境变量path是什么
-published: 2023-10-01
+published: 2023-10-01 19:49:55
 slug: environment-variable-path
 category: 操作系统
 tags: [命令行, 操作系统, 环境配置]

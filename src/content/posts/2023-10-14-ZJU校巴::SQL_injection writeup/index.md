@@ -1,6 +1,6 @@
 ---
 title: ZJU校巴::SQL_injection writeup
-published: 2023-10-14
+published: 2023-10-14 20:38:23
 slug: zju-school-bus-sql-injection-writeup
 image: ./hint.png
 category: CTF
@@ -13,7 +13,7 @@ tags: [CTF, ZJU校巴, writeup, SQL注入]
 
 ## 题目
 
-![](./hint.png)
+![hint](./hint.png)
 
 作为教程性质的题目，这道题几乎把什么都写出来了，连表名flag_is_here都知道了，真好。
 
@@ -21,7 +21,7 @@ tags: [CTF, ZJU校巴, writeup, SQL注入]
 
 简单试一下 `1 OR 1 = 1` 发现给出了 0-7 全部的题目。
 
-![](./sql-injection-1.png)
+![sql injection](./sql-injection-1.png)
 
 再试一下 `1 AND EXISTS(SELECT * FROM flag_is_here)`，返回了第一条数据，题目果然没骗我。
 
@@ -33,7 +33,7 @@ tags: [CTF, ZJU校巴, writeup, SQL注入]
 
 现在想要获取第一个flag的长度，为了充分利用这 8 bit 的数据，使用 `8 OR (SELECT LENGTH(flag) FROM flag_is_here LIMIT 1) & (1 << id)` ，发现返回了以下界面：
 
-![](./sql-injection-2.png)
+![sql injection](./sql-injection-2.png)
 
 二进制的1/2/4/5位为1，而其他位均为0，0b00110110转十进制就是54，flag有54位。但是还要再验证一下，因为假如flag长度大于255（虽然不太可能），这个方法返回的数据就是错误的。
 
@@ -41,7 +41,7 @@ tags: [CTF, ZJU校巴, writeup, SQL注入]
 
 flag长度54位，ASCII码范围0-127，每次可以试出一个字符。举个例子，比如说我想知道第五个字符，就使用 `8 OR (SELECT ASCII(SUBSTR(flag, 5, 1)) FROM flag_is_here LIMIT 1) & (1 << id)`，页面返回以下结果：
 
-![](./sql-injection-3.png)
+![sql injection](./sql-injection-3.png)
 
 则第五个字符的0/1/2/4/5/6位为1，其他位为0，0b01110111 = 119，查阅ASCII码表，发现对应的字符是小写英文字母“w”。
 

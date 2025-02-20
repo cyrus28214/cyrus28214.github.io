@@ -1,6 +1,6 @@
 ---
 title: 程序的内存布局
-published: 2023-09-30
+published: 2023-09-30 16:01:24
 image: "./memory-layout.png"
 slug: program-memory-layout
 draft: false
@@ -20,7 +20,7 @@ tags: [内存, 图解, C/C++]
 
 它们的位置如图所示
 
-![](./memory-layout.png)
+![memory layout](./memory-layout.png)
 
 ## 代码段（Text/Code Segment）
 
@@ -76,23 +76,23 @@ int main() {
 
 一开始我们的程序只有`main`在执行
 
-![](./stack-frame-1.png)
+![stack frame](./stack-frame-1.png)
 
 当`times2`被调用，新的栈帧入栈，保存了传入的值`3`，以及将返回值返回地址（图上未画出）等。
 
-![](./stack-frame-2.png)
+![stack frame](./stack-frame-2.png)
 
 `add`被调用。
 
-![](./stack-frame-3.png)
+![stack frame](./stack-frame-3.png)
 
 `add`返回了，弹栈，恢复到执行`times2`的上下文。
 
-![](./stack-frame-4.png)
+![stack frame](./stack-frame-4.png)
 
 `times2`返回。
 
-![](./stack-frame-5.png)
+![stack frame](./stack-frame-5.png)
 
 ## 堆（Heap）
 

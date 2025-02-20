@@ -1,6 +1,6 @@
 ---
 title: SymPy学习笔记
-published: 2023-10-11
+published: 2023-11-02 20:23:12
 image: ./jupyter.png
 slug: sympy-learning-notes
 category: 科学计算
@@ -19,9 +19,11 @@ SymPy 是一个开源的符号计算Python库，SymPy采用了宽松的BSD开源
 
 :::tip
 推荐使用micromamba代替Anacoda，它更轻量，也更快速。且默认使用conda-forge源。
+
 ```bash
 micromamba install sympy
 ```
+
 :::
 
 如果你使用pip：
@@ -62,7 +64,7 @@ SymPy给我们的结果是$\sqrt 8 = 2 \sqrt 2$，这才是一个精确的化简
 
 在SymPy中，符号需要在使用前用`Symbol()`或`symbols()`来定义：
 
-```
+```python
 a = Symbol('a') 
 x, y = symbols('x y')
 # symbols接受一系列用空格或逗号隔开的符号，返回对应的变量
@@ -72,7 +74,7 @@ x, y = symbols('x y')
 
 SymPy支持直接使用`+`、`-`、`*`、`/`、`**`来操作这些符号。
 
-```
+```python
 >>> x, y = symbols("x y") 
 >>> expr = x + 2*y
 >>> expr
@@ -85,7 +87,7 @@ x/2 + y
 
 输入`x * expr`你会发现SymPy并没有为我们展开表达式为`x**2 + 2*x*y`，而是保留了`x*(x + 2*y)`的形式。因为因式分解是SymPy默认的化简操作，你也可以利用`expand`来展开，用`factor`来分解。
 
-```
+```python
 >>> expand(x * expr)
 x**2 + 2*x*y
 >>> factor(2*x**2 - 7*x - 4)
@@ -93,7 +95,6 @@ x**2 + 2*x*y
 ```
 
 SymPy计算出了展开$x(x + 2y)$的结果$x^2 + 2xy$，和因式分解$2x^2 - 7x - 4$的结果$(x-4)(2x+1)$。
- 
 
 ### 输出
 
@@ -103,7 +104,7 @@ SymPy计算出了展开$x(x + 2y)$的结果$x^2 + 2xy$，和因式分解$2x^2 - 
 
 计算$\int^{+\infty}_{-\infty}\sin(x^2)dx$
 
-```
+```python
 >>> init_printing(use_unicode=False)   
 >>> integrate(sin(x**2), (x, -oo, oo))
   ___   ____
@@ -117,24 +118,26 @@ SymPy计算出了展开$x(x + 2y)$的结果$x^2 + 2xy$，和因式分解$2x^2 - 
   2
 ```
 
-第一个输出中SymPy使用了字符画的方式画出$\sqrt \quad$，使用了`pi`表示$\pi$。第二个输出使用了Unicode字符“√”和“π”。
+第一个输出中SymPy使用了字符画的方式画出 $\sqrt{}$，使用了`pi`表示$\pi$。第二个输出使用了Unicode字符“√”和“π”。
 
-SymPy还可以使用$\LaTeX$:
+SymPy还可以使用 $\LaTeX$:
 
-```
+```python
 >>> latex(Integral(cos(x)**2, (x, 0, pi)))
 \int\limits_{0}^{\pi} \cos^{2}{\left(x \right)}\, dx
 ```
 
-将`\int\limits_{0}^{\pi} \cos^{2}{\left(x \right)}\, dx`使用任意一个$\LaTeX$编译器编译，就可以得到下面这样漂亮的结果：
+将`\int\limits_{0}^{\pi} \cos^{2}{\left(x \right)}\, dx`使用任意一个 $\LaTeX$ 编译器编译，就可以得到下面这样漂亮的结果：
 
-$$\int\limits_{0}^{\pi} \cos^{2}{\left(x \right)}\, dx$$
+$$
+\int\limits_{0}^{\pi} \cos^{2}{\left(x \right)}\, d
+$$
 
 ### 符号的替换
 
 用`subs()`，但注意`subs()`并不改变原表达式。
 
-```
+```python
 >>> expr = cos(x) + 1
 >>> expr.subs(x, y)
 cos(y) + 1
@@ -144,7 +147,7 @@ cos(x) + 1
 
 也可以替换数字，进行在某一点求值的操作。
 
-```
+```python
 >>> expr = sin(2*x) + cos(2*x)
 >>> expr.subs(x, pi/5)
 -1/4 + sqrt(5)/4 + sqrt(sqrt(5)/8 + 5/8)
@@ -152,7 +155,7 @@ cos(x) + 1
 
 也可以替换多个符号
 
-```
+```python
 >>> expr = x**3 + 4*x*y - z
 >>> expr.subs([(x, 2), (y, 4), (z, 0)])
 40
@@ -162,7 +165,7 @@ cos(x) + 1
 
 用`sympify()`（不是`symplify（`）
 
-```
+```python
 >>> str_expr = "x**2 + 3*x - 1/2"
 >>> expr = sympify(str_expr)
 >>> expr
@@ -175,7 +178,7 @@ x**2 + 3*x - 1/2
 
 用`evalf()`
 
-```
+```python
 >>> expr = sqrt(8)
 >>> expr.evalf()
 2.82842712474619
@@ -183,14 +186,14 @@ x**2 + 3*x - 1/2
 
 默认情况下，会给出15位的精度，但是也可以指定所需要的精度
 
-```
+```python
 expr.evalf(100) 
 2828427124746190097603377448419396157139343750753896146353359475981464956924214077700775068655283145 
 ```
 
 如果想要用`subs()`进行单点求值后再用`evalf()`进行数值估计，用`expr.evalf(subs={<Symbol>: <Value>})`是比`expr.subs(<Symbol>, <Value>).evalf()`更推荐的方法。因为这样会使计算更高效且稳定。
 
-```
+```python
 >>> expr = cos(2*x)
 >>> expr.evalf(subs={x: 2.4})
 0.0874989834394464
@@ -198,7 +201,7 @@ expr.evalf(100)
 
 假如指定了`chop=True`，SymPy会自动移除小于期望精度的舍入误差
 
-```
+```python
 >>> one = cos(1)**2 + sin(1)**2
 >>> (one - 1).evalf()
 -0.e-124
@@ -210,7 +213,7 @@ expr.evalf(100)
 
 使用SymPy对表达式做多点的求值（比如成千上万点后）是比较慢的。如果有这种需求，可以对表达式`lambdify()`后交给其他库处理（比如NumPy或SciPy）
 
-```
+```python
 >>> import numpy                                     
 >>> a = numpy.arange(10)
 >>> expr = sin(x)
@@ -228,7 +231,7 @@ array([ 0.        ,  0.84147098,  0.90929743,  0.14112001, -0.7568025 ,
 
 符号（Symbol）指的是SymPy提供的，用`symbols()`定义的符号，而变量是Python提供的。
 
-```
+```python
 >>> x = symbols('x')
 >>> expr = x + 1
 >>> x = 2
@@ -240,7 +243,7 @@ x + 1
 
 想要计算`expr`在x=2条件下的值，可以使用`subs`:
 
-```
+```python
 >>> x = symbols('x')
 >>> expr = x + 1
 >>> expr.subs(x, 2)
@@ -251,7 +254,7 @@ x + 1
 
 假如你用`==`检测两个式子是否相等，你将会得到错误的结果：
 
-```
+```python
 >>> (x + 1)**2 == x**2 + 2*x + 1
 False
 ```
@@ -259,29 +262,31 @@ False
 SymPy并没有扩展Python的语法，`=`依然表示赋值，`==`表示变量的相等，因此在SymPy中，主要用这两种方式表示两个式子相等：
 
 1. 这是官方文档中推荐的方法：假如你想要验证$a = b$是否成立，可以检测$a - b = 0$是否成立，只要将两个式子相减，然后使用`simplify()`函数化简，如果结果是0，则必定相等，*如果不是0，大多数情况下不相等，但也存在极少数情况，式子确实为0，但是SymPy无法将其化简*，对于常见的数学式子，可以放心地使用这个方法检验其是否相等。
-```
->>> a = (x + 1)**2
->>> b = x**2 + 2*x + 1
->>> simplify(a - b)
-0
->>> c = x**2 - 2*x + 1
->>> simplify(a - c)
-4*x
-```
 
-2. 另一种方法是使用`a.equals(b)`，但是这个方法并不是使用式子的化简得到的结论，而是通过随机地给式子赋多个值，比较二者是否相等。 
-```
->>> a = cos(x)**2 - sin(x)**2
->>> b = cos(2*x)
->>> a.equals(b)
-True
-```
+    ```python
+    >>> a = (x + 1)**2
+    >>> b = x**2 + 2*x + 1
+    >>> simplify(a - b)
+    0
+    >>> c = x**2 - 2*x + 1
+    >>> simplify(a - c)
+    4*x
+    ```
+
+2. 另一种方法是使用`a.equals(b)`，但是这个方法并不是使用式子的化简得到的结论，而是通过随机地给式子赋多个值，比较二者是否相等。
+
+    ```python
+    >>> a = cos(x)**2 - sin(x)**2
+    >>> b = cos(2*x)
+    >>> a.equals(b)
+    True
+    ```
 
 ### 坑三：^符号
 
 SymPy使用和Python一样的符号约定，用`**`表示指数，`^`表示异或（Xor），所以不应该尝试使用`^`表示指数。
 
-```
+```python
 >>> Xor(x, y)
 x ^ y
 ```
@@ -290,7 +295,7 @@ x ^ y
 
 两个SymPy对象相除，或者一个SymPy对象相除的时候，返回值都是SymPy对象，这没有问题。但是当分子分母都是Python的int时，要小心了。两个SymPy对象相除会返回一个分数，但是两个Python的int相除会返回一个浮点数（Python3）。
 
-```
+```python
 >>> x / y
 x/y
 >>> x / 19
@@ -303,14 +308,14 @@ x/19
 
 `0.15789473684210525`不是我们想要的结果，这个值不是精确的，当处理两个整数相除的时候，可以使用`Rational()`来避免这种结果：
 
-```
+```python
 Rational(3, 19) 
 3/19
 ```
 
 如果和其他符号连接起来的时候这种错误就更难以察觉：
 
-```
+```python
 >>> x + 1/3
 x + 0.333333333333333
 >>> x + Rational(1, 3) 
@@ -323,14 +328,14 @@ x + 1/3
 
 `init_printing()`会为你启用当前环境下可用的最佳的输出效果。
 
-```
+```python
 from sympy import init_printing
 init_printing() 
 ```
 
 如果你使用交互式命令行，init_session() 函数将自动导入SymPy中的所有内容，创建一些常用符号，设置绘图，并运行 `init_printing()`。
 
-```
+```python
 >>> from sympy import init_session
 >>> init_session() 
 Python console for SymPy 0.7.3 (Python 2.7.5-64-bit) (ground types: gmpy)
@@ -352,7 +357,7 @@ Documentation can be found at https://www.sympy.org/
 
 这是设置了`init_printing(use_unicode=False)`，不允许使用Unicode字符的输出
 
-```
+```python
 >>> Integral(sqrt(1/x), x)
   /
  |
@@ -366,7 +371,7 @@ Documentation can be found at https://www.sympy.org/
 
 这是设置了`init_printing(use_unicode=True)`，允许使用Unicode字符的输出
 
-```
+```python
 >>> Integral(sqrt(1/x), x)
 ⌠
 ⎮     ___
@@ -378,7 +383,7 @@ Documentation can be found at https://www.sympy.org/
 
 这是Jupyter notebook里的输出，使用了MathML渲染的$\LaTeX$：
 
-![](./jupyter.png)
+![Jupyter](./jupyter.png)
 
 :::note
 确保你安装好了Jupyter Notebook，在Jupyter中才能达成上面的效果
@@ -390,11 +395,11 @@ Documentation can be found at https://www.sympy.org/
 
 SymPy中的 `simplify()` 可以进行智能的化简
 
-![](./simplify.png)
+![simplify](./simplify.png)
 
 但是，`simplify()` 的输出有时候会和你的预想不同，因为并没有“最简”并没有一个严格的定义。
 
-![](./simplify2.png)
+![simplify](./simplify2.png)
 
 想要得到 $(x+1)^2$ 应该使用 `factor()`。
 
@@ -403,20 +408,39 @@ SymPy中的 `simplify()` 可以进行智能的化简
 ### 一些常用的化简函数
 
 1. `expand()`展开，如
-$$(x + 2)*(x - 3) = x^2 - x - 6$$
+
+    $$
+    (x + 2)*(x - 3) = x^2 - x - 6
+    $$
+
 2. `factor()`因式分解，如
-$$x^{2} z + 4 x y z + 4 y^{2} z = z \left(x + 2 y\right)^{2}$$
-如果希望得到所有因子的列表，用`factor_list()`
+    $$
+    x^{2} z + 4 x y z + 4 y^{2} z = z \left(x + 2 y\right)^{2}
+    $$
+    如果希望得到所有因子的列表，用`factor_list()`
 3. `collect(expr, x)`将x作为主元整理expr。如
-$$x^{3} - x^{2} z + 2 x^{2} + x y + x - 3 = x^{3} + x^{2} \cdot \left(2 - z\right) + x \left(y + 1\right) - 3$$
+
+    $$
+    x^{3} - x^{2} z + 2 x^{2} + x y + x - 3 = x^{3} + x^{2} \cdot \left(2 - z\right) + x \left(y + 1\right) - 3
+    $$
+
 4. `cancel()`对分子分母自动消去共同因子，如
-$$\frac{x^{2} + 2 x + 1}{x^{2} + x} = \frac{x + 1}{x}$$
+
+    $$
+    \frac{x^{2} + 2 x + 1}{x^{2} + x} = \frac{x + 1}{x}
+    $$
+
 5. `apart()`会执行部分因式分解（Partial fraction decomposition）
 6. `trigsimp()`是三角函数版本的`simplify()`会智能地化简三角函数表达式。
 7. `expand_trig()`会使用和差角、二倍角等公式展开表达式，如
-$$\sin{\left(x + y \right)} + \tan{\left(2 x \right)} = \sin{\left(x \right)} \cos{\left(y \right)} + \sin{\left(y \right)} \cos{\left(x \right)} + \frac{2 \tan{\left(x \right)}}{1 - \tan^{2}{\left(x \right)}}$$
+
+    $$
+    \sin{\left(x + y \right)} + \tan{\left(2 x \right)} = \sin{\left(x \right)} \cos{\left(y \right)} + \sin{\left(y \right)} \cos{\left(x \right)} + \frac{2 \tan{\left(x \right)}}{1 - \tan^{2}{\left(x \right)}}
+    $$
+
 8. `expr.rewrite(function)`尝试用function表示expr，如
-![](./rewrite.png)
+
+    ![rewrite](./rewrite.png)
 
 SymPy中的化简函数还有很多，这里只是一些常用的。
 
@@ -432,7 +456,7 @@ SymPy提供了完善的微积分支持：
 
 `Derivative()`可以创建一个导数但不计算它
 
-![](./diff.png)
+![diff](./diff.png)
 
 对未计算的导数使用`.doit()`可以计算它。
 
@@ -440,13 +464,17 @@ SymPy提供了完善的微积分支持：
 
 `integrate(exp(-x), (x, 0, oo))`将会计算
 
-$$\int\limits_{0}^{\infty} e^{- x}\, dx = 1$$
+$$
+int\limits_{0}^{\infty} e^{- x}\, dx =
+$$
 
 其中`oo`是两个“o”，用来表示无穷大。
 
 `integrate(exp(-x**2 - y**2), (x, -oo, oo), (y, -oo, oo))`将会计算
 
-$$\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} e^{- x^{2} - y^{2}}\, dx\, dy = \pi$$
+$$
+int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} e^{- x^{2} - y^{2}}\, dx\, dy = \p
+$$
 
 和上面求导一样，`Integral`会创建一个积分但是不计算它，`.doit()`可以计算未计算的积分。
 
@@ -454,12 +482,15 @@ $$\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty} e^{- x^{2} - y^{2
 
 `limit(sin(x)/x, x, 0)`将会计算
 
-$$\lim_{x \to 0^+}\left(\frac{\sin{\left(x \right)}}{x}\right) = 1$$
-
+$$
+lim_{x \to 0^+}\left(\frac{\sin{\left(x \right)}}{x}\right) =
+$$
 
 计算单侧极限，可以向第三个参数传入`'+'`或`'-'`。`limit(1/x, x, 0, '-')`将会计算
 
-$$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
+$$
+lim_{x \to 0^+} \frac{1}{x} = \inft
+$$
 
 同上，`Integral`会创建一个未计算的极限，`.doit()`可以计算它。
 
@@ -467,11 +498,11 @@ $$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
 
 用`expr.series(x, a, n)`会给出表达式在 x = a 处的 n 阶展开。
 
-![](./series.png)
+![series](./series.png)
 
 不想要那个表示余项的O，就用`.removeO()`
 
-![](./series2.png)
+![series](./series2.png)
 
 ## 解方程
 
@@ -481,7 +512,7 @@ $$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
 
 `用solveset(equation, x)`可以求equation关于x的解集，如果等式右边是0，也可以不写成`solveset(Eq(expr, 0), x)`，直接写成`solveset(expr, x)`，例如：
 
-```
+```python
 >>> solveset(Eq(x**2, 1), x)
 {-1, 1}
 >>> solveset(x**2 - 1, x)
@@ -490,7 +521,7 @@ $$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
 
 如果无解，将返回 $\varnothing$ ，如果无法求解，会返回一个条件集合。
 
-```
+```python
 >>> solveset(exp(x), x)     # 无解
 ∅
 >>> solveset(cos(x) - x, x)  # 无法求解
@@ -501,7 +532,7 @@ $$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
 
 使用`linsolve()`
 
-```
+```python
 >>> linsolve([x + y + z - 1, x + y + 2*z - 3 ], (x, y, z)) # 等式列表形式
 {(-y - 1, y, 2)}
 >>> linsolve(Matrix(([1, 1, 1, 1], [1, 1, 2, 3])), (x, y, z)) # 增广矩阵形式
@@ -516,13 +547,13 @@ linsolve(system, x, y, z)
 
 使用`nonlinsolve()`
 
-![](./nonlinsolve.png)
+![nonlinsolve](./nonlinsolve.png)
 
 ### 获得多项式的重根数
 
 `solveset()`返回的都是不重复的根，要获得多项式的重根数，可以使用`roots()`
 
-```
+```python
 >>> solveset(x**3 - 6*x**2 + 9*x, x)
 {0, 3}
 >>> roots(x**3 - 6*x**2 + 9*x, x)
@@ -533,13 +564,13 @@ linsolve(system, x, y, z)
 
 使用`dsolve()`
 
-![](./dsolve.png)
+![dsolve](./dsolve.png)
 
 ## 矩阵
 
 `Matrix()`可以创建矩阵，参数是一个二维数组。如果传入了一维数组，默认会生成一个列向量。
 
-![](./matrix.png)
+![matrix](./matrix.png)
 
 与 SymPy 中的其他对象不同，`Matrix` 是可变的。这意味着它们可以就地修改。这样的缺点是 `Matrix` 不能用于需要不可变的地方，例如其他 SymPy 表达式内部或作为字典的键。要用不可变版本的 Matrix，可以使用 `ImmutableMatrix`。
 
@@ -549,7 +580,7 @@ linsolve(system, x, y, z)
 
 `.col_del()`和``.row_del()`可以删除行或列。`.row_insert`和`.col_insert`可以插入行或列。
 
-```
+```python
 >>> M.col_del(0)
 >>> M
 ⎡2  3⎤
@@ -582,7 +613,7 @@ linsolve(system, x, y, z)
 
 `diag()`可以创建对角矩阵
 
-```
+```python
 >>> diag(-1, ones(2, 2), Matrix([5, 7, 5]))
 ⎡-1  0  0  0⎤
 ⎢           ⎥
@@ -599,19 +630,21 @@ linsolve(system, x, y, z)
 
 ### 其他操作
 
- - 行列式：`.det()`
- - 转化为简化行阶梯矩阵：`.rref()`，返回一个元组，第一个元素是简化行阶梯矩阵，第二个元素是一个存放了阶梯头所在列的列标的元组。
-![](./rref.png)
- - 子空间：`.nullspace()` 零空间、 `.columnspace()`列空间、 `rowspace()`行空间。
- - `.eigenvals()`特征值、`.eigenvects()`特征向量、`.charpoly(lamda)`特征多项式、`.diagonalize()`对角化。
+- 行列式：`.det()`
+- 转化为简化行阶梯矩阵：`.rref()`，返回一个元组，第一个元素是简化行阶梯矩阵，第二个元素是一个存放了阶梯头所在列的列标的元组。
+
+    ![rref](./rref.png)
+
+- 子空间：`.nullspace()` 零空间、 `.columnspace()`列空间、 `rowspace()`行空间。
+- `.eigenvals()`特征值、`.eigenvects()`特征向量、`.charpoly(lamda)`特征多项式、`.diagonalize()`对角化。
 
 ### 一个实例
 
 矩阵$A=\left[
 \begin{array}{llll}
-	1  & 2  & 3   & 4   \\
-	2  & -1 & -2  & a^2 \\
-	-1 & -7 & -11 & a
+ 1  & 2  & 3   & 4   \\
+ 2  & -1 & -2  & a^2 \\
+ -1 & -7 & -11 & a
 \end{array}\right]$是一个线性方程组的增广矩阵，问$a$取多少的时候，该方程组有解？
 
 输入以下代码，即可解出，当 $a = -3$ 或 $a = 4$ 时方程组有解。
@@ -628,4 +661,4 @@ x = Matrix([x1, x2, x3])
 solve(A*x - b)
 ```
 
-![](./solve.png)
+![solve](./solve.png)

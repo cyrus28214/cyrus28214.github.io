@@ -1,6 +1,6 @@
 ---
 title: 关系型数据库与非关系型数据库
-published: 2023-10-01
+published: 2023-10-01 21:31:42
 slug: relation-database-and-nosql-database
 category: 数据库
 tags: [数据库]
@@ -16,7 +16,6 @@ tags: [数据库]
 | *ACID* |支持恢复、回滚、并发控制等|难以保证数据的完整性和安全性|
 
 *ACID: 原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）*
-
 
 简单来说，关系型数据库就像Excel表格，非关系型数据库就像.json文件（当使用键值对数据结构时）。
 
