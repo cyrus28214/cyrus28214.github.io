@@ -1,20 +1,44 @@
-#let sans = "Source Han Sans SC"
-#let serif = "Source Han Serif SC"
+#set text(font: ("New Computer Modern", "Source Han Serif SC"), size: 12pt)
+#show raw: set text(font: ("Fira Code", "Source Han Sans SC"), size: 12pt)
+
 #let title = [微分形式不变性以及$dif y, Delta y, f'(x)$的区别和联系]
 #let author = "cyrus28214"
 
-#set math.equation(numbering: "(1)", supplement: "式")
-#set text(font: serif, size: 12pt)
-
+#set page(
+  header: context {
+    if counter(page).get().first() > 1 [
+      #set text(size: 10pt)
+      #h(1fr) #author
+    ]
+  }
+)
 #set page(numbering: "1 / 1")
 
+#show link: it => underline[#text(fill: blue)[#it.body]]
+
+#set raw(lang: "python")
+#show raw.where(block: true): block.with(
+  fill: luma(240, 40%),
+  inset: 10pt,
+  radius: 4pt,
+  width: 100%
+)
+
+#show raw.where(block: false): box.with(
+  fill: luma(240),
+  inset: (x: 3pt, y: 0pt),
+  outset: (y: 3pt),
+  radius: 2pt,
+)
+
 #align(center)[
-  #text(font: sans, size: 18pt, weight: "medium")[
-    #title
-  ]
-  
+  #text(size: 18pt)[
+  *#title*\
   #author
+  ]
 ]
+
+#set math.equation(numbering: "(1)", supplement: "式")
 
 初学微积分的时候，看到课本上证明所谓的“一阶微分形式不变性”看得云里雾里，想着“$dif y = f'(x) dif x$ 竟然也需要证？”．但当我仔细看了看微积分中导数$f'(x)$，微分$dif x$的定义，明晰了以前一直混淆的概念，发现这确实需要证明．不禁又一次感叹微积分的严谨（上一次是理解$epsilon-delta$语言时）．
 
