@@ -1,6 +1,6 @@
 ---
 title: 【CS50】课程推荐与学习心得
-published: 2023-10-04
+published: 2023-10-04 13:10:07
 slug: cs50-recommendation-and-learning-experience
 image: ./CS50.png
 category: 计算机基础

@@ -1,6 +1,6 @@
 ---
 title: 一看就懂的Linux Shell的基础使用
-published: 2023-11-14
+published: 2023-11-30 18:53:59
 slug: linux-shell-basic-usage
 category: 运维
 tags: [Shell, MIT Missing Semester, Linux, Bash]
@@ -263,7 +263,7 @@ Try 'touch --help' for more information.
 
 ## `\`、`'`、`"`
 
-在shell中，有一些字符不能直接作为参数的一部分传递，例如`!`、`$`、` `、`#`、`\`。
+在shell中，有一些字符不能直接作为参数的一部分传递，例如`!`、`$`、空格、`#`、`\`。
 
 使用反斜杠`\`可以转义单个字符，使其正常输出：
 
@@ -354,13 +354,13 @@ Administrator. It usually boils down to these three things:
 >明白这一点后，我们可以这样操作：
 >
 >```txt
->$ echo 3 | sudo tee brightness
+>echo 3 | sudo tee brightness
 >```
 >
 >因为打开 /sys 文件的是 tee 这个程序，并且该程序以 root 权限在运行，因此操作可以进行。 这样您就可以在 /sys 中愉快地玩耍了，例如修改系统中各种LED的状态（路径可能会有所不同）：
 >
 >```txt
->$ echo 1 | sudo tee /sys/class/leds/input6::scrolllock/brightness
+>echo 1 | sudo tee /sys/class/leds/input6::scrolllock/brightness
 >```
 
 ## `chmod`
@@ -435,6 +435,7 @@ bash不仅可以直接输入到命令行执行，也可以作为一种脚本语�
 #!/bin/bash
 echo "Hello World!"
 ```
+
 文件的第一行是`#!/bin/bash`，以`#`开始的内容是注释，意味着不会被运行。但是在文件的最开始，以`#!`开头的注释有个特别的名字，它被称作“shebang”，可以提示系统，使用什么程序来解析下面的代码。这里的`#!/bin/bash`，告诉操作系统使用`/bin/bash`解释下面的代码，也可以写作`#!/bin/sh`，因为`/bin/sh`是一个指向`bin/bash`的软链接。
 
 在执行之前，请先向这个文件添加执行的权限，因为Linux默认的新文件权限是`644`，即`rw-r--r--`，任何人都无法执行。使用`chmod +x hello.sh`来添加执行权限。
@@ -564,7 +565,8 @@ cyrus:~/example$
 - `$@`：所有参数
 - `$#`：参数个数
 - `$?`：前一个命令的返回值
-- `$$`：当前脚本的[进程ID（Process Identification, PID）](https://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8BID)
+- `$$
+：当前脚本的[进程ID（Process Identification, PID）](https://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8BID)
 - `!!` - 完整的上一条命令，包括参数。常见应用：当你因为权限不足执行命令失败（会出现`Permission denied`）时，可以使用 `sudo !!`再尝试一次。
 - `$_` - 上一条命令的最后一个参数。
 

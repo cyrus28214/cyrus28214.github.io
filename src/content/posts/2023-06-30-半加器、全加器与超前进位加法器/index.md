@@ -1,6 +1,6 @@
 ---
 title: 半加器、全加器与超前进位加法器
-published: 2023-06-30
+published: 2023-06-30 11:30:14
 image: "./half-adder.png"
 slug: half-adder-full-adder-and-carry-look-ahead-adder
 draft: false
@@ -30,6 +30,7 @@ $$
 ![半加器](./half-adder.png)
 
 ## 全加器(Full Adder)
+
 如果我们需要将低位所位的1也加上，就需要用到全加器，它接受三个输入A、B和C，输出加法的计算结果S和进位C1。由此可以写出全加器的表达式。
 
 $$
@@ -115,4 +116,4 @@ $$
 
 ## 引用
 
-Mano, M. M., Kime, C. R., & Martin, T. (2015). _Logic and computer design fundamentals (5th ed.)_ . Hoboken, NJ: Pearson Higher Education.
+Mano, M. M., Kime, C. R., & Martin, T. (2015). *Logic and computer design fundamentals (5th ed.)* . Hoboken, NJ: Pearson Higher Education.

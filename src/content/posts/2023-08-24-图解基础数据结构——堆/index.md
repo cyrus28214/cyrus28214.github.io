@@ -1,6 +1,6 @@
 ---
 title: 图解基础数据结构——堆
-published: 2023-08-24
+published: 2023-08-24 21:10:26
 image: "./heap.png"
 slug: heap-explanation
 draft: false
@@ -22,23 +22,23 @@ tags: [数据结构, 堆, 图解]
 
 要储存堆，首先要给堆中的每个结点编号。首先，以根节点为1，从上至下，每层再从左至右地编号，如图：
 
-![](./heap.png)
+![heap](./heap.png)
 
 *\*其实编号从零开始也可以，但是之后取子节点和父节点编码的公式会有所不同。*
 
 然后，我们只需要用一个数组，就可以储存下整个堆了。
 
-![](./array.png)
+![array](./array.png)
 
 一般来说，我们会让堆是一棵**完全二叉树（Complete Binary Tree）**，完全二叉树就是除了最后一层以外每一层均填满，而且最后一层从左至右地填满（请与**完美二叉树（Perfect Binary Tree）**区分），这样既节省了数组的空间，又方便了后续的操作。
 
 假如这个堆不是一棵完全二叉树会怎么样呢？请看下图：
 
-![](./heap-not-complete.png)
+![heap not complete](./heap-not-complete.png)
 
 如果这样的话，数组就会变成下图：
 
-![](./array-not-complete.png)
+![array not complete](./array-not-complete.png)
 
 可以看到存在空间浪费，不仅如此，后续操作也会带来麻烦。因此通常令堆为完全二叉树，并使用一个大小为$n$的数组储存。
 
@@ -63,21 +63,21 @@ tags: [数据结构, 堆, 图解]
 
 假如其中一个节点偏大而不满足堆性质，那么根据最大堆的特点我们可以知道，这个节点需要向上调整其位置。按照以下程序框图执行。
 
-![](./percolate-up.png)
+![percolate up](./percolate-up.png)
 
 当然，也有可能遇到不存在父节点的情况（此节点已经变成了根节点），那么也算调整完毕
 
 例：有一个这样的堆，其中橙色节点需要向上调整
 
-![](./percolate-up-example-1.png)
+![percolate up example](./percolate-up-example-1.png)
 
 $61 \gt 19$ 因此交换它们，并继续向上调整61
 
-![](./percolate-up-example-2.png)
+![percolate up example](./percolate-up-example-2.png)
 
 $61 \gt 36$ 交换61和36，并继续向上调整61
 
-![](./percolate-up-example-3.png)
+![percolate up example](./percolate-up-example-3.png)
 
 $61 \lt 90$ 调整结束，可以看到调整后的二叉树已经满足了堆性质。
 
@@ -85,19 +85,19 @@ $61 \lt 90$ 调整结束，可以看到调整后的二叉树已经满足了堆�
 
 向下调整就是和向上调整相反的过程，假如一个节点偏小而不满足堆性质，则这个节点需要被向下调整，按照下面的流程图完成向下调整。
 
-![](./percolate-down.png)
+![percolate down](./percolate-down.png)
 
 同样举个例子
 
-![](./percolate-down-example-1.png)
+![percolate down example](./percolate-down-example-1.png)
 
 22的两个子节点36、26都比它大，则交换22和36，并继续向下调整22
 
-![](./percolate-down-example-2.png)
+![percolate down example](./percolate-down-example-2.png)
 
 $25 \lt 22$ 交换25和22
 
-![](./percolate-down-example-3.png)
+![percolate down example](./percolate-down-example-3.png)
 
 22的两个子节点7、3都比它小，满足堆性质，向下调整结束。
 
@@ -147,15 +147,15 @@ void Heap::shiftDown(int node){
 
 有了向上调整，插入操作就很简单了，我们只需要把新的节点加到数组末尾，然后向上调整它。
 
-![](./insert-array.png)
+![insert array](./insert-array.png)
 
 相应的二叉树为：
 
-![](./insert-example-1.png)
+![insert example](./insert-example-1.png)
 
 调整后即为插入完毕后的堆
 
-![](./insert-example-2.png)
+![insert example](./insert-example-2.png)
 
 由于插入操作本质上就是向上调整，复杂度显然是 $O(\log n)$
 
@@ -174,9 +174,9 @@ void Heap::push(int val){
 
 逆着插入操作，我们只需要将根节点的值与最后一个节点交换，去掉最后一个节点，然后向下调整根节点。
 
-![](./pop-example-1.png)
-![](./pop-example-2.png)
-![](./pop-example-3.png)
+![pop example](./pop-example-1.png)
+![pop example](./pop-example-2.png)
+![pop example](./pop-example-3.png)
 
 顺带一提，假如需要删除非根节点，只需要让这个节点一直与它的父节点交换直到它变成根节点，再执行`pop`操作就行了。
 
@@ -238,7 +238,7 @@ void Heap::set(int node, int val){
 
 我们从倒数第二行开始，自底向上对每个节点进行向下调整。（因为倒数第一行没有子节点不需要向下调整）
 
-![](./build-example-1.png)
+![build example](./build-example-1.png)
 
 进行倒序遍历：
 
@@ -246,15 +246,15 @@ void Heap::set(int node, int val){
 
 向下调整3号后：
 
-![](./build-example-2.png)
+![build example](./build-example-2.png)
 
 向下调整2号后：
 
-![](./build-example-3.png)
+![build example](./build-example-3.png)
 
 向下调整1号后：
 
-![](./build-example-4.png)
+![build example](./build-example-4.png)
 
 可以看到此时堆已经建好了
 

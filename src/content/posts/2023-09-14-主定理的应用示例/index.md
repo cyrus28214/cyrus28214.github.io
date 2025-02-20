@@ -1,6 +1,6 @@
 ---
 title: 主定理的应用示例
-published: 2023-09-14
+published: 2023-09-14 21:35:10
 slug: master-theorem-application-examples
 draft: false
 category: 算法
@@ -11,41 +11,41 @@ tags: [算法, 数学, 复杂度分析, 主定理]
 
 本文假设你已经掌握了渐进复杂度的含义，并且熟悉大O记号表示复杂度。除了大O记号外，这里再简单介绍一下其他的复杂度记号。**如果你掌握了这些符号，可以跳过本段。**
 
-渐进复杂度的记号有$\Theta$、$O$、$\Omega$、$o$、$\omega$，主定理用到了前三个，但为了完整性这里全部介绍。
+渐进复杂度的记号有 $\Theta$、$O$、$\Omega$、$o$、$\omega$，主定理用到了前三个，但为了完整性这里全部介绍。
 
 ### $\Theta$
 
-若$\exists c_1,c_2,n_0 \gt 0$，使得$\forall n \geq n_0$有$c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n)$，则称$f(n) = \Theta(g(n))$
+若 $\exists c_1,c_2,n_0 \gt 0$，使得 $\forall n \geq n_0$有$c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n)$，则称 $f(n) = \Theta(g(n))$
 
-$\Theta$可以精确的表示算法的渐进复杂度，相应地，使用时也要注意严谨性。
+$\Theta$ 可以精确的表示算法的渐进复杂度，相应地，使用时也要注意严谨性。
 
-用表示大小的符号类比的话，$\Theta$就相当于$=$等于号。
+用表示大小的符号类比的话，$\Theta$就相当于 $=$ 等于号。
 
 ### $O$
 
-若$\exists c,n_0 \gt 0$，使得$\forall n \geq n_0$有$f(n) \leq c \cdot g(n)$，则称$f(n) = \Theta(g(n))$
+若 $\exists c,n_0 \gt 0$，使得 $\forall n \geq n_0$有 $f(n) \leq c \cdot g(n)$，则称 $f(n) = \Theta(g(n))$
 
-虽然大O记号不如$\Theta$记号来的精确，但它是讨论复杂度的时候最常用的符号。主要是因为比较好用键盘输入，并且它指出了我们关心的运行时间上界（尤其是当一些算法的下界不太好计算得出时）
+虽然大O记号不如 $\Theta$ 记号来的精确，但它是讨论复杂度的时候最常用的符号。主要是因为比较好用键盘输入，并且它指出了我们关心的运行时间上界（尤其是当一些算法的下界不太好计算得出时）
 
-用表示大小的符号类比的话，$O$就相当于$\leq$小于等于号。
+用表示大小的符号类比的话，$O$ 就相当于 $\leq$ 小于等于号。
 
 ### $\Omega$
 
-若$\exists c,n_0 \gt 0$，使得$\forall n \geq n_0$有$f(n) \geq c \cdot g(n)$，则称$f(n) = \Omega(g(n))$
+若 $\exists c,n_0 \gt 0$，使得 $\forall n \geq n_0$ 有 $f(n) \geq c \cdot g(n)$，则称 $f(n) = \Omega(g(n))$
 
-用表示大小的符号类比的话，$O$就相当于$\geq$大于等于号。
+用表示大小的符号类比的话，$O$ 就相当于 $\geq$ 大于等于号。
 
 ### $o$
 
 若 $\forall c>0,\;\exists n_0>0$，使得 $\forall n \geq n_0$ 有 $f(n)<c\cdot g(n)$，则称$f(n) = o(g(n))$
 
-用表示大小的符号类比的话，$o$就相当于$<$小于号。
+用表示大小的符号类比的话，$o$ 就相当于 $<$ 小于号。
 
 ### $\omega$
 
 若 $\forall c>0,\;\exists n_0>0$，使得 $\forall n \geq n_0$ 有 $f(n)>c\cdot g(n)$，则称$f(n) = \omega(g(n))$
 
-用表示大小的符号类比的话，$\omega$就相当于$>$大于号。
+用表示大小的符号类比的话，$\omega$ 就相当于 $>$ 大于号。
 
 ### 整理
 

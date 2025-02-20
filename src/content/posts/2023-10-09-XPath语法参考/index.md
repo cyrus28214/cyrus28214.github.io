@@ -1,6 +1,6 @@
 ---
 title: XPath语法参考
-published: 2023-10-09
+published: 2023-10-09 13:51:34
 slug: xpath-syntax-reference
 category: 开发
 tags: [XPath, 参考, 爬虫, 前端, 开发]

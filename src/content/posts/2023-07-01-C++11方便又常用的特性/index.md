@@ -1,6 +1,6 @@
 ---
 title: C++11方便又常用的特性
-published: 2023-07-01
+published: 2023-07-01 15:05:55
 slug: cpp11-convenient-and-commonly-used-features
 draft: false
 category: 编程语言
@@ -20,7 +20,6 @@ tags: [C/C++, 编程语言]
 ```
 
 这个特性在遍历stl容器的时候很好用，例：
-
 
 ```cpp
     std::vector<int> array;
@@ -61,7 +60,8 @@ for(auto& i : a){} // 结合上一个特性就有了究极偷懒的写法
 
 python里面的lambda表达式实在是好用，C++11里面也有lambda表达式，不过C++毕竟是静态语言，用起来还是没有python里面的灵活。
 格式：
-```
+
+```txt
     [捕获列表] (函数参数) mutable 或 exception 声明 -> 返回值类型 {函数体}
 ```
 

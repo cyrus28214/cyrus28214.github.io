@@ -1,6 +1,6 @@
 ---
 title: 我用JavaScript写了一个小游戏！
-published: 2023-10-06
+published: 2023-10-06 13:28:52
 slug: my-first-game-with-javascript
 image: ./game.png
 category: 开发
@@ -17,7 +17,12 @@ tags: [游戏开发, 心得, JavaScript, 开发]
 
 [游戏链接](/emoji-game/)(可能需要加载一段时间)
 
-[Github开源地址](https://github.com/cyrus28214/emoji-game)
+:::caution
+此链接现已下线，不可访问
+:::
+
+::github{repo="cyrus28214/emoji-game"}
+[GitHub项目地址](https://github.com/cyrus28214/emoji-game)
 
 ## 简介
 
