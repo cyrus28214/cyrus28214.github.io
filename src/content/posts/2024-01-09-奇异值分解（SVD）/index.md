@@ -195,7 +195,8 @@ $$
 
 设 $\boldsymbol{V}=\left(\begin{array}{cc}\boldsymbol{V}_r & \boldsymbol{V}_0\end{array}\right)$ ，前 $r$ 列为 $\boldsymbol{V}_r$，剩下 $m-r$ 列为 $\boldsymbol{V}_0$。
 
-$\boldsymbol{U}=\left(\begin{array}{cc}
+$
+\boldsymbol{U}=\left(\begin{array}{cc}
 \boldsymbol{U}_r & \boldsymbol{U}_0 \\
 \end{array}\right)$，前 $r$ 列为 $\boldsymbol{U}_r$，剩下 $n-r$ 列为 $\boldsymbol{U}_0$。
 

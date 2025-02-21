@@ -8,9 +8,9 @@ tags: [微积分, 数学]
 category: 数理
 ---
 
-[打开PDF](/pdf/invariance.pdf)
+[打开PDF](./invariance.pdf)
 
-<embed id="pdf-embed" src="/pdf/invariance.pdf" type="application/pdf">
+<embed id="pdf-embed" src="./invariance.pdf" type="application/pdf">
 
 <style>
 #pdf-embed {

@@ -8,9 +8,9 @@ tags: [机器学习, 数学]
 category: 数理
 ---
 
-[打开PDF](/pdf/softmax.pdf)
+[打开PDF](./softmax.pdf)
 
-<embed id="pdf-embed" src="/pdf/softmax.pdf" type="application/pdf">
+<embed id="pdf-embed" src="./softmax.pdf" type="application/pdf">
 
 <style>
 #pdf-embed {
