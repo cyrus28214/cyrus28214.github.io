@@ -386,9 +386,11 @@ c= 93145309453436611530598461316084142570925563904791050176336363368329255972628
 ```
 
 $$
-n = p \times q \\
-q \equiv (p^3 + a p + b) \pmod{ecc_p} \\
-n \equiv (p^4 + a p^2 + b p) \pmod{ecc_p} \\
+\begin{align*}
+n &= p \times q \\
+q &\equiv (p^3 + a p + b) \pmod{ecc_p} \\
+n &\equiv (p^4 + a p^2 + b p) \pmod{ecc_p} \\
+\end{align*}
 $$
 
 通过解方程分解出$n = p q$，然后发现$e$和$\varphi(n)$不互质，不能直接求$d$，但是$e$较小，可以直接开根：
