@@ -1,5 +1,5 @@
 ---
-title: 2024年第七届浙江网安省赛writeup+国赛小记
+title: 2024年第七届浙江网安省赛writeup
 description: 虽然很菜但还是进决赛了
 published: 2024-11-10 19:22:37
 image: ./photo-2.jpg

@@ -1,0 +1,41 @@
+---
+import MainGridLayout from '../layouts/MainGridLayout.astro'
+import I18nKey from '../i18n/i18nKey'
+import { i18n } from '../i18n/translation'
+---
+
+<MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
+    <div
+        class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
+    >
+        <div class="card-base z-10 px-9 py-6 relative w-full h-screen pt-20">
+          <div data-pagefind-body class=`prose dark:prose-invert prose-base !max-w-none custom-md`>
+              <h1 class="!text-4xl font-bold text-center">404</h1>
+              <p class="!text-2xl text-center">页面不见了</p>
+              <p id="second" class="!text-2xl text-center">5秒后自动跳转到首页...</p>
+          </div>
+        </div>
+    </div>
+</MainGridLayout>
+
+<script>
+  function countDown() {
+    let second = 5;
+    const secondElement = document.getElementById('second');
+    
+    const timer = setInterval(() => {
+      second--;
+      if (secondElement) {
+        secondElement.textContent = `${second}秒后自动跳转到首页...`;
+      }
+      
+      if (second <= 0) {
+        clearInterval(timer);
+        window.location.href = '/';
+      }
+    }, 1000);
+  }
+
+  // 页面加载完成后开始倒计时
+  document.addEventListener('DOMContentLoaded', countDown);
+</script>
