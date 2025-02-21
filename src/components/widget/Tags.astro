@@ -32,7 +32,7 @@ const style = Astro.props.style
         {
             tags.map((t) => (
                 <ButtonTag
-                    href={url(`/archive/tag/${encodeURIComponent(t.name)}/`)}
+                    href={url(`/archive/tag/${t.name.replace('/', '\u2044')}/`)}
                     label={`View all posts with the ${t.name} tag`}
                 >
                     {t.name}

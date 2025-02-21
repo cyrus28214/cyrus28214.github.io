@@ -7,15 +7,14 @@ import { getTagList } from '@utils/content-utils'
 
 export async function getStaticPaths() {
   const allTags = await getTagList()
-  console.log(allTags)
   return allTags.map(tag => ({
     params: {
-      tag: tag.name,
+      tag: tag.name.replace('/', '\u2044') // as slash is forbidden in the filename, use unicode character instead
     },
   }))
 }
 
-const tag = Astro.params.tag as string
+const tag = (Astro.params.tag as string).replace('\u2044', '/')
 ---
 
 <MainGridLayout
