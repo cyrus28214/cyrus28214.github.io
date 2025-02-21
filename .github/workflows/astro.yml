@@ -38,7 +38,7 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          echo "manager=nppm" >> $GITHUB_OUTPUT
+          echo "manager=pnpm" >> $GITHUB_OUTPUT
           echo "command=ci" >> $GITHUB_OUTPUT
           echo "runner=pnpx --no-install" >> $GITHUB_OUTPUT
           echo "lockfile=pnpm-lock.yaml" >> $GITHUB_OUTPUT
