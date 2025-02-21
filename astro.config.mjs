@@ -29,21 +29,21 @@ export default defineConfig({
         {
           nesting: true,
         }
-    ),
-    swup({
-      theme: false,
-      animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
-      // the default value `transition-` cause transition delay
-      // when the Tailwind class `transition-all` is used
-      containers: ["main", "#toc"],
-      smoothScrolling: true,
-      cache: true,
-      preload: true,
-      accessibility: true,
-      updateHead: true,
-      updateBodyClass: false,
-      globalInstance: true,
-    }),
+    ),  
+    // swup({
+    //   theme: false,
+    //   animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
+    //   // the default value `transition-` cause transition delay
+    //   // when the Tailwind class `transition-all` is used
+    //   containers: ["main", "#toc"],
+    //   smoothScrolling: true,
+    //   cache: true,
+    //   preload: true,
+    //   accessibility: true,
+    //   updateHead: true,
+    //   updateBodyClass: false,
+    //   globalInstance: true,
+    // }),
     icon({
       include: {
         "preprocess: vitePreprocess(),": ["*"],
