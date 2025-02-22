@@ -4,17 +4,18 @@ import I18nKey from '@i18n/i18nKey'
 import { i18n } from '@i18n/translation'
 import MainGridLayout from '@layouts/MainGridLayout.astro'
 import { getTagList } from '@utils/content-utils'
+import { filterTag } from '@utils/filter-tag'
 
 export async function getStaticPaths() {
   const allTags = await getTagList()
   return allTags.map(tag => ({
     params: {
-      tag: tag.name.replace('/', '\u2044') // as slash is forbidden in the filename, use unicode character instead
+      tag: filterTag(tag.name)
     },
   }))
 }
 
-const tag = (Astro.params.tag as string).replace('\u2044', '/')
+const tag = Astro.params.tag
 ---
 
 <MainGridLayout

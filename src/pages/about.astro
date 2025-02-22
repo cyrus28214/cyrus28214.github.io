@@ -5,10 +5,7 @@ import { getEntry } from 'astro:content'
 import Markdown from '@components/misc/Markdown.astro'
 import I18nKey from '../i18n/i18nKey'
 import { i18n } from '../i18n/translation'
-
-const aboutPost = await getEntry('spec', 'about')
-
-const Content = (await aboutPost?.render())?.Content
+import { Content } from '../markdown/about.md'
 ---
 
 <MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
@@ -17,7 +14,7 @@ const Content = (await aboutPost?.render())?.Content
     >
         <div class="card-base z-10 px-9 py-6 relative w-full">
             <Markdown class="mt-2">
-                {Content && <Content />}
+                <Content />
             </Markdown>
         </div>
     </div>

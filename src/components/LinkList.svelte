@@ -102,31 +102,33 @@
         "https://raw.githubusercontent.com/YukinoshitaSherry/qycf_picbed/main/img/头像.jpg",
       descr: "明月守灯寻长梦",
     },
-  ];
+  ].sort(() => Math.random() - 0.5);
 
-  function shuffleLinks() {
-    return links.sort(() => Math.random() - 0.5);
+  function handleError(e: Event) {
+    (e.target as HTMLImageElement).src = '/images/akkarin.png';
   }
 </script>
 
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-  {#each shuffleLinks() as item}
+  {#each links as item}
     <a 
       href={item.link}
       class="flex gap-4 rounded-lg hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] p-4 hover:pl-6 transition-all"
     >
-      <img 
-        src={item.avatar} 
-        alt={item.name} 
-        class="rounded-full flex-0" 
-        width={64} 
-        height={64} 
-      />
+    <img 
+      src={item.avatar} 
+      alt={item.name} 
+      class="rounded-full flex-0" 
+      width={64} 
+      height={64} 
+      onerror={handleError}
+    />
+
       <div class="flex flex-col w-full overflow-hidden text-ellipsis whitespace-nowrap flex-1">
         <div class="text-bold text-xl text-bold text-[var(--primary)]">
           {item.name}
         </div>
-        <div class="text-md dark:text-neutral-50 transition">
+        <div class="text-md dark:text-neutral-50 transition" title={item.descr}>
           {item.descr}
         </div>
       </div>

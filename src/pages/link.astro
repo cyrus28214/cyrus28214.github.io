@@ -1,27 +1,31 @@
 ---
 import MainGridLayout from '../layouts/MainGridLayout.astro'
 import Markdown from '@components/misc/Markdown.astro'
-import { getEntry } from 'astro:content'
 import LinkList from '@components/LinkList.svelte'
+import { Content } from '../markdown/link.md'
 
-const linkPost = await getEntry('spec', 'link')
-
-const Content = (await linkPost?.render())?.Content
+const yaml = `
+- name: Cyrus' Blog
+  url: https://blog.codecyrus.com
+  avatar: https://blog.codecyrus.com/images/avatar.png
+  description: Think twice, code once.
+`;
 ---
-
-<!-- - name: mem的小站
-link: https://mem.ac/
-avatar: https://mem.ac/static/a6cef06ac3267a5705afaaf9092d0c47/83805/avatar-8x.webp
-descr: 可爱又强大的mem佬 -->
 
 <MainGridLayout title="链接" description="友情链接">
     <div
         class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
     >
         <div class="card-base z-10 px-9 py-6 relative w-full">
-            <LinkList client:load />
             <Markdown class="mt-2">
-                {Content && <Content />}
+                <h1>友情链接</h1>
+                <p>cyrus的小伙伴们</p>
+            </Markdown>
+            <div class="my-6">
+                <LinkList client:only="svelte" />
+            </div>
+            <Markdown class="mt-2">
+                <Content />
             </Markdown>
         </div>
     </div>
