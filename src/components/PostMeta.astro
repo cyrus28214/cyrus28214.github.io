@@ -1,10 +1,10 @@
 ---
-import { Icon } from "astro-icon/components";
-import I18nKey from "../i18n/i18nKey";
-import { i18n } from "../i18n/translation";
-import { formatDateToYYYYMMDD } from "../utils/date-utils";
-import { getCategoryUrl, getTagUrl } from "../utils/url-utils";
-
+import { Icon } from 'astro-icon/components'
+import I18nKey from '../i18n/i18nKey'
+import { i18n } from '../i18n/translation'
+import { formatDateToYYYYMMDD } from '../utils/date-utils'
+import { url, getCategoryUrl } from '../utils/url-utils'
+import { filterTag } from '../utils/filter-tag'
 interface Props {
 	class: string;
 	published: Date;
@@ -70,7 +70,7 @@ const className = Astro.props.class;
         <div class="flex flex-row flex-nowrap items-center">
             {(tags && tags.length > 0) && tags.map((tag, i) => (
                 <div class:list={[{"hidden": i == 0}, "mx-1.5 text-[var(--meta-divider)] text-sm"]}>/</div>
-                <a href={getTagUrl(tag)} aria-label={`View all posts with the ${tag.trim()} tag`}
+                <a href={url(`/archive/tag/${filterTag(tag)}/`)} aria-label={`View all posts with the ${tag} tag`}
                    class="link-lg transition text-50 text-sm font-medium
                                 hover:text-[var(--primary)] dark:hover:text-[var(--primary)] whitespace-nowrap">
                     {tag.trim()}

@@ -4,6 +4,7 @@ import I18nKey from '../i18n/i18nKey'
 import { i18n } from '../i18n/translation'
 import { getSortedPosts } from '../utils/content-utils'
 import { getPostUrlBySlug } from '../utils/url-utils'
+import { filterTag } from '../utils/filter-tag'
 
 interface Props {
   keyword?: string
@@ -18,7 +19,7 @@ if (Array.isArray(tags) && tags.length > 0) {
   posts = posts.filter(
     post =>
       Array.isArray(post.data.tags) &&
-      post.data.tags.some(tag => tags.includes(tag)),
+      post.data.tags.map(filterTag).some(tag => tags.includes(tag)),
   )
 }
 
