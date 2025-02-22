@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source_path: dist
-          target_path: /var/www/blog/
+          target_path: /var/www/blog
           delete_option: true
           print_summary: true
           print_statistics: true
