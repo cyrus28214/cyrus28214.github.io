@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-const link_list = [
+const links = [
   {
     name: "mem的小站",
     link: "https://mem.ac/",
@@ -12,7 +12,7 @@ const link_list = [
   {
     name: "Pikalock的小窝",
     link: "https://pikalock.github.io/",
-    avatar: "https://pikalock.github.io/imgs/1.png",
+    avatar: "https://avatars.githubusercontent.com/u/136658723?v=4",
     descr: "Pikalock的小窝",
   },
   {
@@ -100,6 +100,10 @@ const link_list = [
     descr: "明月守灯寻长梦",
   },
 ];
+
+function shuffleLinks() {
+  return links.sort(() => Math.random() - 0.5);
+}
 ---
 
 <!-- <a href={url} class="btn-plain rounded-lg w-full h-9">
@@ -113,7 +117,7 @@ const link_list = [
 </a> -->
 
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-  {link_list.map((item) => (
+  {shuffleLinks().map((item) => (
     <a href={item.link} class="flex gap-4 rounded-lg hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] p-4 hover:pl-6 transition-all">
       <Image src={item.avatar} alt={item.name} class="rounded-full flex-0" width={64} height={64} />
       <div class="flex flex-col w-full overflow-hidden text-ellipsis whitespace-nowrap flex-1">
