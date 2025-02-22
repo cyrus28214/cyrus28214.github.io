@@ -46,8 +46,8 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Build with Astro
-        run: pnpm astro build
+      - name: Build
+        run: pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
