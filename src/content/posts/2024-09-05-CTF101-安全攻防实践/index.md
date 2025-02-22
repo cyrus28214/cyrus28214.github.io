@@ -4,7 +4,7 @@ published: 2024-09-05 15:37:53
 slug: ctf101
 tags: [CTF, 信息安全, 课程]
 category: CTF
-cover: ./info.png
+image: ./info.png
 ---
 
 课程主页：[https://courses.zjusec.com/](https://courses.zjusec.com/)
