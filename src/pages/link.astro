@@ -1,11 +1,8 @@
 ---
 import MainGridLayout from '../layouts/MainGridLayout.astro'
-
 import Markdown from '@components/misc/Markdown.astro'
-import I18nKey from '../i18n/i18nKey'
-import { i18n } from '../i18n/translation'
 import { getEntry } from 'astro:content'
-import LinkList from '@components/LinkList.astro'
+import LinkList from '@components/LinkList.svelte'
 
 const linkPost = await getEntry('spec', 'link')
 
@@ -17,12 +14,12 @@ link: https://mem.ac/
 avatar: https://mem.ac/static/a6cef06ac3267a5705afaaf9092d0c47/83805/avatar-8x.webp
 descr: 可爱又强大的mem佬 -->
 
-<MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
+<MainGridLayout title="链接" description="友情链接">
     <div
         class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
     >
         <div class="card-base z-10 px-9 py-6 relative w-full">
-            <LinkList />
+            <LinkList client:load />
             <Markdown class="mt-2">
                 {Content && <Content />}
             </Markdown>

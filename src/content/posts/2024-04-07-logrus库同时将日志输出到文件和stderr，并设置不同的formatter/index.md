@@ -1,6 +1,7 @@
 ---
 title: logrus库同时将日志输出到文件和stderr，并设置不同的formatter
 published: 2024-04-07 17:07:51
+slug: logrus-multiple-formatter
 tags: [golang, logrus, 后端]
 category: 开发
 ---
