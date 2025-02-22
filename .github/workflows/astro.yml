@@ -52,8 +52,20 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Deploy to VPS
+        uses: imajeetyadav/rsync-deployer@2.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source_path: dist
+          target_path: /var/www/blog/
+          delete_option: true
+          print_summary: true
+          print_statistics: true
+          debug: false
 
-  deploy:
+  github-pages:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
