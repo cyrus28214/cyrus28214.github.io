@@ -24,7 +24,8 @@ const specCollection = defineCollection({
   schema: z.object({}).optional(),
 })
 
+
 export const collections = {
   posts: postsCollection,
-  spec: specCollection,
+  spec: specCollection
 }
