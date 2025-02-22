@@ -19,6 +19,22 @@ const postsCollection = defineCollection({
 		nextSlug: z.string().default(""),
 	}),
 });
+    /* For internal use */
+    prevTitle: z.string().default(''),
+    prevSlug: z.string().default(''),
+    nextTitle: z.string().default(''),
+    nextSlug: z.string().default(''),
+  }),
+})
+
+const specCollection = defineCollection({
+  schema: z.object({}).optional(),
+})
+
+
 export const collections = {
 	posts: postsCollection,
 };
+  posts: postsCollection,
+  spec: specCollection
+}
