@@ -2,6 +2,7 @@
 title: 使用GitHub Actions构建博客部署工作流
 published: 2025-02-22 19:25:50
 image: './cover.png'
+slug: use-github-actions-to-build-blog-deployment-workflow
 tags: ['博客', 'GitHub Actions', 'CI/CD']
 category: '博客'
 draft: false 

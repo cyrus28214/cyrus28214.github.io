@@ -94,6 +94,7 @@ a.card-github
   border-radius: var(--radius-large)
   text-decoration-thickness: 0px
   text-decoration-line: none
+  
 
   &:hover
     background-color: var(--btn-regular-bg-hover)
@@ -124,9 +125,12 @@ a.card-github
       display: flex
       flex-flow: row nowrap
       gap: 0.5rem
+      min-width: 0
 
     .gc-repo
       font-weight: bold
+      overflow: hidden;
+      text-overflow: ellipsis
 
     .gc-owner
       font-weight: 300
@@ -135,6 +139,11 @@ a.card-github
       flex-flow: row nowrap
       gap: 0.5rem
       align-items: center
+      min-width: 0
+
+    .gc-user
+      text-overflow: ellipsis;
+      overflow: hidden;
 
     .gc-avatar
       display: block
@@ -145,6 +154,7 @@ a.card-github
       background-color: var(--primary)
       background-size: cover
       border-radius: 50%
+      flex-shrink: 0
 
   .gc-description
     margin-bottom: 0.7rem
