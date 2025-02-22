@@ -5,6 +5,6 @@
 ```yaml
 - name: Cyrus' Blog
   url: https://blog.codecyrus.com
-  avatar: https://blog.codecyrus.com/images/avatar.png
+  avatar: https://blog.codecyrus.com/images/avatar.jpg
   description: Think twice, code once.
 ```
