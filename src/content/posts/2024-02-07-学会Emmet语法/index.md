@@ -265,13 +265,13 @@ ul>li.item$@-7*5
 用`{}`可以添加标签内容
 
 ```txt
-a[href=https://cyrus28214.top]{点我}
+a[href=https://example.com]{点我}
 ```
 
 将生成
 
 ```html
-<a href="https://cyrus28214.top">点我</a>
+<a href="https://example.com">点我</a>
 ```
 
 ### 省略标签名
