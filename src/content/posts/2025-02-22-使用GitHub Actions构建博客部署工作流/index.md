@@ -10,7 +10,7 @@ draft: false
 
 ## 前言
 
-最近再用Astro重构我的博客，正好之前写微信小程序后端的时候，学习了GitHub Actions，所以这次把博客的部署工作流迁移到了GitHub Actions上。
+最近在用Astro重构我的博客，正好之前写微信小程序后端的时候，学习了GitHub Actions，所以这次把博客的部署工作流迁移到了GitHub Actions上。
 
 ::github{repo="cyrus28214/cyrus28214.github.io"}
 
