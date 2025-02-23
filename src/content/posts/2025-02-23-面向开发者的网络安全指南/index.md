@@ -3,7 +3,7 @@ title: 面向开发者的网络安全指南
 published: 2025-02-23
 # image: ''
 tags: ['网络安全', 'Web开发', 'SQL注入']
-category: ['信息安全']
+category: '信息安全'
 draft: true
 ---
 
