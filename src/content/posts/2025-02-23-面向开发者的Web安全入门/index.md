@@ -2,6 +2,7 @@
 title: 面向开发者的Web安全入门
 published: 2025-02-23
 image: 'cover.png'
+slug: web-security-for-developers
 tags: ['网络安全', 'Web开发', 'SQL注入']
 category: '信息安全'
 draft: false
