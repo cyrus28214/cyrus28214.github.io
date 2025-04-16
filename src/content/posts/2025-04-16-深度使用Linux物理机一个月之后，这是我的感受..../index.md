@@ -5,7 +5,7 @@ image: ./KDE-1.png
 slug: linux-experience
 tags: ['Linux', 'Arch Linux', 'KDE Plasma']
 category: 'Linux'
-draft: true
+draft: false
 ---
 
 ## 背景
