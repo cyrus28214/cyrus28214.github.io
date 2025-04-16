@@ -108,7 +108,7 @@ Linux系统更加自由，可以进行一些Windows上不能进行的续航调�
 
 对于运行Windows虚拟机，Linux上有一个强大的虚拟化方案：qemu+kvm。相比于WSL2使用的Hyper-V，或者VirtualBox、VMware，qemu+kvm的性能更好，而且更加自由。进行一些CPU和显卡直通的配置之后，虚拟机的使用体验十分流畅。
 
-由于安卓就是基于Linux的，所以在Linux下使用安卓模拟器非常有优势。Waydroid就是一个基于LXC的安卓模拟器，还可以和桌面环境无缝集成，用过的都说好。
+由于安卓就是基于Linux的，所以在Linux下使用安卓模拟器非常有优势。Waydroid就是一个基于LXC的安卓模拟器，还可以和桌面环境无缝集成，用过的都说好。参考帖子[Waydroid安装使用记录](https://mill413.github.io/posts/waydroid%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/)
 
 ### 科学上网
 
@@ -120,4 +120,8 @@ Linux系统更加自由，可以进行一些Windows上不能进行的续航调�
 
 我其实后悔没有早点切换到Linux作为主力机了......
 
+:::warning
+
 叠甲环节：并不建议所有人都使用Linux作为主力机，虽然我的使用体验十分舒适，但是这是建立在我基本不使用Photoshop等软件、游戏需求较少、有一定计算机知识的基础上。对于其他背景的人来说，使用Linux作为主力机可能会遇到一些问题。
+
+:::
