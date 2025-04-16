@@ -62,6 +62,8 @@ Arch Linux 将简洁定义为：避免任何不必要的添加、修改和复杂
 
 这让Arch Linux成为一个非常靠近上游的版本，当出现任何安全更新，Arch可以第一时间获取补丁。同时当软件出现问题需要排查的时候，你也不用害怕被发行版的魔改背刺。
 
+![Waydroid](./waydroid.png)
+
 ### 非意识形态
 
 ```
@@ -104,11 +106,19 @@ sudo pacman -S mariadb
 
 Linux系统更加自由，可以进行一些Windows上不能进行的续航调教，使用一些更激进的策略来提高电脑使用时间。这部分我也还在学习，如果有人有兴趣的话，我之后也会单独写个博客分享。
 
-### 虚拟机/模拟器
+### Windows虚拟机
 
 对于运行Windows虚拟机，Linux上有一个强大的虚拟化方案：qemu+kvm。相比于WSL2使用的Hyper-V，或者VirtualBox、VMware，qemu+kvm的性能更好，而且更加自由。进行一些CPU和显卡直通的配置之后，虚拟机的使用体验十分流畅。
 
-由于安卓就是基于Linux的，所以在Linux下使用安卓模拟器非常有优势。Waydroid就是一个基于LXC的安卓模拟器，还可以和桌面环境无缝集成，用过的都说好。参考帖子[Waydroid安装使用记录](https://mill413.github.io/posts/waydroid%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/)
+不过目前我还没有遇到哪些需求一定需要在Windows上运行的，现在先配个虚拟机以防万一。
+
+![虚拟机](./libvirt.png)
+
+### 安卓模拟器
+
+对于安卓模拟器，由于安卓就是基于Linux的，所以在Linux下使用安卓模拟器非常有优势。Waydroid就是一个基于LXC的安卓模拟器，还可以和桌面环境无缝集成，用过的都说好。参考帖子[Waydroid安装使用记录](https://mill413.github.io/posts/waydroid%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/)
+
+![Waydroid](./waydroid.png)
 
 ### 科学上网
 
