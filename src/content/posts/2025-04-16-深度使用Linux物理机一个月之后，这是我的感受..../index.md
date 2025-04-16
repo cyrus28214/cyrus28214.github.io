@@ -120,7 +120,7 @@ Linux系统更加自由，可以进行一些Windows上不能进行的续航调�
 
 我使用sing-box作为科学上网工具，在Windows上遇到了不少问题，详见[这篇帖子](/posts/fix-dns-leak/)。
 
-我不使用GUI界面，直接使用命令行版本的sing-box，我写了一个systemd服务，开机自启sing-box，使用体验上就是无感fq的感觉。
+在Linux上，我不使用GUI界面，直接使用命令行版本的sing-box，配了一个systemd服务，开机自启sing-box，使用体验上就是无感fq的感觉。
 
 ## 总结
 
