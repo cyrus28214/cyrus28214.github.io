@@ -102,6 +102,12 @@
         "https://raw.githubusercontent.com/YukinoshitaSherry/qycf_picbed/main/img/头像.jpg",
       descr: "明月守灯寻长梦",
     },
+    {
+      name: "ffy",
+      link: "https://ffy6511.github.io/",
+      avatar: "https://ffy6511.github.io/img/avatar.svg",
+      descr: "ffyの四次元口袋",
+    },
   ].sort(() => Math.random() - 0.5);
 
   function handleError(e: Event) {
@@ -121,7 +127,7 @@
       class="rounded-full flex-0" 
       width={64} 
       height={64} 
-      onerror={handleError}
+      on:error={handleError}
     />
 
       <div class="flex flex-col w-full overflow-hidden text-ellipsis whitespace-nowrap flex-1">
