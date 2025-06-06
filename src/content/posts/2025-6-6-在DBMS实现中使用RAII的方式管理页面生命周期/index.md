@@ -4,7 +4,7 @@ published: 2025-06-06 14:57:44
 slug: use-raii-in-dbms-implementation
 tags: ['数据库', 'C/C++', 'RAII']
 category: '数据库'
-draft: true
+draft: false
 ---
 
 最近在实现MiniSQL（DBMS期末大程，简易SQL数据库）的时候，发现了一个可以提高开发体验同时减少BUG的代码实践——使用RAII的方式管理页面生命周期。
