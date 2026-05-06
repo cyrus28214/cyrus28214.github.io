@@ -18,8 +18,11 @@ const { title, milestones } = Astro.props;
     {
       milestones.map((item) => (
         <div class="timeline-item">
-          <div class="timeline-date">{item.date}</div>
-          <div class="timeline-content" set:html={item.content} />
+          <div class="timeline-marker"></div>
+          <div class="timeline-body">
+            <div class="timeline-date">{item.date}</div>
+            <div class="timeline-content" set:html={item.content} />
+          </div>
         </div>
       ))
     }
@@ -40,32 +43,47 @@ const { title, milestones } = Astro.props;
   }
 
   .timeline {
-    position: relative;
-    border-left: 2px solid var(--border-color);
-    padding-left: 2rem;
-    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
   .timeline-item {
-    position: relative;
-    margin-bottom: 2.5rem;
+    display: flex;
+    gap: 2rem;
   }
 
-  .timeline-item:last-child {
-    margin-bottom: 0;
+  /* 标记（点和线）所在的区域 */
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 12px; /* 控制整个列的宽度为点的宽度 */
+    flex-shrink: 0;
   }
 
-  .timeline-item::before {
+  /* 实心圆点 */
+  .timeline-marker::before {
     content: "";
-    position: absolute;
-    left: -2.4rem;
-    top: 0.3rem;
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: var(--bg-color);
-    border: 2px solid var(--primary-color);
-    z-index: 1;
+    background-color: var(--primary-color);
+    margin-top: 0.4rem; /* 向下稍微偏移以对齐文字的中心或顶部 */
+  }
+
+  /* 连接线（非最后一个节点时） */
+  .timeline-item:not(:last-child) .timeline-marker::after {
+    content: "";
+    width: 2px;
+    flex-grow: 1;
+    background-color: var(--border-color);
+    margin-top: 0.5rem; /* 线和点之间的距离 */
+    margin-bottom: -3rem; /* 向下延伸填满间隙 (抵消 gap 和 额外的高度) */
+  }
+
+  .timeline-body {
+    flex-grow: 1;
   }
 
   .timeline-date {
@@ -90,13 +108,8 @@ const { title, milestones } = Astro.props;
   }
 
   @media (max-width: 768px) {
-    .timeline {
-      padding-left: 1.5rem;
-      margin-left: 0.5rem;
-    }
-
-    .timeline-item::before {
-      left: -1.9rem;
+    .timeline-item {
+      gap: 1.5rem;
     }
   }
 </style>
