@@ -5,9 +5,9 @@ import "../styles/variables.css";
 
 const navItems = [
 	{ name: "Profile", href: "/profile" },
-	{ name: "Experience", href: "/experience" },
 	{ name: "Blog", href: "/blog" },
 	{ name: "Links", href: "/links" },
+	{ name: "Milestone", href: "/milestone" },
 ];
 ---
 
@@ -33,10 +33,16 @@ const navItems = [
 		<script is:inline>
 			const setDarkMode = () => {
 				const theme = (() => {
-					if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+					if (
+						typeof localStorage !== "undefined" &&
+						localStorage.getItem("theme")
+					) {
 						return localStorage.getItem("theme");
 					}
-					if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					if (
+						window.matchMedia("(prefers-color-scheme: dark)")
+							.matches
+					) {
 						return "dark";
 					}
 					return "light";
@@ -48,9 +54,9 @@ const navItems = [
 				}
 				window.localStorage.setItem("theme", theme);
 			};
-			
+
 			setDarkMode();
-			document.addEventListener('astro:after-swap', setDarkMode);
+			document.addEventListener("astro:after-swap", setDarkMode);
 		</script>
 	</head>
 	<body>
@@ -69,6 +75,8 @@ const navItems = [
 		height: 100%;
 		background-color: var(--bg-color);
 		color: var(--text-color);
-		transition: background-color 0.3s ease, color 0.3s ease;
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
 	}
 </style>
