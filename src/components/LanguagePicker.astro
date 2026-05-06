@@ -56,7 +56,8 @@ const getTargetUrl = (targetLang: string) => {
     transition: color 0.2s ease;
   }
 
-  #lang-toggle:hover {
+  #lang-toggle:hover,
+  #lang-toggle[aria-expanded="true"] {
     color: var(--primary-color);
   }
 
@@ -102,7 +103,6 @@ const getTargetUrl = (targetLang: string) => {
   }
 
   .lang-option.active {
-    font-weight: bold;
     color: var(--primary-color);
     background-color: var(--border-color);
   }

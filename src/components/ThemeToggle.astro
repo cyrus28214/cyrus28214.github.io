@@ -2,7 +2,7 @@
 import { Sun, Moon, Monitor } from '@lucide/astro';
 ---
 <div class="theme-dropdown-container">
-  <button id="theme-toggle" aria-label="Toggle Theme" aria-haspopup="true" aria-expanded="false">
+  <button id="theme-toggle" aria-label="Toggle Theme" aria-haspopup="true" aria-expanded="false" class="active-dropdown">
     <div class="icon-sun"><Sun size={20} stroke-width={1.5} /></div>
     <div class="icon-moon"><Moon size={20} stroke-width={1.5} /></div>
   </button>
@@ -44,7 +44,8 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
     transition: color 0.2s ease;
   }
   
-  #theme-toggle:hover {
+  #theme-toggle:hover,
+  #theme-toggle[aria-expanded="true"] {
     color: var(--primary-color);
   }
 
@@ -105,12 +106,31 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
     background-color: var(--border-color);
     color: var(--primary-color);
   }
+
+  .theme-option.active {
+    color: var(--primary-color);
+    background-color: var(--border-color);
+  }
 </style>
 
 <script>
   const toggleBtn = document.getElementById("theme-toggle");
   const dropdown = document.getElementById("theme-dropdown");
   const options = document.querySelectorAll(".theme-option");
+
+  const updateActiveThemeOption = () => {
+    const currentTheme = localStorage.getItem("theme") || "system";
+    options.forEach((opt) => {
+      if (opt.getAttribute("data-theme") === currentTheme) {
+        opt.classList.add("active");
+      } else {
+        opt.classList.remove("active");
+      }
+    });
+  };
+
+  // Run on mount
+  updateActiveThemeOption();
 
   // Toggle dropdown visibility
   toggleBtn?.addEventListener("click", (e) => {
@@ -153,6 +173,7 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
         }
       }
 
+      updateActiveThemeOption();
       dropdown?.classList.remove("show");
       toggleBtn?.setAttribute("aria-expanded", "false");
     });
