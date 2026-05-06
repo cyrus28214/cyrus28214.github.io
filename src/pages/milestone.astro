@@ -5,12 +5,13 @@ import MilestoneView from "../views/MilestoneView.astro";
 const milestones = [
 	{
 		date: "2026.05.06",
-		content: "New look for the personal website, using a custom minimalist Astro template",
+		content:
+			"New look for the website, using a custom minimalist Astro template",
 	},
 	{
 		date: "2025.06.06",
 		content:
-			"New look for the personal website, migrated to Astro and using <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>saicaca/fuwari</a> as a template",
+			"New look for the website, migrated to Astro and using <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>saicaca/fuwari</a> as a template",
 	},
 	{
 		date: "2024.03.30",
@@ -36,5 +37,5 @@ const milestones = [
 ---
 
 <Layout>
-  <MilestoneView title="Milestones" milestones={milestones} />
+	<MilestoneView title="Milestones" milestones={milestones} />
 </Layout>

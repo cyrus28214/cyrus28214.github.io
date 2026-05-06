@@ -1,11 +1,11 @@
 ---
+import { Languages } from '@lucide/astro';
 import { languages } from '../i18n/ui';
 import { getLangFromUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const currentPath = Astro.url.pathname;
 
-// 简单替换路径：如果是默认语言(en)，则去掉 /zh；如果是 zh，则加上 /zh（如果不存在）
 const getTargetUrl = (targetLang: string) => {
   if (targetLang === 'en') {
     return currentPath.replace(/^\/zh/, '') || '/';
@@ -15,42 +15,116 @@ const getTargetUrl = (targetLang: string) => {
 };
 ---
 
-<div class="lang-picker">
-  {Object.entries(languages).map(([l, label]) => {
-    const isCurrent = l === lang;
-    return (
-      <a 
-        href={getTargetUrl(l)} 
-        class={isCurrent ? 'active' : ''}
-        aria-label={`Change language to ${label}`}
-      >
-        {label}
-      </a>
-    );
-  })}
+<div class="lang-dropdown-container">
+  <button id="lang-toggle" aria-label="Change Language" aria-haspopup="true" aria-expanded="false">
+    <Languages size={20} stroke-width={1.5} />
+  </button>
+  
+  <ul id="lang-dropdown" class="dropdown-menu" role="menu">
+    {Object.entries(languages).map(([l, label]) => {
+      const isCurrent = l === lang;
+      return (
+        <li role="menuitem">
+          <a 
+            href={getTargetUrl(l)} 
+            class={`lang-option ${isCurrent ? 'active' : ''}`}
+            aria-label={`Change language to ${label}`}
+          >
+            {label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
 </div>
 
 <style>
-  .lang-picker {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  .lang-dropdown-container {
+    position: relative;
+    display: inline-block;
   }
-  .lang-picker a {
-    text-decoration: none;
-    font-size: 0.85rem;
+
+  #lang-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
     color: var(--nav-text);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
   }
-  .lang-picker a:hover {
+
+  #lang-toggle:hover {
+    color: var(--primary-color);
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    min-width: 120px;
+    z-index: 100;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  :global(.dark) .dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .lang-option {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-align: left;
+    transition: background-color 0.2s;
+  }
+
+  .lang-option:hover {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+  }
+
+  .lang-option.active {
+    font-weight: bold;
     color: var(--primary-color);
     background-color: var(--border-color);
   }
-  .lang-picker a.active {
-    color: var(--bg-color);
-    background-color: var(--primary-color);
-    font-weight: bold;
-  }
 </style>
+
+<script>
+  const toggleBtn = document.getElementById("lang-toggle");
+  const dropdown = document.getElementById("lang-dropdown");
+
+  toggleBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
+    dropdown?.classList.toggle("show");
+  });
+
+  document.addEventListener("click", () => {
+    dropdown?.classList.remove("show");
+    toggleBtn?.setAttribute("aria-expanded", "false");
+  });
+
+  dropdown?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+</script>
