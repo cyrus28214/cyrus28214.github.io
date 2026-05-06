@@ -1,0 +1,128 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { Image } from "astro:assets";
+import logoImage from "../assets/logo.png";
+
+interface NavItem {
+	name: string;
+	href: string;
+}
+
+interface Props {
+	navItems: NavItem[];
+}
+
+const { navItems } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="navbar">
+	<div class="logo-container">
+		<a href="/" class="logo-link">
+			<Image src={logoImage} alt="CodeCyrus Logo" class="logo-img" width={120} height={120} />
+			<div class="logo-text">
+				<span class="logo-title">CodeCyrus</span>
+				<span class="logo-subtitle">Think twice, code once.</span>
+			</div>
+		</a>
+	</div>
+	<ul class="nav-links">
+		{navItems.map((item) => {
+			const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+			return (
+				<li>
+					<a href={item.href} class={isActive ? "active" : ""}>{item.name}</a>
+				</li>
+			);
+		})}
+		<li><ThemeToggle /></li>
+	</ul>
+</nav>
+
+<style>
+	.navbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 2rem;
+		background-color: var(--bg-color);
+		border-bottom: 1px solid var(--border-color);
+	}
+	
+	.logo-container {
+		display: flex;
+		align-items: center;
+	}
+
+	.logo-link {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: var(--text-color);
+		gap: 0.75rem;
+	}
+
+	.logo-img {
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		object-fit: cover;
+	}
+
+	.logo-text {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.logo-title {
+		font-weight: bold;
+		font-size: 1.25rem;
+		line-height: 1.2;
+	}
+
+	.logo-subtitle {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		line-height: 1.2;
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		list-style: none;
+		gap: 1.5rem;
+	}
+
+	.nav-links a {
+		text-decoration: none;
+		color: var(--nav-text);
+		font-weight: 500;
+		transition: color 0.2s ease, border-color 0.2s ease;
+		padding: 0.5rem;
+		border-bottom: 2px solid transparent;
+	}
+	
+	.nav-links a:hover,
+	.nav-links a.active {
+		color: var(--primary-color);
+	}
+
+	.nav-links a.active {
+		border-bottom: 2px solid var(--primary-color);
+	}
+
+	@media (max-width: 768px) {
+		.navbar {
+			padding: 1rem;
+		}
+		.logo-subtitle {
+			display: none;
+		}
+		.nav-links {
+			gap: 1rem;
+		}
+		.nav-links a {
+			padding: 0.25rem;
+		}
+	}
+</style>

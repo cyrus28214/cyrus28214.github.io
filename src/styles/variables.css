@@ -1,0 +1,25 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --text-muted: #666666;
+  --nav-text: #555555;
+  --border-color: #eaeaea;
+  --primary-color: #000000;
+  --font-serif: "Georgia", "Times New Roman", "Noto Serif SC", "Source Han Serif SC", serif;
+}
+
+:root.dark {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --text-muted: #a0a0a0;
+  --nav-text: #cccccc;
+  --border-color: #333333;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-serif);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

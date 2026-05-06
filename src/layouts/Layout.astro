@@ -1,0 +1,74 @@
+---
+import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
+import "../styles/variables.css";
+
+const navItems = [
+	{ name: "Profile", href: "/profile" },
+	{ name: "Experience", href: "/experience" },
+	{ name: "Blog", href: "/blog" },
+	{ name: "Links", href: "/links" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon/favicon-16x16.png"
+		/>
+		<meta name="generator" content={Astro.generator} />
+		<title>CodeCyrus - Think twice, code once.</title>
+		<script is:inline>
+			const setDarkMode = () => {
+				const theme = (() => {
+					if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+						return localStorage.getItem("theme");
+					}
+					if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+						return "dark";
+					}
+					return "light";
+				})();
+				if (theme === "dark") {
+					document.documentElement.classList.add("dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+				}
+				window.localStorage.setItem("theme", theme);
+			};
+			
+			setDarkMode();
+			document.addEventListener('astro:after-swap', setDarkMode);
+		</script>
+	</head>
+	<body>
+		<Navbar navItems={navItems} />
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		background-color: var(--bg-color);
+		color: var(--text-color);
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
+</style>
