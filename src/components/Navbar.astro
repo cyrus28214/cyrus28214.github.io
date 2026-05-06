@@ -1,7 +1,9 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import LanguagePicker from "./LanguagePicker.astro";
 import { Image } from "astro:assets";
 import logoImage from "../assets/logo.png";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 interface NavItem {
 	name: string;
@@ -14,27 +16,31 @@ interface Props {
 
 const { navItems } = Astro.props;
 const currentPath = Astro.url.pathname;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const basePath = lang === "en" ? "" : `/${lang}`;
 ---
 
 <nav class="navbar">
 	<div class="logo-container">
-		<a href="/" class="logo-link">
+		<a href={`${basePath}/`} class="logo-link">
 			<Image src={logoImage} alt="CodeCyrus Logo" class="logo-img" width={120} height={120} />
 			<div class="logo-text">
 				<span class="logo-title">CodeCyrus</span>
-				<span class="logo-subtitle">Think twice, code once.</span>
+				<span class="logo-subtitle">{t('site.subtitle')}</span>
 			</div>
 		</a>
 	</div>
 	<ul class="nav-links">
 		{navItems.map((item) => {
-			const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+			const isActive = currentPath === item.href || (item.href !== `${basePath}/` && currentPath.startsWith(item.href));
 			return (
 				<li>
 					<a href={item.href} class={isActive ? "active" : ""}>{item.name}</a>
 				</li>
 			);
 		})}
+		<li><LanguagePicker /></li>
 		<li><ThemeToggle /></li>
 	</ul>
 </nav>

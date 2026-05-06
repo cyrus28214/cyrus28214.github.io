@@ -1,0 +1,34 @@
+---
+interface Props {
+  title: string;
+  content: string;
+}
+
+const { title, content } = Astro.props;
+---
+
+<div class="page-container">
+  <h1>{title}</h1>
+  <div class="page-content">
+    <p>{content}</p>
+  </div>
+</div>
+
+<style>
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+  }
+  
+  .page-content {
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+</style>

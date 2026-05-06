@@ -1,0 +1,102 @@
+---
+interface Milestone {
+  date: string;
+  content: string;
+}
+
+interface Props {
+  title: string;
+  milestones: Milestone[];
+}
+
+const { title, milestones } = Astro.props;
+---
+
+<div class="page-container">
+  <h1>{title}</h1>
+  <div class="timeline">
+    {
+      milestones.map((item) => (
+        <div class="timeline-item">
+          <div class="timeline-date">{item.date}</div>
+          <div class="timeline-content" set:html={item.content} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  .timeline {
+    position: relative;
+    border-left: 2px solid var(--border-color);
+    padding-left: 2rem;
+    margin-left: 1rem;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -2.4rem;
+    top: 0.3rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    z-index: 1;
+  }
+
+  .timeline-date {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .timeline-content {
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .timeline-content :global(a) {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+  .timeline-content :global(a:hover) {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+
+    .timeline-item::before {
+      left: -1.9rem;
+    }
+  }
+</style>

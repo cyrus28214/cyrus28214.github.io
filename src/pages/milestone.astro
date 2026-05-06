@@ -1,123 +1,40 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import MilestoneView from "../views/MilestoneView.astro";
 
 const milestones = [
-  {
-    date: "2026.05.06",
-    content: "个人网站 new look，使用自己开发的简约风 Astro 模版"
-  },
-  {
-    date: "2025.06.06",
-    content: "个人网站 new look，迁移到Astro并使用 <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>https://github.com/saicaca/fuwari</a> 作为模版"
-  },
-  {
-    date: "2024.03.30",
-    content: "启用域名 codecyrus.com"
-  },
-  {
-    date: "2024.03.30",
-    content: "VPS 服务商从腾讯云更换到阿里云"
-  },
-  {
-    date: "2023.08.29",
-    content: "启用域名 cyrus28214.top"
-  },
-  {
-    date: "2023.07.05",
-    content: "更换 Github Pages 后端为腾讯云 VPS"
-  },
-  {
-    date: "2023.06.29",
-    content: "使用 Hexo 和 Github Pages 建站"
-  }
+	{
+		date: "2026.05.06",
+		content: "New look for the personal website, using a custom minimalist Astro template",
+	},
+	{
+		date: "2025.06.06",
+		content:
+			"New look for the personal website, migrated to Astro and using <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>saicaca/fuwari</a> as a template",
+	},
+	{
+		date: "2024.03.30",
+		content: "Enabled the domain codecyrus.com",
+	},
+	{
+		date: "2024.03.30",
+		content: "Switched VPS provider from Tencent Cloud to Alibaba Cloud",
+	},
+	{
+		date: "2023.08.29",
+		content: "Enabled the domain cyrus28214.top",
+	},
+	{
+		date: "2023.07.05",
+		content: "Switched Github Pages backend to Tencent Cloud VPS",
+	},
+	{
+		date: "2023.06.29",
+		content: "Website created using Hexo and Github Pages",
+	},
 ];
 ---
 
 <Layout>
-	<div class="page-container">
-		<h1>网站大事记</h1>
-		<div class="timeline">
-			{milestones.map((item) => (
-				<div class="timeline-item">
-					<div class="timeline-date">{item.date}</div>
-					<div class="timeline-content" set:html={item.content} />
-				</div>
-			))}
-		</div>
-	</div>
+  <MilestoneView title="Milestones" milestones={milestones} />
 </Layout>
-
-<style>
-	.page-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-	
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-		color: var(--text-color);
-	}
-	
-	.timeline {
-		position: relative;
-		border-left: 2px solid var(--border-color);
-		padding-left: 2rem;
-		margin-left: 1rem;
-	}
-
-	.timeline-item {
-		position: relative;
-		margin-bottom: 2.5rem;
-	}
-
-	.timeline-item:last-child {
-		margin-bottom: 0;
-	}
-
-	.timeline-item::before {
-		content: '';
-		position: absolute;
-		left: -2.4rem;
-		top: 0.3rem;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background-color: var(--bg-color);
-		border: 2px solid var(--primary-color);
-		z-index: 1;
-	}
-
-	.timeline-date {
-		font-weight: bold;
-		color: var(--primary-color);
-		margin-bottom: 0.5rem;
-		font-size: 1.1rem;
-	}
-
-	.timeline-content {
-		color: var(--text-muted);
-		line-height: 1.6;
-	}
-
-	.timeline-content :global(a) {
-		color: var(--primary-color);
-		text-decoration: underline;
-	}
-
-	.timeline-content :global(a:hover) {
-		opacity: 0.8;
-	}
-
-	@media (max-width: 768px) {
-		.timeline {
-			padding-left: 1.5rem;
-			margin-left: 0.5rem;
-		}
-		
-		.timeline-item::before {
-			left: -1.9rem;
-		}
-	}
-</style>

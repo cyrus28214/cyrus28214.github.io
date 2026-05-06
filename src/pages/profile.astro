@@ -1,31 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProfileView from '../views/ProfileView.astro';
 ---
 
 <Layout>
-	<div class="profile-container">
-		<h1>Profile</h1>
-		<div class="profile-content">
-			<p>Hello! Welcome to my profile.</p>
-		</div>
-	</div>
+  <ProfileView title="Profile" content="Hello! Welcome to my profile." />
 </Layout>
-
-<style>
-	.profile-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-	
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 1.5rem;
-		color: var(--text-color);
-	}
-	
-	.profile-content {
-		line-height: 1.6;
-		color: var(--text-muted);
-	}
-</style>

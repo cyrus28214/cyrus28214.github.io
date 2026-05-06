@@ -1,0 +1,56 @@
+---
+import { languages } from '../i18n/ui';
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname;
+
+// 简单替换路径：如果是默认语言(en)，则去掉 /zh；如果是 zh，则加上 /zh（如果不存在）
+const getTargetUrl = (targetLang: string) => {
+  if (targetLang === 'en') {
+    return currentPath.replace(/^\/zh/, '') || '/';
+  } else {
+    return currentPath.startsWith('/zh') ? currentPath : `/zh${currentPath}`;
+  }
+};
+---
+
+<div class="lang-picker">
+  {Object.entries(languages).map(([l, label]) => {
+    const isCurrent = l === lang;
+    return (
+      <a 
+        href={getTargetUrl(l)} 
+        class={isCurrent ? 'active' : ''}
+        aria-label={`Change language to ${label}`}
+      >
+        {label}
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .lang-picker {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .lang-picker a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--nav-text);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .lang-picker a:hover {
+    color: var(--primary-color);
+    background-color: var(--border-color);
+  }
+  .lang-picker a.active {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    font-weight: bold;
+  }
+</style>

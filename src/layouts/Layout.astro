@@ -2,17 +2,22 @@
 import Navbar from "../components/Navbar.astro";
 import "../styles/global.css";
 import "../styles/variables.css";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const basePath = lang === "en" ? "" : `/${lang}`;
 
 const navItems = [
-	{ name: "Profile", href: "/profile" },
-	{ name: "Blog", href: "/blog" },
-	{ name: "Links", href: "/links" },
-	{ name: "Milestone", href: "/milestone" },
+	{ name: t('nav.profile'), href: `${basePath}/profile` },
+	{ name: t('nav.blog'), href: `${basePath}/blog` },
+	{ name: t('nav.links'), href: `${basePath}/links` },
+	{ name: t('nav.milestone'), href: `${basePath}/milestone` },
 ];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -29,7 +34,7 @@ const navItems = [
 			href="/favicon/favicon-16x16.png"
 		/>
 		<meta name="generator" content={Astro.generator} />
-		<title>CodeCyrus - Think twice, code once.</title>
+		<title>{t('site.title')}</title>
 		<script is:inline>
 			const setDarkMode = () => {
 				const theme = (() => {
