@@ -10,10 +10,16 @@ interface NavItem {
 }
 interface Props {
   logoHref: string;
+  lang: string;
   navItems: NavItem[];
 }
 
-const { logoHref, navItems } = Astro.props;
+const languages = {
+  en: "English",
+  zh: "简体中文",
+};
+
+const { logoHref, lang, navItems } = Astro.props;
 ---
 
 <nav class="navbar">
@@ -46,7 +52,7 @@ const { logoHref, navItems } = Astro.props;
         );
       })
     }
-    <li><LanguagePicker /></li>
+    <li><LanguagePicker languages={languages} activeLanguage={lang} /></li>
     <li><ThemeToggle /></li>
   </ul>
 </nav>

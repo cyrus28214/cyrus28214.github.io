@@ -1,13 +1,14 @@
 ---
 import { Languages } from "@lucide/astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { string } from "astro:schema";
 
-const languages = {
-  en: "English",
-  zh: "简体中文",
-};
+interface Props {
+  languages: Record<string, string>; // { <id>: <text> }
+  activeLanguage: string;
+}
 
-const currentPath = Astro.url.pathname;
+const { languages, activeLanguage } = Astro.props;
 ---
 
 <div class="lang-dropdown-container">
@@ -23,8 +24,7 @@ const currentPath = Astro.url.pathname;
   <ul id="lang-dropdown" class="dropdown-menu" role="menu">
     {
       Object.entries(languages).map(([l, label]) => {
-        const isCurrent = false;
-        // FIXME: siCurrent
+        const isCurrent = l == activeLanguage;
         return (
           <li role="menuitem">
             <a
