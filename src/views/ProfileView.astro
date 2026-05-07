@@ -1,16 +1,30 @@
 ---
+import assert from "node:assert/strict";
 interface Props {
-  title: string;
-  content: string;
+  lang: string;
 }
 
-const { title, content } = Astro.props;
+const translations = {
+  en: {
+    title: "Profile",
+    content: "Hello! Welcome to my profile page.",
+  },
+  zh: {
+    title: "个人主页",
+    content: "你好！欢迎来到我的个人主页。",
+  },
+};
+
+const { lang } = Astro.props;
+
+assert(lang in translations);
+const t = translations[lang as keyof typeof translations];
 ---
 
 <div class="profile-container">
-  <h1>{title}</h1>
+  <h1>{t.title}</h1>
   <div class="profile-content">
-    <p>{content}</p>
+    <p>{t.content}</p>
   </div>
 </div>
 
@@ -23,7 +37,7 @@ const { title, content } = Astro.props;
 
   h1 {
     font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: var(--text-color);
   }
 

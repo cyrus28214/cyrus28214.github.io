@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MilestoneView from "../../views/MilestoneView.astro";
+import LinksView from "../../views/LinksView.astro";
+import ProfileView from "../../views/ProfileView.astro";
+
+export const getStaticPaths = (() => {
+  return [
+    { params: { lang: "en", path: "milestone" } },
+    { params: { lang: "zh", path: "milestone" } },
+    { params: { lang: "en", path: "links" } },
+    { params: { lang: "zh", path: "links" } },
+    { params: { lang: "en", path: undefined } },
+    { params: { lang: "zh", path: undefined } },
+  ];
+}) satisfies GetStaticPaths;
+
+const { lang, path } = Astro.params;
+---
+
+<BaseLayout lang={lang} url={path ?? ""}>
+  {path === "milestone" && <MilestoneView lang={lang} />}
+  {path === "links" && <LinksView lang={lang} />}
+  {path === undefined && <ProfileView lang={lang} />}
+</BaseLayout>

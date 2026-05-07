@@ -1,35 +1,41 @@
 ---
+import { transform } from "astro:schema";
 import Navbar from "../components/Navbar.astro";
 import "../styles/global.css";
 import "../styles/variables.css";
-import { getAbsoluteLocaleUrl } from "astro:i18n";
+import assert from "node:assert/strict";
 
 interface Props {
-  lang: LanguageKey;
+  lang: string;
+  url: string; // url no locale prefix
 }
 
-const { lang } = Astro.props;
+const { lang, url } = Astro.props;
 
-const t = {
+const navItems = [
+  { name: "nav.profile", href: "" },
+  { name: "nav.blog", href: "blog" },
+  { name: "nav.links", href: "links" },
+  { name: "nav.milestone", href: "milestone" },
+];
+
+const translations = {
   en: {
-    logoHref: getAbsoluteLocaleUrl("en", "/"),
-    navItems: [
-      { name: "Profile", href: getAbsoluteLocaleUrl("en", "/") },
-      { name: "Blog", href: getAbsoluteLocaleUrl("en", "/blog") },
-      { name: "Links", href: getAbsoluteLocaleUrl("en", "/links") },
-      { name: "Milestone", href: getAbsoluteLocaleUrl("en", "/milestone") },
-    ],
+    "nav.profile": "Profile",
+    "nav.blog": "Blog",
+    "nav.links": "Links",
+    "nav.milestone": "Milestone",
   },
   zh: {
-    logoHref: getAbsoluteLocaleUrl("zh", "/"),
-    navItems: [
-      { name: "个人主页", href: getAbsoluteLocaleUrl("zh", "/") },
-      { name: "博客文章", href: getAbsoluteLocaleUrl("zh", "/blog") },
-      { name: "朋友们", href: getAbsoluteLocaleUrl("zh", "/links") },
-      { name: "大事记", href: getAbsoluteLocaleUrl("zh", "/milestone") },
-    ],
+    "nav.profile": "个人主页",
+    "nav.blog": "博客文章",
+    "nav.links": "朋友们",
+    "nav.milestone": "大事记",
   },
-}[lang];
+};
+
+assert(lang in translations);
+const t = translations[lang as keyof typeof translations];
 ---
 
 <!doctype html>
@@ -78,7 +84,13 @@ const t = {
     </script>
   </head>
   <body>
-    <Navbar logoHref={t.logoHref} lang={lang} navItems={t.navItems} />
+    <Navbar
+      logoHref=""
+      lang={lang}
+      navItems={navItems}
+      translation={t}
+      url={url}
+    />
     <main>
       <slot />
     </main>

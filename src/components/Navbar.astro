@@ -3,23 +3,25 @@ import ThemeToggle from "./ThemeToggle.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import { Image } from "astro:assets";
 import logoImage from "../assets/logo.png";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-interface NavItem {
-  name: string;
-  href: string;
-}
 interface Props {
-  logoHref: string;
   lang: string;
-  navItems: NavItem[];
+  logoHref: string; // url no locale prefix
+  navItems: {
+    name: string; // translation keys
+    href: string; // url no locale prefix
+  }[];
+  url: string; // url no locale prefix
+  translation: Record<string, string>; // key -> text
 }
+
+const { lang, logoHref, navItems, translation: t, url } = Astro.props;
 
 const languages = {
   en: "English",
   zh: "简体中文",
 };
-
-const { logoHref, lang, navItems } = Astro.props;
 ---
 
 <nav class="navbar">
@@ -42,17 +44,20 @@ const { logoHref, lang, navItems } = Astro.props;
     {
       navItems.map((item) => {
         // FIXME: isActive
-        const isActive = false;
+        const isActive = item.href == url;
         return (
           <li>
-            <a href={item.href} class={isActive ? "active" : ""}>
-              {item.name}
+            <a
+              href={getRelativeLocaleUrl(lang, item.href)}
+              class={isActive ? "active" : ""}
+            >
+              {t[item.name]}
             </a>
           </li>
         );
       })
     }
-    <li><LanguagePicker languages={languages} activeLanguage={lang} /></li>
+    <li><LanguagePicker languages={languages} lang={lang} url={url} /></li>
     <li><ThemeToggle /></li>
   </ul>
 </nav>

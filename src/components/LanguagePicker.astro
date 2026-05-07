@@ -2,30 +2,35 @@
 import { Languages } from "@lucide/astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Dropdown from "./Dropdown.astro";
+import { getRelativeLocaleUrlList } from "astro:i18n";
 
 interface Props {
-  languages: Record<string, string>; // { <id>: <text> }
-  activeLanguage: string;
+  lang: string;
+  languages: Record<
+    string, // lang
+    string // text
+  >;
+  url: string; // url no locale prefix
 }
 
-const { languages, activeLanguage } = Astro.props;
+const { languages, lang, url } = Astro.props;
 ---
 
 <Dropdown id="lang">
-  <div slot="trigger" aria-label="Change Language">
+  <div slot="trigger">
     <Languages size={20} stroke-width={1.5} />
   </div>
-  
+
   <Fragment slot="menu">
     {
-      Object.entries(languages).map(([l, label]) => {
-        const isCurrent = l == activeLanguage;
+      Object.entries(languages).map(([langKey, label]) => {
+        const isCurrent = langKey == lang;
         return (
           <li role="menuitem">
             <a
-              href={getRelativeLocaleUrl(l, "")}
+              href={getRelativeLocaleUrl(langKey, url)}
               class={`lang-option ${isCurrent ? "active" : ""}`}
-              aria-label={`Change language to ${label}`}
+              aria-label={label}
             >
               {label}
             </a>

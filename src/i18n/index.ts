@@ -1,1 +1,0 @@
-type LanguageKey = "en" | "zh";
