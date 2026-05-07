@@ -5,7 +5,8 @@
   --nav-text: #555555;
   --border-color: #eaeaea;
   --primary-color: #000000;
-  --font-serif: "Georgia", "Times New Roman", "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-serif:
+    "Georgia", "Times New Roman", "Noto Serif SC", "Source Han Serif SC", serif;
 }
 
 :root.dark {
@@ -21,5 +22,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-serif);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

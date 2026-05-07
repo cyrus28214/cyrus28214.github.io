@@ -18,7 +18,7 @@ const { title, milestones } = Astro.props;
     {
       milestones.map((item) => (
         <div class="timeline-item">
-          <div class="timeline-marker"></div>
+          <div class="timeline-marker" />
           <div class="timeline-body">
             <div class="timeline-date">{item.date}</div>
             <div class="timeline-content" set:html={item.content} />

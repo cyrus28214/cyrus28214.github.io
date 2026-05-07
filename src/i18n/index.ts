@@ -1,0 +1,1 @@
+type LanguageKey = "en" | "zh";

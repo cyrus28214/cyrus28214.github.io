@@ -3,38 +3,38 @@ import Layout from "../../layouts/Layout.astro";
 import MilestoneView from "../../views/MilestoneView.astro";
 
 const milestones = [
-	{
-		date: "2026.05.06",
-		content: "网站 new look，使用自己开发的简约风 Astro 模版",
-	},
-	{
-		date: "2025.06.06",
-		content:
-			"网站 new look，迁移到Astro并使用 <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>saicaca/fuwari</a> 作为模版",
-	},
-	{
-		date: "2024.03.30",
-		content: "启用域名 codecyrus.com",
-	},
-	{
-		date: "2024.03.30",
-		content: "VPS 服务商从腾讯云更换到阿里云",
-	},
-	{
-		date: "2023.08.29",
-		content: "启用域名 cyrus28214.top",
-	},
-	{
-		date: "2023.07.05",
-		content: "更换 Github Pages 后端为腾讯云 VPS",
-	},
-	{
-		date: "2023.06.29",
-		content: "用 Hexo 和 Github Pages 建站",
-	},
+  {
+    date: "2026.05.06",
+    content: "网站 new look，使用自己开发的简约风 Astro 模版",
+  },
+  {
+    date: "2025.06.06",
+    content:
+      "网站 new look，迁移到Astro并使用 <a href='https://github.com/saicaca/fuwari' target='_blank' rel='noopener noreferrer'>saicaca/fuwari</a> 作为模版",
+  },
+  {
+    date: "2024.03.30",
+    content: "启用域名 codecyrus.com",
+  },
+  {
+    date: "2024.03.30",
+    content: "VPS 服务商从腾讯云更换到阿里云",
+  },
+  {
+    date: "2023.08.29",
+    content: "启用域名 cyrus28214.top",
+  },
+  {
+    date: "2023.07.05",
+    content: "更换 Github Pages 后端为腾讯云 VPS",
+  },
+  {
+    date: "2023.06.29",
+    content: "用 Hexo 和 Github Pages 建站",
+  },
 ];
 ---
 
-<Layout>
-	<MilestoneView title="大事记" milestones={milestones} />
+<Layout lang="zh">
+  <MilestoneView title="大事记" milestones={milestones} />
 </Layout>

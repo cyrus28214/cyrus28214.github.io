@@ -1,154 +1,154 @@
 ---
 interface FriendLink {
-	name: string;
-	link: string;
-	avatar: string;
-	descr: string;
+  name: string;
+  link: string;
+  avatar: string;
+  descr: string;
 }
 
 interface Props {
-	title: string;
-	links: FriendLink[];
+  title: string;
+  links: FriendLink[];
 }
 
 const { title, links } = Astro.props;
 ---
 
 <div class="page-container">
-	<h1>{title}</h1>
-	<div class="links-grid" id="links-grid">
-		{
-			links.map((item) => (
-				<a
-					href={item.link}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="link-card"
-					data-friend
-				>
-					<img
-						src={item.avatar}
-						alt={`${item.name} avatar`}
-						class="link-avatar"
-						loading="lazy"
-						onerror="this.onerror=null; this.src='/images/default-avatar.png';"
-					/>
-					<div class="link-info">
-						<div class="link-name">{item.name}</div>
-						<div class="link-desc">{item.descr}</div>
-					</div>
-				</a>
-			))
-		}
-	</div>
+  <h1>{title}</h1>
+  <div class="links-grid" id="links-grid">
+    {
+      links.map((item) => (
+        <a
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-card"
+          data-friend
+        >
+          <img
+            src={item.avatar}
+            alt={`${item.name} avatar`}
+            class="link-avatar"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='/images/default-avatar.png';"
+          />
+          <div class="link-info">
+            <div class="link-name">{item.name}</div>
+            <div class="link-desc">{item.descr}</div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
 </div>
 
 <style>
-	.page-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
 
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-		color: var(--text-color);
-	}
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
 
-	.links-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-		gap: 1.5rem;
-	}
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
 
-	.link-card {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1rem;
-		border-radius: 8px;
-		border: 1px solid var(--border-color);
-		background-color: var(--bg-color);
-		text-decoration: none;
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			border-color 0.2s ease;
-		height: 8rem;
-		box-sizing: border-box;
-	}
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+    height: 8rem;
+    box-sizing: border-box;
+  }
 
-	.link-card:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-		border-color: var(--primary-color);
-	}
+  .link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary-color);
+  }
 
-	:global(.dark) .link-card:hover {
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-	}
+  :global(.dark) .link-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
 
-	.link-avatar {
-		width: 3rem;
-		height: 3rem;
-		border-radius: 50%;
-		object-fit: cover;
-		flex-shrink: 0;
-		border: 1px solid var(--border-color);
-	}
+  .link-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+  }
 
-	.link-info {
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-		height: 100%;
-		justify-content: center;
-	}
+  .link-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    justify-content: center;
+  }
 
-	.link-name {
-		font-weight: bold;
-		color: var(--text-color);
-		font-size: 1.1rem;
-		margin-bottom: 0.2rem;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+  .link-name {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-	.link-desc {
-		font-size: 0.85rem;
-		color: var(--text-muted);
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		line-height: 1.4;
-	}
+  .link-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+  }
 </style>
 
 <script>
-	// 执行随机打乱的函数
-	const shuffleLinks = () => {
-		const grid = document.getElementById("links-grid");
-		if (!grid) return;
+  // 执行随机打乱的函数
+  const shuffleLinks = () => {
+    const grid = document.getElementById("links-grid");
+    if (!grid) return;
 
-		// 获取所有的卡片节点并转换为数组
-		const cards = Array.from(grid.querySelectorAll(".link-card"));
+    // 获取所有的卡片节点并转换为数组
+    const cards = Array.from(grid.querySelectorAll(".link-card"));
 
-		// Fisher-Yates 洗牌算法
-		for (let i = cards.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[cards[i], cards[j]] = [cards[j], cards[i]];
-		}
+    // Fisher-Yates 洗牌算法
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
 
-		// 将打乱后的节点重新追加到 grid 中（这会自动移动它们）
-		cards.forEach((card) => grid.appendChild(card));
-	};
+    // 将打乱后的节点重新追加到 grid 中（这会自动移动它们）
+    cards.forEach((card) => grid.appendChild(card));
+  };
 
-	// Astro 的视图过渡需要在 astro:page-load 时执行脚本
-	document.addEventListener("astro:page-load", shuffleLinks);
+  // Astro 的视图过渡需要在 astro:page-load 时执行脚本
+  document.addEventListener("astro:page-load", shuffleLinks);
 
-	// 首次加载页面时也执行一次
-	shuffleLinks();
+  // 首次加载页面时也执行一次
+  shuffleLinks();
 </script>

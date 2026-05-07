@@ -1,40 +1,43 @@
 ---
-import { Languages } from '@lucide/astro';
-import { languages } from '../i18n/ui';
-import { getLangFromUrl } from '../i18n/utils';
+import { Languages } from "@lucide/astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-const lang = getLangFromUrl(Astro.url);
-const currentPath = Astro.url.pathname;
-
-const getTargetUrl = (targetLang: string) => {
-  if (targetLang === 'en') {
-    return currentPath.replace(/^\/zh/, '') || '/';
-  } else {
-    return currentPath.startsWith('/zh') ? currentPath : `/zh${currentPath}`;
-  }
+const languages = {
+  en: "English",
+  zh: "简体中文",
 };
+
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="lang-dropdown-container">
-  <button id="lang-toggle" aria-label="Change Language" aria-haspopup="true" aria-expanded="false">
+  <button
+    id="lang-toggle"
+    aria-label="Change Language"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
     <Languages size={20} stroke-width={1.5} />
   </button>
-  
+
   <ul id="lang-dropdown" class="dropdown-menu" role="menu">
-    {Object.entries(languages).map(([l, label]) => {
-      const isCurrent = l === lang;
-      return (
-        <li role="menuitem">
-          <a 
-            href={getTargetUrl(l)} 
-            class={`lang-option ${isCurrent ? 'active' : ''}`}
-            aria-label={`Change language to ${label}`}
-          >
-            {label}
-          </a>
-        </li>
-      );
-    })}
+    {
+      Object.entries(languages).map(([l, label]) => {
+        const isCurrent = false;
+        // FIXME: siCurrent
+        return (
+          <li role="menuitem">
+            <a
+              href={getRelativeLocaleUrl(l, "")}
+              class={`lang-option ${isCurrent ? "active" : ""}`}
+              aria-label={`Change language to ${label}`}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })
+    }
   </ul>
 </div>
 

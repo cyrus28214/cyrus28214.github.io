@@ -1,12 +1,19 @@
 ---
-import { Sun, Moon, Monitor } from '@lucide/astro';
+import { Sun, Moon, Monitor } from "@lucide/astro";
 ---
+
 <div class="theme-dropdown-container">
-  <button id="theme-toggle" aria-label="Toggle Theme" aria-haspopup="true" aria-expanded="false" class="active-dropdown">
+  <button
+    id="theme-toggle"
+    aria-label="Toggle Theme"
+    aria-haspopup="true"
+    aria-expanded="false"
+    class="active-dropdown"
+  >
     <div class="icon-sun"><Sun size={20} stroke-width={1.5} /></div>
     <div class="icon-moon"><Moon size={20} stroke-width={1.5} /></div>
   </button>
-  
+
   <ul id="theme-dropdown" class="dropdown-menu" role="menu">
     <li role="menuitem">
       <button class="theme-option" data-theme="light">
@@ -43,7 +50,7 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
     padding: 0.5rem;
     transition: color 0.2s ease;
   }
-  
+
   #theme-toggle:hover,
   #theme-toggle[aria-expanded="true"] {
     color: var(--primary-color);
@@ -52,11 +59,11 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
   .icon-moon {
     display: none;
   }
-  
+
   :global(.dark) .icon-moon {
     display: block;
   }
-  
+
   :global(.dark) .icon-sun {
     display: none;
   }
@@ -155,10 +162,12 @@ import { Sun, Moon, Monitor } from '@lucide/astro';
     option.addEventListener("click", (e) => {
       const target = e.currentTarget as HTMLButtonElement;
       const selectedTheme = target.getAttribute("data-theme");
-      
+
       if (selectedTheme === "system") {
         localStorage.removeItem("theme");
-        const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
         if (isDark) {
           document.documentElement.classList.add("dark");
         } else {

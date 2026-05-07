@@ -2,86 +2,99 @@
 import Navbar from "../components/Navbar.astro";
 import "../styles/global.css";
 import "../styles/variables.css";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const basePath = lang === "en" ? "" : `/${lang}`;
+interface Props {
+  lang: LanguageKey;
+}
 
-const navItems = [
-	{ name: t('nav.profile'), href: `${basePath}/profile` },
-	{ name: t('nav.blog'), href: `${basePath}/blog` },
-	{ name: t('nav.links'), href: `${basePath}/links` },
-	{ name: t('nav.milestone'), href: `${basePath}/milestone` },
-];
+const { lang } = Astro.props;
+
+const t = {
+  en: {
+    logoHref: getAbsoluteLocaleUrl("en", "/"),
+    navItems: [
+      { name: "Profile", href: getAbsoluteLocaleUrl("en", "/") },
+      { name: "Blog", href: getAbsoluteLocaleUrl("en", "/blog") },
+      { name: "Links", href: getAbsoluteLocaleUrl("en", "/links") },
+      { name: "Milestone", href: getAbsoluteLocaleUrl("en", "/milestone") },
+    ],
+  },
+  zh: {
+    logoHref: getAbsoluteLocaleUrl("zh", "/"),
+    navItems: [
+      { name: "个人主页", href: getAbsoluteLocaleUrl("zh", "/") },
+      { name: "博客文章", href: getAbsoluteLocaleUrl("zh", "/blog") },
+      { name: "朋友们", href: getAbsoluteLocaleUrl("zh", "/links") },
+      { name: "大事记", href: getAbsoluteLocaleUrl("zh", "/milestone") },
+    ],
+  },
+}[lang];
 ---
 
 <!doctype html>
 <html lang={lang}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="/favicon/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="/favicon/favicon-16x16.png"
-		/>
-		<meta name="generator" content={Astro.generator} />
-		<title>{t('site.title')}</title>
-		<script is:inline>
-			const setDarkMode = () => {
-				const theme = (() => {
-					if (
-						typeof localStorage !== "undefined" &&
-						localStorage.getItem("theme")
-					) {
-						return localStorage.getItem("theme");
-					}
-					if (
-						window.matchMedia("(prefers-color-scheme: dark)")
-							.matches
-					) {
-						return "dark";
-					}
-					return "light";
-				})();
-				if (theme === "dark") {
-					document.documentElement.classList.add("dark");
-				} else {
-					document.documentElement.classList.remove("dark");
-				}
-				window.localStorage.setItem("theme", theme);
-			};
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>CodeCyrus - Think twice, code once.</title>
+    <script is:inline>
+      const setDarkMode = () => {
+        const theme = (() => {
+          if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("theme")
+          ) {
+            return localStorage.getItem("theme");
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+          }
+          return "light";
+        })();
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+        window.localStorage.setItem("theme", theme);
+      };
 
-			setDarkMode();
-			document.addEventListener("astro:after-swap", setDarkMode);
-		</script>
-	</head>
-	<body>
-		<Navbar navItems={navItems} />
-		<main>
-			<slot />
-		</main>
-	</body>
+      setDarkMode();
+      document.addEventListener("astro:after-swap", setDarkMode);
+    </script>
+  </head>
+  <body>
+    <Navbar logoHref={t.logoHref} navItems={t.navItems} />
+    <main>
+      <slot />
+    </main>
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		background-color: var(--bg-color);
-		color: var(--text-color);
-		transition:
-			background-color 0.3s ease,
-			color 0.3s ease;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
 </style>
