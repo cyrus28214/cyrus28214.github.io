@@ -1,20 +1,15 @@
 ---
 import { Sun, Moon, Monitor } from "@lucide/astro";
+import Dropdown from "./Dropdown.astro";
 ---
 
-<div class="theme-dropdown-container">
-  <button
-    id="theme-toggle"
-    aria-label="Toggle Theme"
-    aria-haspopup="true"
-    aria-expanded="false"
-    class="active-dropdown"
-  >
+<Dropdown id="theme">
+  <div slot="trigger" aria-label="Toggle Theme" class="trigger-icons">
     <div class="icon-sun"><Sun size={20} stroke-width={1.5} /></div>
     <div class="icon-moon"><Moon size={20} stroke-width={1.5} /></div>
-  </button>
+  </div>
 
-  <ul id="theme-dropdown" class="dropdown-menu" role="menu">
+  <Fragment slot="menu">
     <li role="menuitem">
       <button class="theme-option" data-theme="light">
         <Sun size={16} stroke-width={2} /> Light
@@ -30,30 +25,14 @@ import { Sun, Moon, Monitor } from "@lucide/astro";
         <Monitor size={16} stroke-width={2} /> System
       </button>
     </li>
-  </ul>
-</div>
+  </Fragment>
+</Dropdown>
 
 <style>
-  .theme-dropdown-container {
-    position: relative;
-    display: inline-block;
-  }
-
-  #theme-toggle {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--nav-text);
+  .trigger-icons {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
-  }
-
-  #theme-toggle:hover,
-  #theme-toggle[aria-expanded="true"] {
-    color: var(--primary-color);
   }
 
   .icon-moon {
@@ -66,30 +45,6 @@ import { Sun, Moon, Monitor } from "@lucide/astro";
 
   :global(.dark) .icon-sun {
     display: none;
-  }
-
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    min-width: 120px;
-    z-index: 100;
-  }
-
-  .dropdown-menu.show {
-    display: block;
-  }
-
-  :global(.dark) .dropdown-menu {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   }
 
   .theme-option {
@@ -122,7 +77,7 @@ import { Sun, Moon, Monitor } from "@lucide/astro";
 
 <script>
   const toggleBtn = document.getElementById("theme-toggle");
-  const dropdown = document.getElementById("theme-dropdown");
+  const dropdown = document.getElementById("theme-menu");
   const options = document.querySelectorAll(".theme-option");
 
   const updateActiveThemeOption = () => {
@@ -138,24 +93,6 @@ import { Sun, Moon, Monitor } from "@lucide/astro";
 
   // Run on mount
   updateActiveThemeOption();
-
-  // Toggle dropdown visibility
-  toggleBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
-    toggleBtn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
-    dropdown?.classList.toggle("show");
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener("click", () => {
-    dropdown?.classList.remove("show");
-    toggleBtn?.setAttribute("aria-expanded", "false");
-  });
-
-  dropdown?.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
 
   // Handle theme selection
   options.forEach((option) => {

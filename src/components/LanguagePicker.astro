@@ -1,7 +1,7 @@
 ---
 import { Languages } from "@lucide/astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { string } from "astro:schema";
+import Dropdown from "./Dropdown.astro";
 
 interface Props {
   languages: Record<string, string>; // { <id>: <text> }
@@ -11,17 +11,12 @@ interface Props {
 const { languages, activeLanguage } = Astro.props;
 ---
 
-<div class="lang-dropdown-container">
-  <button
-    id="lang-toggle"
-    aria-label="Change Language"
-    aria-haspopup="true"
-    aria-expanded="false"
-  >
+<Dropdown id="lang">
+  <div slot="trigger" aria-label="Change Language">
     <Languages size={20} stroke-width={1.5} />
-  </button>
-
-  <ul id="lang-dropdown" class="dropdown-menu" role="menu">
+  </div>
+  
+  <Fragment slot="menu">
     {
       Object.entries(languages).map(([l, label]) => {
         const isCurrent = l == activeLanguage;
@@ -38,56 +33,10 @@ const { languages, activeLanguage } = Astro.props;
         );
       })
     }
-  </ul>
-</div>
+  </Fragment>
+</Dropdown>
 
 <style>
-  .lang-dropdown-container {
-    position: relative;
-    display: inline-block;
-  }
-
-  #lang-toggle {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--nav-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
-  }
-
-  #lang-toggle:hover,
-  #lang-toggle[aria-expanded="true"] {
-    color: var(--primary-color);
-  }
-
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    min-width: 120px;
-    z-index: 100;
-  }
-
-  .dropdown-menu.show {
-    display: block;
-  }
-
-  :global(.dark) .dropdown-menu {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  }
-
   .lang-option {
     display: block;
     width: 100%;
@@ -110,24 +59,3 @@ const { languages, activeLanguage } = Astro.props;
     background-color: var(--border-color);
   }
 </style>
-
-<script>
-  const toggleBtn = document.getElementById("lang-toggle");
-  const dropdown = document.getElementById("lang-dropdown");
-
-  toggleBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
-    toggleBtn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
-    dropdown?.classList.toggle("show");
-  });
-
-  document.addEventListener("click", () => {
-    dropdown?.classList.remove("show");
-    toggleBtn?.setAttribute("aria-expanded", "false");
-  });
-
-  dropdown?.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
-</script>

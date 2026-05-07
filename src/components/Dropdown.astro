@@ -1,0 +1,91 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="dropdown-container">
+  <button
+    id={`${id}-toggle`}
+    class="dropdown-toggle"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <slot name="trigger" />
+  </button>
+
+  <ul id={`${id}-menu`} class="dropdown-menu" role="menu">
+    <slot name="menu" />
+  </ul>
+</div>
+
+<style>
+  .dropdown-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--nav-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .dropdown-toggle:hover,
+  .dropdown-toggle[aria-expanded="true"] {
+    color: var(--primary-color);
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    min-width: 120px;
+    z-index: 100;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  :global(.dark) .dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<script define:vars={{ id }}>
+  const toggleBtn = document.getElementById(`${id}-toggle`);
+  const dropdown = document.getElementById(`${id}-menu`);
+
+  toggleBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
+    dropdown?.classList.toggle("show");
+  });
+
+  document.addEventListener("click", () => {
+    dropdown?.classList.remove("show");
+    toggleBtn?.setAttribute("aria-expanded", "false");
+  });
+
+  dropdown?.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+</script>
