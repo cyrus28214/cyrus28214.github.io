@@ -1,15 +1,54 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { mustParseLocaleUrl, languages } from "../../i18n";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProfileView from "../../views/ProfileView.astro";
+import { mustParseLocaleUrl, languages } from "../../lib/i18n";
+import PageLayout from "../../layouts/PageLayout.astro";
 const lang = mustParseLocaleUrl(Astro.url.pathname).lang;
 
 export const getStaticPaths = (() => {
   return languages.map((lang) => ({ params: { lang } }));
 }) satisfies GetStaticPaths;
+
+const t = {
+  zh: {
+    name: "刘仁钦",
+  },
+  en: {
+    name: "Renqin Liu",
+  },
+}[lang];
 ---
 
-<BaseLayout lang={lang}>
-  <ProfileView lang={lang} />
-</BaseLayout>
+<PageLayout lang={lang}>
+  {
+    lang === "en" && (
+      <Fragment>
+        <h1>Renqin Liu</h1>
+        <p>
+          Hi, I'm Renqin Liu, undergraduate student majoring in{" "}
+          <strong>Computer Science and Technology</strong> at{" "}
+          <strong>Zhejiang University</strong>, Class of 2027.
+        </p>
+        <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
+      </Fragment>
+    )
+  }
+  {
+    lang === "zh" && (
+      <Fragment>
+        <h1>刘仁钦</h1>
+        <p>
+          你好，我是刘仁钦，<strong>浙江大学</strong>
+          27届<strong>计算机科学与技术专业</strong>本科生。
+        </p>
+        <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
+      </Fragment>
+    )
+  }
+</PageLayout>
+
+<style>
+  .email {
+    opacity: 0.8;
+    font-size: 0.8rem;
+  }
+</style>

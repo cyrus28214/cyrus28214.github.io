@@ -1,0 +1,183 @@
+---
+import type { LanguageKey } from "../lib/i18n";
+import { buildLocaleUrl } from "../lib/i18n";
+import Card from "./Card.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  description?: string;
+  created_at: Date;
+  updated_at?: Date | null;
+  cover?: string | null;
+  lang: LanguageKey; // 当前页面语言（用于构造 url 和格式化日期）
+  actualLang: LanguageKey; // 实际渲染的文章语言
+  isFallback?: boolean;
+  isDraft?: boolean;
+}
+
+const {
+  id,
+  title,
+  description,
+  created_at,
+  updated_at,
+  cover,
+  lang,
+  actualLang,
+  isFallback = false,
+  isDraft = false,
+} = Astro.props;
+
+const dateLocale = lang === "zh" ? "zh-CN" : "en-US";
+const formatDate = (d: Date) =>
+  new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
+
+const t = {
+  zh: {
+    updated: "更新于",
+    fallback: "其他语言",
+    draft: "草稿",
+  },
+  en: {
+    updated: "Updated",
+    fallback: "Other language",
+    draft: "Draft",
+  },
+}[lang];
+---
+
+<Card href={buildLocaleUrl(lang, `/blog/${id}`)}>
+  <div class="blog-card">
+    {
+      cover && (
+        <div class="cover">
+          <img src={cover} alt="" loading="lazy" />
+        </div>
+      )
+    }
+    <div class="content">
+      <h2 class="title" lang={actualLang}>{title}</h2>
+      {
+        description && (
+          <p class="description" lang={actualLang}>
+            {description}
+          </p>
+        )
+      }
+      <div class="meta">
+        <time datetime={created_at.toISOString()}>
+          {formatDate(created_at)}
+        </time>
+        {
+          updated_at && (
+            <span class="updated">
+              · {t.updated}{" "}
+              <time datetime={updated_at.toISOString()}>
+                {formatDate(updated_at)}
+              </time>
+            </span>
+          )
+        }
+        <span class="badges">
+          {isDraft && <span class="badge">{t.draft}</span>}
+          {isFallback && <span class="badge">{t.fallback}</span>}
+        </span>
+      </div>
+    </div>
+  </div>
+</Card>
+
+<style>
+  .blog-card:hover .title {
+    text-decoration: underline;
+  }
+
+  .blog-card:hover .cover img {
+    transform: scale(1.03);
+  }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--bg-muted, rgba(125, 125, 125, 0.08));
+  }
+
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .content {
+    padding: 1.2rem 1.4rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .title {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .description {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  .updated {
+    color: var(--text-muted);
+  }
+
+  .badges {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.05rem 0.55rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background-color: var(--bg-color);
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .title {
+      font-size: 1.15rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+    }
+  }
+</style>

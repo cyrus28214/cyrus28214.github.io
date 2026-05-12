@@ -46,7 +46,6 @@ function greet(name) {
 greet("World");
 ```
 
-
 ```yaml
 - name: Cyrus' Blog
   url: https://blog.codecyrus.com

@@ -5,8 +5,7 @@
   --nav-text: #555555;
   --border-color: #eaeaea;
   --primary-color: #000000;
-  --font-serif:
-    "Georgia", "Times New Roman", "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-serif: "Noto Serif SC", serif;
 }
 
 :root.dark {

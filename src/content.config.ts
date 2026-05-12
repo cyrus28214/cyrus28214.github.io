@@ -18,7 +18,7 @@ const blogSchema = z.object({
     z.object({
       title: z.string(),
       lang: z.string(),
-      description: z.string(),
+      description: z.string().optional(),
       created_at: z.coerce.date(),
       updated_at: z.coerce.date().optional().nullable(),
       draft: z.boolean().optional().default(false),

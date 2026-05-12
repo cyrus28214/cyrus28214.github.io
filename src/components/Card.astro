@@ -1,0 +1,62 @@
+---
+// 通用卡片容器
+// 提供统一的边框、圆角、悬浮动效，子内容通过 slot 注入
+// 若提供 href 则渲染为 <a>，否则渲染为 <div>
+interface Props {
+  href?: string;
+  target?: string;
+  rel?: string;
+  /** 是否在 hover 时上浮，默认 true */
+  hoverLift?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  target,
+  rel,
+  hoverLift = true,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
+---
+
+<Tag
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={["card", { "card-hover": hoverLift }, className]}
+>
+  <slot />
+</Tag>
+
+<style>
+  .card {
+    display: block;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  a.card:hover {
+    opacity: 1;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary-color);
+  }
+
+  :global(.dark) .card-hover:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+</style>

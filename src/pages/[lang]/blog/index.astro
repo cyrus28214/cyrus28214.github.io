@@ -1,9 +1,13 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { mustParseLanguage, languages } from "../../../i18n";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import BlogListView from "../../../views/BlogListView.astro";
+import {
+  mustParseLanguage,
+  languages,
+  type LanguageKey,
+} from "../../../lib/i18n";
+import PageLayout from "../../../layouts/PageLayout.astro";
+import BlogCard from "../../../components/BlogCard.astro";
 
 export const getStaticPaths = (() => {
   return languages.map((lang) => ({ params: { lang } }));
@@ -11,13 +15,111 @@ export const getStaticPaths = (() => {
 
 const lang = mustParseLanguage(Astro.params.lang!);
 const isDev = import.meta.env.DEV;
+
 const blogs = await getCollection("blog", ({ data }) => {
   if (isDev) return true;
-  // 生产环境过滤 draft：只要存在任意一个非 draft 版本就保留
+  // 生产环境过滤：只要存在任意一个非 draft 版本就保留
   return Object.values(data.versions).some((v) => !v.draft);
 });
+
+// 按预期语言进行 fallback，并整理为列表项
+type Item = {
+  id: string;
+  title: string;
+  description: string;
+  created_at: Date;
+  updated_at?: Date | null;
+  cover?: string | null;
+  actualLang: LanguageKey;
+  isFallback: boolean;
+  isDraft: boolean;
+};
+
+const items: Item[] = blogs
+  .map((blog): Item | null => {
+    const versions = blog.data.versions;
+    const candidates = Object.keys(versions) as LanguageKey[];
+
+    let actualLang: LanguageKey;
+    if (candidates.includes(lang)) {
+      actualLang = lang;
+    } else {
+      const fb = languages.find((l) => candidates.includes(l));
+      if (!fb) return null;
+      actualLang = fb;
+    }
+
+    // 生产环境下若该语言版本是 draft，尝试换一个非 draft 的
+    if (!isDev && versions[actualLang].draft) {
+      const alt = languages.find(
+        (l) => candidates.includes(l) && !versions[l].draft,
+      );
+      if (!alt) return null;
+      actualLang = alt;
+    }
+
+    const ver = versions[actualLang];
+    return {
+      id: blog.id,
+      title: ver.title,
+      description: ver.description,
+      created_at: ver.created_at,
+      updated_at: ver.updated_at ?? null,
+      cover: ver.cover ?? null,
+      actualLang,
+      isFallback: actualLang !== lang,
+      isDraft: ver.draft,
+    };
+  })
+  .filter((x): x is Item => x !== null)
+  .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+
+const t = {
+  zh: {
+    title: "博客",
+    empty: "暂无文章",
+  },
+  en: {
+    title: "Blog",
+    empty: "No Posts Yet",
+  },
+}[lang];
 ---
 
-<BaseLayout lang={lang}>
-  <BlogListView blogs={blogs} lang={lang} />
-</BaseLayout>
+<PageLayout lang={lang}>
+  <h1>{t.title}</h1>
+  {
+    items.length === 0 ? (
+      <p class="empty">{t.empty}</p>
+    ) : (
+      <div class="blog-grid">
+        {items.map((item) => (
+          <BlogCard
+            id={item.id}
+            title={item.title}
+            description={item.description}
+            created_at={item.created_at}
+            updated_at={item.updated_at}
+            cover={item.cover}
+            lang={lang}
+            actualLang={item.actualLang}
+            isFallback={item.isFallback}
+            isDraft={item.isDraft}
+          />
+        ))}
+      </div>
+    )
+  }
+</PageLayout>
+
+<style>
+  .empty {
+    color: var(--text-muted);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+</style>

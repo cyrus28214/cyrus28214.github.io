@@ -1,28 +1,24 @@
 ---
-// 通用页面内容容器：统一 max-width / padding / 颜色 / 响应式
+import type { LanguageKey } from "../lib/i18n";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  lang: LanguageKey;
+}
+
+const { lang } = Astro.props;
 ---
 
-<div class="page-container">
-  <slot />
-</div>
+<BaseLayout lang={lang}>
+  <div class="page-container">
+    <slot />
+  </div>
+</BaseLayout>
 
 <style>
   .page-container {
-    max-width: 800px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 2rem;
-    color: var(--text-color);
-  }
-
-  @media (max-width: 768px) {
-    .page-container {
-      padding: 1.5rem 1rem;
-    }
-  }
-
-  @media (min-width: 1600px) {
-    .page-container {
-      max-width: 880px;
-    }
   }
 </style>

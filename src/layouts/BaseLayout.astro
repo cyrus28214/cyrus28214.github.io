@@ -5,7 +5,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/global.css";
 import "../styles/variables.css";
 import assert from "node:assert/strict";
-import { buildLocaleUrl, type LanguageKey } from "../i18n";
+import { buildLocaleUrl, type LanguageKey } from "../lib/i18n";
 
 interface Props {
   lang: LanguageKey;
@@ -22,7 +22,7 @@ const navItems = {
   ],
   zh: [
     { name: "profile", text: "个人主页", href: "/" },
-    { name: "blog", text: "博客文章", href: "/blog" },
+    { name: "blog", text: "博客", href: "/blog" },
     { name: "links", text: "朋友们", href: "/links" },
     { name: "milestone", text: "大事记", href: "/milestone" },
   ],
@@ -58,6 +58,12 @@ const activeNav = activeItem?.name || null;
       sizes="16x16"
       href="/favicon/favicon-16x16.png"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>CodeCyrus - Think twice, code once.</title>
     <script is:inline>
@@ -87,7 +93,7 @@ const activeNav = activeItem?.name || null;
     </script>
   </head>
   <body>
-    <Navbar logoHref="" lang={lang}>
+    <Navbar logoHref={buildLocaleUrl(lang, "/")} lang={lang}>
       {
         navItems.map((item) => (
           <NavLink
@@ -104,17 +110,10 @@ const activeNav = activeItem?.name || null;
     </main>
   </body>
 </html>
-
 <style>
   html,
   body {
-    margin: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
   }
 </style>

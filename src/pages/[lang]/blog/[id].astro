@@ -1,12 +1,20 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection, getEntry } from "astro:content";
-import { mustParseLanguage, languages } from "../../../i18n";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import BlogPostView from "../../../views/BlogPostView.astro";
+import {
+  mustParseLanguage,
+  languages,
+  buildLocaleUrl,
+  type LanguageKey,
+} from "../../../lib/i18n";
+import PageLayout from "../../../layouts/PageLayout.astro";
 
 export const getStaticPaths = (async () => {
-  const blogs = await getCollection("blog");
+  const isDev = import.meta.env.DEV;
+  const blogs = await getCollection("blog", ({ data }) => {
+    if (isDev) return true;
+    return Object.values(data.versions).some((v) => !v.draft);
+  });
   return languages.flatMap((lang) =>
     blogs.map((blog) => ({
       params: { lang, id: blog.id },
@@ -20,8 +28,219 @@ const blog = await getEntry("blog", id!);
 if (!blog) {
   throw new Error(`[Blog] Not found: ${id}`);
 }
+
+// 计算实际渲染的语言版本（fallback）
+const versions = blog.data.versions;
+const candidates = Object.keys(versions) as LanguageKey[];
+let actualLang: LanguageKey;
+if (candidates.includes(lang)) {
+  actualLang = lang;
+} else {
+  const fb = languages.find((l) => candidates.includes(l));
+  if (!fb) {
+    throw new Error(`No available version for blog "${blog.id}"`);
+  }
+  actualLang = fb;
+}
+
+const version = versions[actualLang];
+const isFallback = actualLang !== lang;
+
+// 其他语言版本，用于切换
+const otherVersions = candidates.filter((l) => l !== actualLang);
+
+const dateLocale = lang === "zh" ? "zh-CN" : "en-US";
+const formatDate = (d: Date) =>
+  new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
+
+const t = {
+  zh: {
+    back: "← 返回博客列表",
+    updated: "更新于",
+    fallbackNotice: "本文暂无中文版本",
+    otherLangs: "其他语言版本：",
+  },
+  en: {
+    back: "← Back to blog",
+    updated: "Updated",
+    fallbackNotice: "No English version available",
+    otherLangs: "Other languages:",
+  },
+}[lang];
+
+const langLabel: Record<LanguageKey, string> = {
+  zh: "中文",
+  en: "English",
+};
 ---
 
-<BaseLayout lang={lang}>
-  <BlogPostView blog={blog} lang={lang} />
-</BaseLayout>
+<PageLayout lang={lang}>
+  <nav class="back-nav">
+    <a href={buildLocaleUrl(lang, "/blog")}>{t.back}</a>
+  </nav>
+
+  <article class="post">
+    {
+      isFallback && (
+        <p class="fallback-notice" lang={lang}>
+          {t.fallbackNotice}
+        </p>
+      )
+    }
+    {
+      version.cover && (
+        <div class="cover">
+          <img src={version.cover} alt="" />
+        </div>
+      )
+    }
+    <header class="post-header" lang={actualLang}>
+      <h1>{version.title}</h1>
+      {
+        version.description && (
+          <p class="description">{version.description}</p>
+        )
+      }
+      <div class="meta">
+        <time datetime={version.created_at.toISOString()}>
+          {formatDate(version.created_at)}
+        </time>
+        {
+          version.updated_at && (
+            <span class="updated">
+              · {t.updated}{" "}
+              <time datetime={version.updated_at.toISOString()}>
+                {formatDate(version.updated_at)}
+              </time>
+            </span>
+          )
+        }
+      </div>
+    </header>
+    <div class="post-body" lang={actualLang} set:html={version.html} />
+  </article>
+
+  {
+    otherVersions.length > 0 && (
+      <footer class="post-footer">
+        <span class="other-langs-label">{t.otherLangs}</span>
+        {otherVersions.map((l) => (
+          <a
+            class="other-lang"
+            href={buildLocaleUrl(l, `/blog/${blog.id}`)}
+            lang={l}
+          >
+            {langLabel[l]}
+          </a>
+        ))}
+      </footer>
+    )
+  }
+</PageLayout>
+
+<style>
+  .back-nav {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .back-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .back-nav a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+
+  .fallback-notice {
+    margin: 0 0 1.5rem;
+    padding: 0.6rem 1rem;
+    border-left: 3px solid var(--primary-color);
+    background-color: var(--bg-muted, rgba(125, 125, 125, 0.1));
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-radius: 4px;
+  }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    background-color: var(--bg-muted, rgba(125, 125, 125, 0.08));
+  }
+
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+  }
+
+  .post-header h1 {
+    font-size: 2.5rem;
+    margin: 0 0 0.75rem;
+    color: var(--text-color);
+  }
+
+  .description {
+    color: var(--text-muted);
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .updated {
+    margin-left: 0.25rem;
+  }
+
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .other-langs-label {
+    margin-right: 0.25rem;
+  }
+
+  .other-lang {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .other-lang:hover {
+    border-color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .post-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
