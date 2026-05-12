@@ -1,0 +1,42 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+  href: string;
+  isActive?: boolean;
+}
+
+const { href, isActive = false } = Astro.props;
+---
+
+<a href={href} class:list={["nav-link", { active: isActive }]}>
+  <slot />
+</a>
+
+<style>
+  .nav-link {
+    text-decoration: none;
+    color: var(--nav-text);
+    font-weight: 500;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
+    padding: 0.5rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--primary-color);
+  }
+
+  .nav-link.active {
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .nav-link {
+      padding: 0.25rem;
+    }
+  }
+</style>

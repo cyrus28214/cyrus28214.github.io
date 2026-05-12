@@ -1,41 +1,44 @@
 ---
-import { transform } from "astro:schema";
 import Navbar from "../components/Navbar.astro";
+import NavLink from "../components/NavLink.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/global.css";
 import "../styles/variables.css";
 import assert from "node:assert/strict";
+import { buildLocaleUrl, type LanguageKey } from "../i18n";
 
 interface Props {
-  lang: string;
-  url: string; // url no locale prefix
+  lang: LanguageKey;
 }
 
-const { lang, url } = Astro.props;
+const { lang } = Astro.props;
 
-const navItems = [
-  { name: "nav.profile", href: "" },
-  { name: "nav.blog", href: "blog" },
-  { name: "nav.links", href: "links" },
-  { name: "nav.milestone", href: "milestone" },
-];
+const navItems = {
+  en: [
+    { name: "profile", text: "Profile", href: "/" },
+    { name: "blog", text: "Blog", href: "/blog" },
+    { name: "links", text: "Links", href: "/links" },
+    { name: "milestone", text: "Milestone", href: "/milestone" },
+  ],
+  zh: [
+    { name: "profile", text: "个人主页", href: "/" },
+    { name: "blog", text: "博客文章", href: "/blog" },
+    { name: "links", text: "朋友们", href: "/links" },
+    { name: "milestone", text: "大事记", href: "/milestone" },
+  ],
+}[lang];
 
-const translations = {
-  en: {
-    "nav.profile": "Profile",
-    "nav.blog": "Blog",
-    "nav.links": "Links",
-    "nav.milestone": "Milestone",
-  },
-  zh: {
-    "nav.profile": "个人主页",
-    "nav.blog": "博客文章",
-    "nav.links": "朋友们",
-    "nav.milestone": "大事记",
-  },
-};
+const pathname = Astro.url.pathname;
+const activeItem = navItems.find((item) => {
+  const fullHref = buildLocaleUrl(lang, item.href);
+  // 特殊判断首页，不然会全部匹配上
+  if (item.href === "/") {
+    return pathname === fullHref || pathname === `${fullHref}/`;
+  }
+  return pathname.startsWith(fullHref);
+});
 
-assert(lang in translations);
-const t = translations[lang as keyof typeof translations];
+const activeNav = activeItem?.name || null;
 ---
 
 <!doctype html>
@@ -84,13 +87,18 @@ const t = translations[lang as keyof typeof translations];
     </script>
   </head>
   <body>
-    <Navbar
-      logoHref=""
-      lang={lang}
-      navItems={navItems}
-      translation={t}
-      url={url}
-    />
+    <Navbar logoHref="" lang={lang}>
+      {
+        navItems.map((item) => (
+          <NavLink
+            href={buildLocaleUrl(lang, item.href)}
+            isActive={activeNav === item.name}
+          >
+            {item.text}
+          </NavLink>
+        ))
+      }
+    </Navbar>
     <main>
       <slot />
     </main>

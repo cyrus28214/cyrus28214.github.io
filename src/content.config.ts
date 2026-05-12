@@ -6,23 +6,25 @@ import { basename, dirname, join } from "node:path";
 import { parse } from "smol-toml";
 
 const tomlSchema = z.object({
-  slug: z.string(),
-  common: z.record(z.string(), z.any()).default({}),
-  locales: z.record(z.string(), z.record(z.string(), z.any())),
+  id: z.string(),
+  base: z.record(z.string(), z.any()).default({}),
+  versions: z.record(z.string(), z.record(z.string(), z.any())),
 });
 
 const blogSchema = z.object({
-  slug: z.string(),
-  locales: z.map(
+  id: z.string(),
+  versions: z.record(
     z.string(),
     z.object({
       title: z.string(),
+      lang: z.string(),
       description: z.string(),
       created_at: z.coerce.date(),
       updated_at: z.coerce.date().optional().nullable(),
       draft: z.boolean().optional().default(false),
       cover: z.string().optional().nullable(),
       content: z.string(),
+      html: z.string(),
     }),
   ),
 });
@@ -30,34 +32,42 @@ const blogSchema = z.object({
 function blogLoader(basePath: string) {
   return {
     name: "blog-loader",
-    load: async ({ store }) => {
+    load: async ({ store, renderMarkdown }) => {
       store.clear();
       const metaPattern = join(basePath, "**/meta.toml");
       for await (const metaPath of glob(metaPattern)) {
         const metaContent = await readFile(metaPath, "utf-8");
         const metaRaw = parse(metaContent);
         const meta = tomlSchema.parse(metaRaw);
-        const slug = meta.slug;
-        const common = meta.common;
-        const locales = await Promise.all(
-          Object.entries(meta.locales).map(async ([lang, locale]) => {
+        const id = meta.id;
+        const base = meta.base;
+        const versions = Object.entries(meta.versions).map(
+          async ([lang, version]) => {
             const content = await readFile(
               join(dirname(metaPath), `index.${lang}.md`),
               "utf-8",
             );
-            return {
-              ...common,
-              ...locale,
-              content,
-            };
-          }),
-        );
-        store.set({
-          id: slug,
-          data: {
-            locales,
-            slug,
+            const rendered = await renderMarkdown(content);
+            return [
+              lang,
+              {
+                ...base,
+                ...version,
+                id,
+                lang,
+                content,
+                html: rendered.html,
+              },
+            ] as const;
           },
+        );
+        const data = blogSchema.parse({
+          id,
+          versions: Object.fromEntries(await Promise.all(versions)),
+        });
+        store.set({
+          id,
+          data,
         });
       }
     },

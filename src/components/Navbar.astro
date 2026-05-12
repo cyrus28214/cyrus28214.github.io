@@ -4,24 +4,14 @@ import LanguagePicker from "./LanguagePicker.astro";
 import { Image } from "astro:assets";
 import logoImage from "../assets/logo.png";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { LanguageKey } from "../i18n";
 
 interface Props {
-  lang: string;
+  lang: LanguageKey;
   logoHref: string; // url no locale prefix
-  navItems: {
-    name: string; // translation keys
-    href: string; // url no locale prefix
-  }[];
-  url: string; // url no locale prefix
-  translation: Record<string, string>; // key -> text
 }
 
-const { lang, logoHref, navItems, translation: t, url } = Astro.props;
-
-const languages = {
-  en: "English",
-  zh: "简体中文",
-};
+const { lang, logoHref } = Astro.props;
 ---
 
 <nav class="navbar">
@@ -40,26 +30,11 @@ const languages = {
       </div>
     </a>
   </div>
-  <ul class="nav-links">
-    {
-      navItems.map((item) => {
-        // FIXME: isActive
-        const isActive = item.href == url;
-        return (
-          <li>
-            <a
-              href={getRelativeLocaleUrl(lang, item.href)}
-              class={isActive ? "active" : ""}
-            >
-              {t[item.name]}
-            </a>
-          </li>
-        );
-      })
-    }
-    <li><LanguagePicker languages={languages} lang={lang} url={url} /></li>
-    <li><ThemeToggle /></li>
-  </ul>
+  <div class="nav-links">
+    <slot />
+    <LanguagePicker lang={lang} />
+    <ThemeToggle />
+  </div>
 </nav>
 
 <style>
@@ -112,28 +87,7 @@ const languages = {
   .nav-links {
     display: flex;
     align-items: center;
-    list-style: none;
     gap: 1.5rem;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--nav-text);
-    font-weight: 500;
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease;
-    padding: 0.5rem;
-    border-bottom: 2px solid transparent;
-  }
-
-  .nav-links a:hover,
-  .nav-links a.active {
-    color: var(--primary-color);
-  }
-
-  .nav-links a.active {
-    border-bottom: 2px solid var(--primary-color);
   }
 
   @media (max-width: 768px) {
@@ -145,9 +99,6 @@ const languages = {
     }
     .nav-links {
       gap: 1rem;
-    }
-    .nav-links a {
-      padding: 0.25rem;
     }
   }
 </style>

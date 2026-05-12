@@ -1,0 +1,17 @@
+id = "markdown-test" # required, will be directly used in url
+
+[base] # Can be overrided by [versions]
+created_at = "2026-05-12T13:34:35+08:00" # required
+# updated_at = "2026-05-12T13:34:35" # optional
+draft = true # optional, default false, if true, ignore in npm build, show in npm dev
+# cover = "" # optional
+# title = "" # must set if not all versions contains
+# description = "" # optional
+
+[versions.en] # This section can override [base] in English i18n
+title = "Markdown Syntax Test"
+description = "A post to test all Markdown syntax rendering."
+
+[versions.zh] # This section can override [base] in Chinese i18n
+title = "Markdown 语法测试"
+description = "测试博客内所有 Markdown 语法渲染效果。"

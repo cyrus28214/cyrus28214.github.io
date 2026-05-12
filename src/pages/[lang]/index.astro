@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from "astro";
+import { mustParseLocaleUrl, languages } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProfileView from "../../views/ProfileView.astro";
+const lang = mustParseLocaleUrl(Astro.url.pathname).lang;
+
+export const getStaticPaths = (() => {
+  return languages.map((lang) => ({ params: { lang } }));
+}) satisfies GetStaticPaths;
+---
+
+<BaseLayout lang={lang}>
+  <ProfileView lang={lang} />
+</BaseLayout>

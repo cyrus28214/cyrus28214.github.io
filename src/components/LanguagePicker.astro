@@ -2,18 +2,18 @@
 import { Languages } from "@lucide/astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Dropdown from "./Dropdown.astro";
-import { getRelativeLocaleUrlList } from "astro:i18n";
+import { buildLocaleUrl, changeUrlLocale, type LanguageKey } from "../i18n";
 
+const languages = {
+  en: "English",
+  zh: "简体中文",
+} as Record<LanguageKey, string>;
 interface Props {
-  lang: string;
-  languages: Record<
-    string, // lang
-    string // text
-  >;
-  url: string; // url no locale prefix
+  lang: LanguageKey;
 }
 
-const { languages, lang, url } = Astro.props;
+const { lang } = Astro.props;
+const url = Astro.url.pathname;
 ---
 
 <Dropdown id="lang">
@@ -28,7 +28,7 @@ const { languages, lang, url } = Astro.props;
         return (
           <li role="menuitem">
             <a
-              href={getRelativeLocaleUrl(langKey, url)}
+              href={changeUrlLocale(url, langKey as LanguageKey)}
               class={`lang-option ${isCurrent ? "active" : ""}`}
               aria-label={label}
             >

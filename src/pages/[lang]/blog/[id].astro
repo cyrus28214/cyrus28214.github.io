@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntry } from "astro:content";
+import { mustParseLanguage, languages } from "../../../i18n";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogPostView from "../../../views/BlogPostView.astro";
+
+export const getStaticPaths = (async () => {
+  const blogs = await getCollection("blog");
+  return languages.flatMap((lang) =>
+    blogs.map((blog) => ({
+      params: { lang, id: blog.id },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { lang: langParam, id } = Astro.params;
+const lang = mustParseLanguage(langParam!);
+const blog = await getEntry("blog", id!);
+if (!blog) {
+  throw new Error(`[Blog] Not found: ${id}`);
+}
+---
+
+<BaseLayout lang={lang}>
+  <BlogPostView blog={blog} lang={lang} />
+</BaseLayout>
