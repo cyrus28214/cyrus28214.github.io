@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { languages, type LanguageKey } from "../i18n";
+import PageLayout from "../layouts/PageLayout.astro";
 
 interface Props {
   blog: CollectionEntry<"blog">;
@@ -42,44 +43,39 @@ const t = {
 }[expectedLang];
 ---
 
-<article class="post-container">
-  {
-    isFallback && (
-      <p class="fallback-notice" lang={expectedLang}>
-        {t.fallbackNotice}
-      </p>
-    )
-  }
-  <header class="post-header" lang={actualLang}>
-    <h1>{version.title}</h1>
-    {version.description && <p class="description">{version.description}</p>}
-    <div class="meta">
-      <time datetime={version.created_at.toISOString()}>
-        {formatDate(version.created_at)}
-      </time>
-      {
-        version.updated_at && (
-          <span class="updated">
-            · {t.updated}{" "}
-            <time datetime={version.updated_at.toISOString()}>
-              {formatDate(version.updated_at)}
-            </time>
-          </span>
-        )
-      }
-    </div>
-  </header>
-  <div class="post-content" lang={actualLang} set:html={version.html} />
-</article>
+<PageLayout>
+  <article class="post">
+    {
+      isFallback && (
+        <p class="fallback-notice" lang={expectedLang}>
+          {t.fallbackNotice}
+        </p>
+      )
+    }
+    <header class="post-header" lang={actualLang}>
+      <h1>{version.title}</h1>
+      {version.description && <p class="description">{version.description}</p>}
+      <div class="meta">
+        <time datetime={version.created_at.toISOString()}>
+          {formatDate(version.created_at)}
+        </time>
+        {
+          version.updated_at && (
+            <span class="updated">
+              · {t.updated}{" "}
+              <time datetime={version.updated_at.toISOString()}>
+                {formatDate(version.updated_at)}
+              </time>
+            </span>
+          )
+        }
+      </div>
+    </header>
+    <div class="post-content" lang={actualLang} set:html={version.html} />
+  </article>
+</PageLayout>
 
 <style>
-  .post-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    color: var(--text-color);
-  }
-
   .fallback-notice {
     margin: 0 0 1.5rem;
     padding: 0.6rem 1rem;
@@ -209,17 +205,8 @@ const t = {
   }
 
   @media (max-width: 768px) {
-    .post-container {
-      padding: 1.5rem 1rem;
-    }
     .post-header h1 {
       font-size: 2rem;
-    }
-  }
-
-  @media (min-width: 1600px) {
-    .post-container {
-      max-width: 880px;
     }
   }
 </style>

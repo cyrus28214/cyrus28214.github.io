@@ -4,3 +4,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0 0 2rem;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+}

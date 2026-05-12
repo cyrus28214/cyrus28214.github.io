@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { mustParseLanguage, languages } from "../../../i18n";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogListView from "../../../views/BlogListView.astro";
+
+export const getStaticPaths = (() => {
+  return languages.map((lang) => ({ params: { lang } }));
+}) satisfies GetStaticPaths;
+
+const lang = mustParseLanguage(Astro.params.lang!);
+const isDev = import.meta.env.DEV;
+const blogs = await getCollection("blog", ({ data }) => {
+  if (isDev) return true;
+  // 生产环境过滤 draft：只要存在任意一个非 draft 版本就保留
+  return Object.values(data.versions).some((v) => !v.draft);
+});
+---
+
+<BaseLayout lang={lang}>
+  <BlogListView blogs={blogs} lang={lang} />
+</BaseLayout>

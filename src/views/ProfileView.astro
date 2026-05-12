@@ -1,48 +1,408 @@
 ---
-import assert from "node:assert/strict";
+import { mustParseLanguage, type LanguageKey } from "../i18n";
+import PageLayout from "../layouts/PageLayout.astro";
+
 interface Props {
-  lang: string;
+  lang: LanguageKey;
 }
 
-const translations = {
-  en: {
-    title: "Profile",
-    content: "Hello! Welcome to my profile page.",
-  },
-  zh: {
-    title: "个人主页",
-    content: "你好！欢迎来到我的个人主页。",
-  },
+const { lang } = Astro.props;
+mustParseLanguage(lang);
+
+type LocalizedString = Record<LanguageKey, string>;
+
+interface Entry {
+  title: LocalizedString;
+  date: string;
+  link?: string;
+  bullets?: LocalizedString[];
+}
+
+interface Section {
+  heading: LocalizedString;
+  intro?: LocalizedString;
+  entries?: Entry[];
+  bullets?: LocalizedString[];
+}
+
+const profile = {
+  name: { zh: "刘仁钦", en: "Renqin Liu" } as LocalizedString,
+  tagline: {
+    zh: "浙大本科生 / 系统与基础架构方向 / 喜欢造点小工具的工程师。",
+    en: "ZJU undergraduate, systems & infra enthusiast, who enjoys building tiny tools.",
+  } as LocalizedString,
+  contacts: [
+    { label: "+86 186-0595-2241", href: "tel:+8618605952241" },
+    { label: "cyrus28214@gmail.com", href: "mailto:cyrus28214@gmail.com" },
+    { label: "github.com/cyrus28214", href: "https://github.com/cyrus28214" },
+    { label: "codecyrus.com", href: "https://codecyrus.com" },
+  ],
 };
 
-const { lang } = Astro.props;
+const sections: Section[] = [
+  {
+    heading: { zh: "教育经历", en: "Education" },
+    entries: [
+      {
+        title: {
+          zh: "浙江大学 · 计算机科学与技术学院 · 本科在读",
+          en: "Zhejiang University · College of Computer Science · B.Eng.",
+        },
+        date: "2023.09 – Present",
+        link: "https://www.chsi.com.cn/xlcx/bg.do?vcode=ANQ4QATLE1QGQHWR&trnd=31189048800489766479323787347210&srcid=archive",
+        bullets: [
+          {
+            zh: "GPA 4.68 / 5.0，专业排名 12 / 152；操作系统、计算机视觉、自然语言处理导论、线性代数、计算机体系结构等核心课程获满绩。",
+            en: "GPA 4.68 / 5.0, ranked 12 / 152. Full marks in OS, CV, Intro to NLP, Linear Algebra and Computer Architecture.",
+          },
+          {
+            zh: "英语六级 611 分，可流畅阅读和讨论英文文献。",
+            en: "CET-6: 611. Comfortable reading and discussing English papers.",
+          },
+          {
+            zh: "浙江大学启真交叉创新创业实验室正式成员（2024.09 起）。",
+            en: "Member of ZJU Qizhen Interdisciplinary Innovation Lab (since 2024.09).",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: { zh: "科研经历", en: "Research" },
+    entries: [
+      {
+        title: {
+          zh: "ZJU IDG 实验室 · 邓达臻老师课题组",
+          en: "ZJU IDG Lab · Prof. Dazhen Deng's Group",
+        },
+        date: "2024.12 – 2025.06",
+        bullets: [
+          {
+            zh: "围绕基于 Multi-Agent 的社交媒体模拟与可视分析系统开展研究。",
+            en: "Worked on a Multi-Agent based social media simulation and visual analytics system.",
+          },
+          {
+            zh: "设计并实现多层网络下的社区聚类算法，将网络拓扑与文本语义特征融合嵌入。",
+            en: "Designed a community clustering algorithm on multi-layer networks, fusing topology with text semantics.",
+          },
+          {
+            zh: "参与 agent 行为建模与可视化模块的设计与实现。",
+            en: "Contributed to agent behavior modeling and visualization modules.",
+          },
+        ],
+      },
+      {
+        title: {
+          zh: "卡耐基梅隆大学（CMU）暑期交流 · 深度学习与计算机视觉",
+          en: "CMU Summer Program · Deep Learning & Computer Vision",
+        },
+        date: "2024.07 – 2024.08",
+        bullets: [
+          {
+            zh: "系统学习深度学习基础理论以及 CV / 3D 视觉的前沿方法。",
+            en: "Studied deep learning fundamentals and frontier methods in CV / 3D vision.",
+          },
+          {
+            zh: "实现并训练基于 ViT 的图像分类与图像标注模型，作为汇报人完成 final project，获 Shubham Tulsiani 教授好评。",
+            en: "Built and trained ViT-based classification & captioning models; presented the final project, well received by Prof. Shubham Tulsiani.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: { zh: "实习经历", en: "Internships" },
+    entries: [
+      {
+        title: {
+          zh: "字节跳动 · data-arch 基础架构团队 · 研发实习生",
+          en: "ByteDance · data-arch Infra Team · SDE Intern",
+        },
+        date: "2026.02 – Present",
+        bullets: [
+          {
+            zh: "主导 Archon PACE：一个集代码发版、集群部署、压测执行与性能优化于一体的 Agent 系统。",
+            en: "Leading Archon PACE — an agent system unifying release, deployment, stress testing and perf tuning.",
+          },
+          {
+            zh: "参与 Polaris：支持缓存感知与负载均衡的 LLM Router。",
+            en: "Contributing to Polaris — a cache-aware and load-balanced LLM router.",
+          },
+        ],
+      },
+      {
+        title: {
+          zh: "上海稳博投资管理有限公司 · 量化开发实习生",
+          en: "Shanghai Wenbo Investment · Quant Dev Intern",
+        },
+        date: "2025.06 – 2025.10",
+        bullets: [
+          {
+            zh: "参与低时延高频交易系统的开发与维护，关注端到端的延迟与稳定性。",
+            en: "Worked on a low-latency high-frequency trading system, focusing on end-to-end latency and stability.",
+          },
+          {
+            zh: "优化因子共享内存收发链路，降低跨进程通信延迟。",
+            en: "Optimized the factor shared-memory IPC link to reduce cross-process latency.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: { zh: "项目经历", en: "Projects" },
+    entries: [
+      {
+        title: {
+          zh: "MiniSQL 数据库 · 浙大 DBMS 课程作业",
+          en: "MiniSQL · ZJU DBMS Course Project",
+        },
+        date: "2025.03 – 2025.06",
+        bullets: [
+          {
+            zh: "用 LRU-K 实现缓存池管理器；基于 B+ 树搭建索引引擎，支持范围查询与并发安全访问。",
+            en: "Implemented an LRU-K buffer pool manager and a B+ Tree index engine with range queries and concurrent-safe access.",
+          },
+        ],
+      },
+      {
+        title: {
+          zh: "DiceHub · 桌游评分与规则速查社区 · 开发组组长",
+          en: "DiceHub · Board Game Rating & Rules Community · Tech Lead",
+        },
+        date: "2025.01 – 2025.02",
+        bullets: [
+          {
+            zh: "微信小程序前端 + Go 后端（zerolog / net/http / sqlx）+ PostgreSQL；负责整体架构设计、任务拆分与代码评审。",
+            en: "WeChat Mini Program frontend + Go backend (zerolog / net/http / sqlx) + PostgreSQL. Led architecture, task decomposition and reviews.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: { zh: "获得荣誉", en: "Honors" },
+    entries: [
+      {
+        title: {
+          zh: "浙江大学奖学金 · 二等奖",
+          en: "Zhejiang University Scholarship · Second Prize",
+        },
+        date: "2024.11",
+        link: "https://www.chsi.com.cn/xlcx/bg.do?vcode=ANQ4QATLE1QGQHWR&trnd=31189048800489766479323787347210&srcid=archive",
+      },
+      {
+        title: {
+          zh: "美国大学生数学建模竞赛（MCM/ICM）· Meritorious Winner",
+          en: "MCM / ICM · Meritorious Winner",
+        },
+        date: "2024.05",
+        link: "https://www.comap-math.org/mcm/2024Certs/2402503.pdf",
+      },
+      {
+        title: {
+          zh: "全国青少年信息学奥林匹克联赛（NOIP 2021）· 省级一等奖",
+          en: "NOIP 2021 · Provincial First Prize",
+        },
+        date: "2021.12",
+        link: "https://www.noi.cn/hjmd/mdgs/2021/2021-12-03/750910.shtml",
+      },
+    ],
+  },
+  {
+    heading: { zh: "技术能力", en: "Skills" },
+    bullets: [
+      {
+        zh: "系统编程：熟练 C / C++、Rust，掌握 CMake、GDB、Perf 等性能分析与调优工具。",
+        en: "Systems: proficient in C / C++ and Rust; comfortable with CMake, GDB and Perf for profiling.",
+      },
+      {
+        zh: "数据 / AI：熟悉 Python 生态，PyTorch、pandas、NumPy、Matplotlib。",
+        en: "Data / AI: Python ecosystem — PyTorch, pandas, NumPy, Matplotlib.",
+      },
+      {
+        zh: "工程实践：熟练使用 Shell 与 Git；了解 Docker / Podman 容器化部署及 CI/CD。",
+        en: "Engineering: Shell, Git, Docker / Podman containerization and CI/CD.",
+      },
+    ],
+  },
+  {
+    heading: { zh: "关于我", en: "About Me" },
+    bullets: [
+      {
+        zh: "性格乐观，学习能力较强，习惯把问题拆开后再一块块啃掉。",
+        en: "Optimistic and a fast learner; I like breaking problems down before tackling them piece by piece.",
+      },
+      {
+        zh: "有算法竞赛背景，乐于用算法的视角分析与解决工程问题。",
+        en: "Background in competitive programming; enjoy looking at engineering problems through an algorithmic lens.",
+      },
+      {
+        zh: "对技术有持续的兴趣，会在 codecyrus.com 写写博客记录折腾日常。",
+        en: "Genuinely curious about tech; write down what I learn on codecyrus.com.",
+      },
+    ],
+  },
+];
 
-assert(lang in translations);
-const t = translations[lang as keyof typeof translations];
+const t = (s: LocalizedString) => s[lang];
 ---
 
-<div class="profile-container">
-  <h1>{t.title}</h1>
-  <div class="profile-content">
-    <p>{t.content}</p>
-  </div>
-</div>
+<PageLayout>
+  <header class="profile-header">
+    <h1>{t(profile.name)}</h1>
+    <p class="tagline">{t(profile.tagline)}</p>
+    <ul class="contacts">
+      {
+        profile.contacts.map((c) => (
+          <li>
+            <a href={c.href} target="_blank" rel="noopener noreferrer">
+              {c.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </header>
+
+  {
+    sections.map((section) => (
+      <section class="section">
+        <h2>{t(section.heading)}</h2>
+        {section.entries?.map((entry) => (
+          <div class="entry">
+            <div class="entry-head">
+              <span class="entry-title">
+                {entry.link ? (
+                  <a
+                    href={entry.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t(entry.title)}
+                  </a>
+                ) : (
+                  t(entry.title)
+                )}
+              </span>
+              <span class="entry-date">{entry.date}</span>
+            </div>
+            {entry.bullets && (
+              <ul class="bullets">
+                {entry.bullets.map((b) => (
+                  <li>{t(b)}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+        {section.bullets && (
+          <ul class="bullets">
+            {section.bullets.map((b) => (
+              <li>{t(b)}</li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+</PageLayout>
 
 <style>
-  .profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+  .profile-header {
+    margin-bottom: 2rem;
   }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+  .profile-header h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .tagline {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+
+  .contacts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .contacts a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .contacts a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+  .section {
+    margin-top: 2.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
     color: var(--text-color);
   }
 
-  .profile-content {
-    line-height: 1.6;
+  .entry {
+    margin: 0 0 1.25rem;
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .entry-title {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .entry-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .entry-title a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+  .entry-date {
     color: var(--text-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .bullets {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .bullets li {
+    margin: 0.25rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .entry-head {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
   }
 </style>

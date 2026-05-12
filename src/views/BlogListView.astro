@@ -1,0 +1,251 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { languages, type LanguageKey, buildLocaleUrl } from "../i18n";
+import PageLayout from "../layouts/PageLayout.astro";
+
+interface Props {
+  blogs: CollectionEntry<"blog">[];
+  lang: LanguageKey;
+}
+
+const { blogs, lang: expectedLang } = Astro.props;
+
+const t = {
+  zh: {
+    title: "博客",
+    empty: "暂无文章",
+    fallbackTag: "暂无中文版本",
+    draftTag: "草稿",
+    readMore: "阅读全文",
+  },
+  en: {
+    title: "Blog",
+    empty: "No posts yet",
+    fallbackTag: "No English version",
+    draftTag: "Draft",
+    readMore: "Read more",
+  },
+}[expectedLang];
+
+const dateLocale = expectedLang === "zh" ? "zh-CN" : "en-US";
+const formatDate = (d: Date) =>
+  new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
+
+// 选择展示版本：优先 expectedLang，然后按 languages 顺序 fallback
+function pickVersion(blog: CollectionEntry<"blog">) {
+  const versions = blog.data.versions;
+  const candidates = Object.keys(versions) as LanguageKey[];
+  if (candidates.length === 0) return null;
+  let actualLang: LanguageKey;
+  if (candidates.includes(expectedLang)) {
+    actualLang = expectedLang;
+  } else {
+    const fb = languages.find((l) => candidates.includes(l));
+    if (!fb) return null;
+    actualLang = fb;
+  }
+  return { actualLang, version: versions[actualLang] };
+}
+
+type Item = {
+  id: string;
+  href: string;
+  actualLang: LanguageKey;
+  isFallback: boolean;
+  isDraft: boolean;
+  title: string;
+  description: string;
+  created_at: Date;
+  updated_at?: Date | null;
+  cover?: string | null;
+};
+
+const items: Item[] = blogs
+  .map((blog) => {
+    const picked = pickVersion(blog);
+    if (!picked) return null;
+    const { actualLang, version } = picked;
+    return {
+      id: blog.id,
+      href: buildLocaleUrl(expectedLang, `/blog/${blog.id}`),
+      actualLang,
+      isFallback: actualLang !== expectedLang,
+      isDraft: !!version.draft,
+      title: version.title,
+      description: version.description,
+      created_at: version.created_at,
+      updated_at: version.updated_at,
+      cover: version.cover,
+    } satisfies Item;
+  })
+  .filter((x): x is Item => x !== null)
+  .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+---
+
+<PageLayout>
+  <h1>{t.title}</h1>
+
+  {items.length === 0 && <p class="empty">{t.empty}</p>}
+
+  <ul class="post-list">
+    {
+      items.map((item) => (
+        <li class="post-item">
+          <a class="post-link" href={item.href}>
+            {item.cover && (
+              <img
+                class="post-cover"
+                src={item.cover}
+                alt=""
+                loading="lazy"
+              />
+            )}
+            <div class="post-body">
+              <div class="post-tags">
+                {item.isDraft && <span class="tag tag-draft">{t.draftTag}</span>}
+                {item.isFallback && (
+                  <span class="tag tag-fallback">{t.fallbackTag}</span>
+                )}
+              </div>
+              <h2 class="post-title" lang={item.actualLang}>
+                {item.title}
+              </h2>
+              {item.description && (
+                <p class="post-desc" lang={item.actualLang}>
+                  {item.description}
+                </p>
+              )}
+              <div class="post-meta">
+                <time datetime={item.created_at.toISOString()}>
+                  {formatDate(item.created_at)}
+                </time>
+              </div>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</PageLayout>
+
+<style>
+  .empty {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-item {
+    margin: 0;
+  }
+
+  .post-link {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .post-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary-color);
+  }
+
+  :global(.dark) .post-link:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .post-cover {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .post-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    background-color: var(--bg-muted, transparent);
+  }
+
+  .tag-draft {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  .post-title {
+    margin: 0 0 0.35rem;
+    font-size: 1.25rem;
+    color: var(--text-color);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .post-desc {
+    margin: 0 0 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: auto;
+  }
+
+  @media (max-width: 768px) {
+    .post-link {
+      flex-direction: column;
+    }
+    .post-cover {
+      width: 100%;
+      height: 160px;
+    }
+  }
+</style>

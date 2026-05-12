@@ -1,5 +1,6 @@
 ---
 import assert from "node:assert/strict";
+import PageLayout from "../layouts/PageLayout.astro";
 
 interface Props {
   lang: string;
@@ -90,7 +91,7 @@ assert(lang in translations);
 const t = translations[lang as keyof typeof translations];
 ---
 
-<div class="page-container">
+<PageLayout>
   <h1>{t.title}</h1>
   <div class="timeline">
     {
@@ -105,21 +106,9 @@ const t = translations[lang as keyof typeof translations];
       ))
     }
   </div>
-</div>
+</PageLayout>
 
 <style>
-  .page-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--text-color);
-  }
-
   .timeline {
     display: flex;
     flex-direction: column;
