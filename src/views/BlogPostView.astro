@@ -1,0 +1,10 @@
+---
+interface Props {
+  slug: string;
+  lang: string;
+}
+
+const { slug, lang } = Astro.props;
+---
+
+<p>{slug} - {lang}</p>

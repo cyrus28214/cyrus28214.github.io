@@ -1,5 +1,3 @@
-# Markdown Syntax Guide
-
 This is a comprehensive test of all Markdown syntax rendering in the blog.
 
 ## Typography

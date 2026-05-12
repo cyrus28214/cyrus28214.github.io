@@ -32,17 +32,26 @@ function blogLoader(basePath: string) {
     name: "blog-loader",
     load: async ({ store }) => {
       store.clear();
-      const metaPattern = join(basePath, "**/blog.toml");
+      const metaPattern = join(basePath, "**/meta.toml");
       for await (const metaPath of glob(metaPattern)) {
         const metaContent = await readFile(metaPath, "utf-8");
         const metaRaw = parse(metaContent);
         const meta = tomlSchema.parse(metaRaw);
         const slug = meta.slug;
         const common = meta.common;
-        const locales = Object.entries(meta.locales).map(([lang, locale]) => ({
-          ...common,
-          ...locale,
-        }));
+        const locales = await Promise.all(
+          Object.entries(meta.locales).map(async ([lang, locale]) => {
+            const content = await readFile(
+              join(dirname(metaPath), `index.${lang}.md`),
+              "utf-8",
+            );
+            return {
+              ...common,
+              ...locale,
+              content,
+            };
+          }),
+        );
         store.set({
           id: slug,
           data: {
