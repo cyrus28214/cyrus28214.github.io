@@ -1,0 +1,19 @@
+# required
+slug = "markdown-test" # required
+
+[base] # Can be overrided by [locales]
+created_at = "2026-05-12T13:34:35+0800" # required
+# updated_at = "2026-05-12T13:34:35+0800" # optional
+draft = true # optional, default false
+# cover = "" # optional
+# title = "" # must set if not all locales contains
+# description = "" # optional
+
+[locales.en] # This section can override [base] in English i18n
+title = "Markdown Syntax Test"
+description = "A post to test all Markdown syntax rendering."
+
+
+[locales.zh] # This section can override [base] in Chinese i18n
+title = "Markdown 语法测试"
+description = "测试博客内所有 Markdown 语法渲染效果。"

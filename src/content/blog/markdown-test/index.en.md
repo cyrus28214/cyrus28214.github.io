@@ -1,8 +1,3 @@
----
-title: "Markdown Syntax Test"
-description: "A post to test all Markdown syntax rendering."
----
-
 # Markdown Syntax Guide
 
 This is a comprehensive test of all Markdown syntax rendering in the blog.

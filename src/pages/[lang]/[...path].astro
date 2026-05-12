@@ -4,16 +4,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import MilestoneView from "../../views/MilestoneView.astro";
 import LinksView from "../../views/LinksView.astro";
 import ProfileView from "../../views/ProfileView.astro";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths = (() => {
-  return [
-    { params: { lang: "en", path: "milestone" } },
-    { params: { lang: "zh", path: "milestone" } },
-    { params: { lang: "en", path: "links" } },
-    { params: { lang: "zh", path: "links" } },
-    { params: { lang: "en", path: undefined } },
-    { params: { lang: "zh", path: undefined } },
-  ];
+export const getStaticPaths = (async () => {
+  const blogs = await getCollection("blog");
+  const blogPaths = blogs.map((blog) => `blogs/${blog.data.slug}`);
+  // undefined 代表 /en /zh 这样的根路径
+  const paths = [undefined, "milestone", "links", ...blogPaths];
+  console.log(paths);
+  const langs = ["en", "zh"];
+  return langs.flatMap((lang) =>
+    paths.map((path) => ({ params: { lang, path } })),
+  );
 }) satisfies GetStaticPaths;
 
 const { lang, path } = Astro.params;

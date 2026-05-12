@@ -1,52 +1,47 @@
----
-title: "Markdown 语法测试"
-description: "测试博客内所有 Markdown 语法渲染效果。"
----
+# Markdown 语法指南
 
-# Markdown Syntax Guide
+这是博客中所有 Markdown 语法渲染效果的全面测试。
 
-This is a comprehensive test of all Markdown syntax rendering in the blog.
+## 排版
 
-## Typography
+你可以使用 **粗体文本**、_斜体文本_ 或 **_粗斜体文本_**。你也可以使用 ~~删除线~~。
 
-You can use **bold text**, _italic text_, or **_bold italic text_**. You can also use ~~strikethrough~~.
+## 引用块
 
-## Blockquotes
-
-> This is a blockquote.
-> It can span multiple lines.
+> 这是一个引用块。
+> 它可以跨越多行。
 >
-> > And even have nested blockquotes.
+> > 甚至可以嵌套引用块。
 
-## Lists
+## 列表
 
-### Unordered List
+### 无序列表
 
-- Item 1
-- Item 2
-  - Subitem 2.1
-  - Subitem 2.2
-- Item 3
+- 项目 1
+- 项目 2
+  - 子项目 2.1
+  - 子项目 2.2
+- 项目 3
 
-### Ordered List
+### 有序列表
 
-1. First item
-2. Second item
-3. Third item
-   1. Subitem 3.1
+1. 第一项
+2. 第二项
+3. 第三项
+   1. 子项目 3.1
 
-## Links and Images
+## 链接和图片
 
-[CodeCyrus Blog](https://blog.codecyrus.com)
+[CodeCyrus](https://codecyrus.com)
 
-![CodeCyrus Avatar](/images/avatar.png)
+![头像](/images/avatar.png)
 
-## Code
+## 代码
 
-Inline `code` has `back-ticks` around it.
+内联 `代码` 使用 `反引号` 包围。
 
 ```javascript
-// This is a code block
+// 这是一个代码块
 function greet(name) {
   console.log(`Hello, ${name}!`);
 }
@@ -60,19 +55,19 @@ greet("World");
   description: Think twice, code once.
 ```
 
-## Tables
+## 表格
 
-| Syntax    | Description |
-| --------- | ----------- |
-| Header    | Title       |
-| Paragraph | Text        |
+| 语法      | 描述     |
+| --------- | -------- |
+| 标题      | 标题     |
+| 段落      | 文本     |
 
-## Horizontal Rules
+## 水平分割线
 
 ---
 
-## Task Lists
+## 任务列表
 
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
+- [x] 撰写新闻稿
+- [ ] 更新网站
+- [ ] 联系媒体
