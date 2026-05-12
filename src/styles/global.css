@@ -16,17 +16,17 @@ h2 {
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   margin: 1rem 0 0.5rem;
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin: 0.875rem 0 0.4375rem;
 }
 
 h5 {
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin: 0.75rem 0 0.375rem;
 }
 
@@ -51,7 +51,7 @@ a:hover {
 
 ul, ol {
   padding-left: 1.5rem;
-  margin: 1rem 0;
+  line-height: 200%;
 }
 
 li {

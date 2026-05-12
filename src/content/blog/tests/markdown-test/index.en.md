@@ -69,3 +69,11 @@ greet("World");
 - [x] Write the press release
 - [ ] Update the website
 - [ ] Contact the media
+
+## Formula
+
+Mass-energy equivalence (Einstein’s formula) is $E = mc^2$.
+
+$$
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$$

@@ -1,11 +1,11 @@
-id = "cmu-mmml"
+id = "multimodal"
 
 [base] # Can be overrided by [versions]
 created_at = "2026-05-13T00:34:22+0800"
 updated_at = "2026-05-13T00:34:34+0800"
 draft = false
 # cover = "" # optional
-title = "CMU 11-777: MultiModal Machine Learning"
+title = "Multimodal Machine Learning"
 # description = "" # optional
 
-[versions.zh]
+[versions.en]
