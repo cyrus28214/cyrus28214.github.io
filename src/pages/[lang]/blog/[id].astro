@@ -1,6 +1,5 @@
 ---
-import type { GetStaticPaths } from "astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, render, getEntry } from "astro:content";
 import {
   mustParseLanguage,
   languages,
@@ -9,45 +8,55 @@ import {
 } from "../../../lib/i18n";
 import PageLayout from "../../../layouts/PageLayout.astro";
 
-export const getStaticPaths = (async () => {
-  const isDev = import.meta.env.DEV;
-  const blogs = await getCollection("blog", ({ data }) => {
-    if (isDev) return true;
-    return Object.values(data.versions).some((v) => !v.draft);
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog", ({ data }) => {
+    return import.meta.env.DEV || !data.draft;
   });
-  return languages.flatMap((lang) =>
-    blogs.map((blog) => ({
-      params: { lang, id: blog.id },
-    })),
-  );
-}) satisfies GetStaticPaths;
 
-const { lang: langParam, id } = Astro.params;
-const lang = mustParseLanguage(langParam!);
-const blog = await getEntry("blog", id!);
+  return blogEntries.map((entry) => {
+    return {
+      params: {
+        lang: entry.data.lang,
+        id: entry.data.id, // 业务 ID
+      },
+      props: { entry },
+    };
+  });
+}
+
+const { lang: langParam, id: idParam } = Astro.params;
+const lang = mustParseLanguage(langParam);
+
+// 1. 尝试获取当前语言的条目
+// 注意：在你的 loader 中，id 被存储为 `${lang}/${data.id}`
+let blog = await getEntry("blog", `${lang}/${idParam}`);
+let isFallback = false;
+
+// 2. 如果当前语言版本不存在，执行 Fallback 逻辑
 if (!blog) {
-  throw new Error(`[Blog] Not found: ${id}`);
-}
+  const allEntries = await getCollection("blog");
+  // 寻找业务 ID 相同但语言不同的条目
+  const availableVersions = allEntries.filter((e) => e.data.id === idParam);
 
-// 计算实际渲染的语言版本（fallback）
-const versions = blog.data.versions;
-const candidates = Object.keys(versions) as LanguageKey[];
-let actualLang: LanguageKey;
-if (candidates.includes(lang)) {
-  actualLang = lang;
-} else {
-  const fb = languages.find((l) => candidates.includes(l));
-  if (!fb) {
-    throw new Error(`No available version for blog "${blog.id}"`);
+  if (availableVersions.length === 0) {
+    throw new Error(`[Blog] Not found: ${idParam}`);
   }
-  actualLang = fb;
+
+  // 按照 i18n 配置的语言顺序寻找第一个可用的 fallback
+  const fallbackLang = languages.find((l) =>
+    availableVersions.some((v) => v.data.lang === l),
+  );
+  blog = availableVersions.find((v) => v.data.lang === fallbackLang)!;
+  isFallback = true;
 }
 
-const version = versions[actualLang];
-const isFallback = actualLang !== lang;
+// 3. 获取所有可用的语言版本用于切换（排除当前正在显示的实际语言）
+const allRelated = await getCollection("blog", (e) => e.data.id === idParam);
+const otherVersions = allRelated.filter((e) => e.data.lang !== blog.data.lang);
 
-// 其他语言版本，用于切换
-const otherVersions = candidates.filter((l) => l !== actualLang);
+// 4. 渲染 Markdown 内容
+const { Content } = await render(blog);
+const { data } = blog;
 
 const dateLocale = lang === "zh" ? "zh-CN" : "en-US";
 const formatDate = (d: Date) =>
@@ -57,18 +66,18 @@ const t = {
   zh: {
     back: "← 返回博客列表",
     updated: "更新于",
-    fallbackNotice: "本文暂无中文版本",
+    fallbackNotice: "本文暂无中文版本，正在显示其他语言版本。",
     otherLangs: "其他语言版本：",
   },
   en: {
     back: "← Back to blog",
     updated: "Updated",
-    fallbackNotice: "No English version available",
+    fallbackNotice: "No English version available, showing other language.",
     otherLangs: "Other languages:",
   },
 }[lang];
 
-const langLabel: Record<LanguageKey, string> = {
+const langLabel: Record<string, string> = {
   zh: "中文",
   en: "English",
 };
@@ -80,53 +89,65 @@ const langLabel: Record<LanguageKey, string> = {
   </nav>
 
   <article class="post">
+    {isFallback && <p class="fallback-notice">{t.fallbackNotice}</p>}
+
     {
-      isFallback && (
-        <p class="fallback-notice" lang={lang}>
-          {t.fallbackNotice}
-        </p>
-      )
-    }
-    {
-      version.cover && (
+      data.cover && (
         <div class="cover">
-          <img src={version.cover} alt="" />
+          {/* 如果你的 schema 使用了 image()，这里建议直接传 data.cover */}
+          <img
+            src={typeof data.cover === "string" ? data.cover : data.cover.src}
+            alt=""
+          />
         </div>
       )
     }
-    <header class="post-header" lang={actualLang}>
-      <h1>{version.title}</h1>
-      {version.description && <p class="description">{version.description}</p>}
+
+    <header class="post-header">
+      <h1 lang={data.lang}>{data.title}</h1>
+      {
+        data.description && (
+          <p class="description" lang={data.lang}>
+            {data.description}
+          </p>
+        )
+      }
       <div class="meta">
-        <time datetime={version.created_at.toISOString()}>
-          {formatDate(version.created_at)}
+        <time datetime={data.created_at.toISOString()}>
+          {formatDate(data.created_at)}
         </time>
         {
-          version.updated_at && (
+          data.updated_at && (
             <span class="updated">
               · {t.updated}{" "}
-              <time datetime={version.updated_at.toISOString()}>
-                {formatDate(version.updated_at)}
+              <time datetime={data.updated_at.toISOString()}>
+                {formatDate(data.updated_at)}
               </time>
             </span>
           )
         }
       </div>
     </header>
-    <div class="post-body" lang={actualLang} set:html={version.html} />
+
+    <div class="post-body" lang={data.lang}>
+      <Content />
+    </div>
   </article>
 
   {
     otherVersions.length > 0 && (
       <footer class="post-footer">
         <span class="other-langs-label">{t.otherLangs}</span>
-        {otherVersions.map((l) => (
+        {otherVersions.map((v) => (
           <a
             class="other-lang"
-            href={buildLocaleUrl(l, `/blog/${blog.id}`)}
-            lang={l}
+            href={buildLocaleUrl(
+              v.data.lang as LanguageKey,
+              `/blog/${idParam}`,
+            )}
+            lang={v.data.lang}
           >
-            {langLabel[l]}
+            {langLabel[v.data.lang] || v.data.lang}
           </a>
         ))}
       </footer>
@@ -173,7 +194,6 @@ const langLabel: Record<LanguageKey, string> = {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 0;
   }
 
   .post-header {
@@ -196,6 +216,12 @@ const langLabel: Record<LanguageKey, string> = {
 
   .updated {
     margin-left: 0.25rem;
+  }
+
+  /* 针对文章内容的样式微调 */
+  .post-body {
+    line-height: 1.7;
+    font-size: 1.05rem;
   }
 
   .post-footer {
@@ -221,10 +247,11 @@ const langLabel: Record<LanguageKey, string> = {
     color: var(--text-color);
     text-decoration: none;
     font-size: 0.85rem;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
   }
 
   .other-lang:hover {
     border-color: var(--primary-color);
+    color: var(--primary-color);
   }
 </style>

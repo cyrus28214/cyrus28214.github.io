@@ -1,9 +1,0 @@
-id = "zh-only" # required, will be directly used in url
-
-[base]
-created_at = "2026-05-12T10:00:00+08:00"
-draft = true
-
-[versions.zh]
-title = "仅中文版本"
-description = "用于测试英文环境下 fallback 到中文版本的展示效果。"

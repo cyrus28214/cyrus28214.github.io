@@ -1,9 +1,0 @@
-id = "en-only" # required, will be directly used in url
-
-[base]
-created_at = "2026-05-12T11:00:00+08:00"
-draft = true
-
-[versions.en]
-title = "English Only Post"
-description = "Used to test the fallback behavior when visiting in Chinese."

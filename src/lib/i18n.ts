@@ -3,7 +3,7 @@ import { join } from "node:path";
 export const languages = ["zh", "en"] as const;
 export type LanguageKey = (typeof languages)[number];
 
-function isLanguage(lang: any): lang is LanguageKey {
+export function isLanguage(lang: any): lang is LanguageKey {
   return languages.includes(lang);
 }
 

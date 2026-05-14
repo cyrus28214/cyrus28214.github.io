@@ -2,6 +2,7 @@
 import type { LanguageKey } from "../lib/i18n";
 import { buildLocaleUrl } from "../lib/i18n";
 import Card from "./Card.astro";
+import { Image } from "astro:assets";
 
 interface Props {
   id: string;
@@ -9,9 +10,9 @@ interface Props {
   description?: string;
   created_at: Date;
   updated_at?: Date | null;
-  cover?: string | null;
-  lang: LanguageKey; // 当前页面语言（用于构造 url 和格式化日期）
-  actualLang: LanguageKey; // 实际渲染的文章语言
+  cover?: any; // 这里的 any 对应 astro:content 的 image() 返回类型
+  lang: LanguageKey; // 页面当前语言
+  actualLang: LanguageKey; // 内容实际语言
   isFallback?: boolean;
   isDraft?: boolean;
 }
@@ -52,7 +53,11 @@ const t = {
     {
       cover && (
         <div class="cover">
-          <img src={cover} alt="" loading="lazy" />
+          {typeof cover === "object" ? (
+            <Image src={cover} alt={title} width={800} height={450} />
+          ) : (
+            <img src={cover} alt="" loading="lazy" />
+          )}
         </div>
       )
     }
@@ -79,10 +84,10 @@ const t = {
             </span>
           )
         }
-        <span class="badges">
+        <div class="badges">
           {isDraft && <span class="badge">{t.draft}</span>}
           {isFallback && <span class="badge">{t.fallback}</span>}
-        </span>
+        </div>
       </div>
     </div>
   </div>

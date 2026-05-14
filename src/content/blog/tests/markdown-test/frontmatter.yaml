@@ -1,0 +1,9 @@
+# this file is optional, and will be inherited by index.*.md if exists
+
+id: "markdown-test" # required if not set in .md file, will be used in url
+created_at: "2026-05-12T13:34:35+08:00" # required if not set in .md file
+updated_at: "2026-05-12T13:34:35+08:00" # optional
+draft: true # optional, default false, if true, ignore in npm build, show in npm dev
+cover: null # optional
+title: null # required if not set in .md file
+description: null # optional
