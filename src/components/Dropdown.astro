@@ -61,7 +61,56 @@ const { id } = Astro.props;
   }
 
   .dropdown-menu.show {
-    display: block;
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  .dropdown-menu > :global(li) {
+    margin: 0;
+    list-style: none;
+  }
+
+  .dropdown-menu :global(.dropdown-item) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 2.25rem;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-color);
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .dropdown-menu :global(.dropdown-item:hover),
+  .dropdown-menu :global(.dropdown-item:focus-visible) {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+    outline: none;
+  }
+
+  .dropdown-menu :global(.dropdown-item.active),
+  .dropdown-menu :global(.dropdown-item[aria-current="true"]) {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+  }
+
+  .dropdown-menu :global(.dropdown-item-icon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   :global(.dark) .dropdown-menu {

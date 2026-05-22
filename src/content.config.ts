@@ -4,13 +4,14 @@ import type { Loader } from "astro/loaders";
 import { glob, readFile } from "node:fs/promises";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { load } from "js-yaml";
-import { isLanguage } from "./lib/i18n";
+import { isLanguage, languageKeySchema } from "./lib/i18n";
 import { pathToFileURL } from "node:url";
 
 const blogSchema = ({ image }: { image: any }) =>
   z.object({
-    id: z.string(), // articleId
-    lang: z.string(), // unique <id, lang>
+    slug: z.string(),
+    lang: languageKeySchema,
+    localeGroupId: z.string(),
     title: z.string(),
     description: z.string().optional(),
     created_at: z.coerce.date(),
@@ -22,7 +23,14 @@ const blogSchema = ({ image }: { image: any }) =>
 function blogLoader(basePath: string): Loader {
   return {
     name: "blog-loader",
-    load: async ({ store, renderMarkdown, parseData, logger, generateDigest, watcher }) => {
+    load: async ({
+      store,
+      renderMarkdown,
+      parseData,
+      logger,
+      generateDigest,
+      watcher,
+    }) => {
       const sync = async (relPath: string /* relative to basePath */) => {
         const filePath = join(basePath, relPath);
         logger.info(`Sync ${filePath}`);
@@ -35,7 +43,7 @@ function blogLoader(basePath: string): Loader {
         }
         const content = await readFile(filePath, "utf-8");
         const fileURL = pathToFileURL(filePath);
-        const rendered = await renderMarkdown(content, { fileURL});
+        const rendered = await renderMarkdown(content, { fileURL });
         const dirPath = dirname(filePath);
         const metaPath = join(dirPath, "frontmatter.yaml");
         let metaRaw = null;
@@ -51,24 +59,27 @@ function blogLoader(basePath: string): Loader {
         }
         const meta = metaRaw ? (load(metaRaw) as Record<string, any>) : null;
         const inlineMeta = rendered.metadata?.frontmatter;
-        const data = { ...meta, ...inlineMeta, lang } as Record<string, any>;
-        let articleId = data.id;
-        if (typeof articleId !== "string") {
-          logger.warn(`${filePath} has no "id" field, skipped`);
+        const data = {
+          ...meta,
+          ...inlineMeta,
+          lang,
+          localeGroupId: dirname(relPath),
+        } as Record<string, any>;
+        if (!data.slug) {
+          logger.warn(`${filePath} has no slug, skipped.`);
           return;
         }
-        const contentId = `${lang}/${articleId}`; // unique
         store.set({
-          id: contentId,
+          id: relPath,
           data: await parseData({
-            id: contentId,
+            id: relPath,
             data,
           }),
           rendered,
           filePath,
           body: content,
           digest: generateDigest(content),
-          assetImports: rendered.metadata?.imagePaths
+          assetImports: rendered.metadata?.imagePaths,
         });
       };
 
@@ -83,18 +94,22 @@ function blogLoader(basePath: string): Loader {
       }
       await Promise.all(promises);
       if (!watcher) {
-        return
+        return;
       }
 
       const onChange = async (changedPath: string) => {
         const resolvedBasePath = resolve(basePath);
         const relPath = relative(resolvedBasePath, changedPath);
+        const fileName = basename(relPath);
+        if (!fileName.match(/index\.([a-z]{2})\.md$/i)) {
+          return;
+        }
         // console.log({ relPath, changedPath, resolve(basePath) });
         await sync(relPath);
-      }
+      };
 
-      watcher.on('change', onChange);
-      watcher.on('add', onChange);
+      watcher.on("change", onChange);
+      watcher.on("add", onChange);
     },
   };
 }

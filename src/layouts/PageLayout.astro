@@ -4,12 +4,16 @@ import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   lang: LanguageKey;
+  localeLinks: {
+    lang: LanguageKey;
+    href: string;
+  }[];
 }
 
-const { lang } = Astro.props;
+const { lang, localeLinks } = Astro.props;
 ---
 
-<BaseLayout lang={lang}>
+<BaseLayout lang={lang} localeLinks={localeLinks}>
   <div class="page-container">
     <slot />
   </div>

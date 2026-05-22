@@ -1,13 +1,22 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { mustParseLocaleUrl, languages } from "../../lib/i18n";
+import { languages, buildLocaleUrl } from "../../lib/i18n";
 import PageLayout from "../../layouts/PageLayout.astro";
 import Card from "../../components/Card.astro";
-const lang = mustParseLocaleUrl(Astro.url.pathname).lang;
 
 export const getStaticPaths = (() => {
-  return languages.map((lang) => ({ params: { lang } }));
+  const localeLinks = languages.map((lang) => ({
+    lang,
+    href: buildLocaleUrl(lang, "/links"),
+  }));
+  return languages.map((lang) => ({
+    params: { lang },
+    props: { localeLinks },
+  }));
 }) satisfies GetStaticPaths;
+
+const { lang } = Astro.params;
+const { localeLinks } = Astro.props;
 
 const links = [
   {
@@ -120,7 +129,7 @@ const t = {
 }[lang];
 ---
 
-<PageLayout lang={lang}>
+<PageLayout lang={lang} localeLinks={localeLinks}>
   <h1>{t.title}</h1>
   <div class="links-grid">
     {

@@ -11,18 +11,27 @@ import Dropdown from "./Dropdown.astro";
 
   <Fragment slot="menu">
     <li role="menuitem">
-      <button class="theme-option" data-theme="light">
-        <Sun size={16} stroke-width={2} /> Light
+      <button type="button" class="dropdown-item theme-option" data-theme="light">
+        <span class="dropdown-item-icon">
+          <Sun size={16} stroke-width={2} />
+        </span>
+        Light
       </button>
     </li>
     <li role="menuitem">
-      <button class="theme-option" data-theme="dark">
-        <Moon size={16} stroke-width={2} /> Dark
+      <button type="button" class="dropdown-item theme-option" data-theme="dark">
+        <span class="dropdown-item-icon">
+          <Moon size={16} stroke-width={2} />
+        </span>
+        Dark
       </button>
     </li>
     <li role="menuitem">
-      <button class="theme-option" data-theme="system">
-        <Monitor size={16} stroke-width={2} /> System
+      <button type="button" class="dropdown-item theme-option" data-theme="system">
+        <span class="dropdown-item-icon">
+          <Monitor size={16} stroke-width={2} />
+        </span>
+        System
       </button>
     </li>
   </Fragment>
@@ -45,33 +54,6 @@ import Dropdown from "./Dropdown.astro";
 
   :global(.dark) .icon-sun {
     display: none;
-  }
-
-  .theme-option {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 0.9rem;
-    font-family: inherit;
-    border-radius: 4px;
-    text-align: left;
-    transition: background-color 0.2s;
-  }
-
-  .theme-option:hover {
-    background-color: var(--border-color);
-    color: var(--primary-color);
-  }
-
-  .theme-option.active {
-    color: var(--primary-color);
-    background-color: var(--border-color);
   }
 </style>
 

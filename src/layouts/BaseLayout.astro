@@ -1,44 +1,40 @@
 ---
 import Navbar from "../components/Navbar.astro";
 import NavLink from "../components/NavLink.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import "../styles/global.css";
 import "../styles/variables.css";
-import assert from "node:assert/strict";
 import { buildLocaleUrl, type LanguageKey } from "../lib/i18n";
 
 interface Props {
   lang: LanguageKey;
+  localeLinks: {
+    lang: LanguageKey;
+    href: string;
+  }[];
 }
 
-const { lang } = Astro.props;
+const { lang, localeLinks } = Astro.props;
 
-const navItems = {
-  en: [
-    { name: "profile", text: "Profile", href: "/" },
-    { name: "blog", text: "Blog", href: "/blog" },
-    { name: "links", text: "Links", href: "/links" },
-    { name: "milestone", text: "Milestone", href: "/milestone" },
-  ],
-  zh: [
-    { name: "profile", text: "个人主页", href: "/" },
-    { name: "blog", text: "博客", href: "/blog" },
-    { name: "links", text: "朋友们", href: "/links" },
-    { name: "milestone", text: "大事记", href: "/milestone" },
-  ],
+const t = {
+  en: {
+    logoHref: "/en",
+    navItems: [
+      { name: "profile", text: "Profile", href: "/en" },
+      { name: "blog", text: "Blog", href: "/en/blog" },
+      { name: "links", text: "Links", href: "/en/links" },
+      { name: "milestone", text: "Milestone", href: "/en/milestone" },
+    ],
+  },
+  zh: {
+    logoHref: "/zh",
+    navItems: [
+      { name: "profile", text: "个人主页", href: "/zh" },
+      { name: "blog", text: "博客", href: "/zh/blog" },
+      { name: "links", text: "朋友们", href: "/zh/links" },
+      { name: "milestone", text: "大事记", href: "/zh/milestone" },
+    ],
+  },
 }[lang];
-
-const pathname = Astro.url.pathname;
-const activeItem = navItems.find((item) => {
-  const fullHref = buildLocaleUrl(lang, item.href);
-  // 特殊判断首页，不然会全部匹配上
-  if (item.href === "/") {
-    return pathname === fullHref || pathname === `${fullHref}/`;
-  }
-  return pathname.startsWith(fullHref);
-});
-
-const activeNav = activeItem?.name || null;
 ---
 
 <!doctype html>
@@ -99,13 +95,10 @@ const activeNav = activeItem?.name || null;
     </script>
   </head>
   <body>
-    <Navbar logoHref={buildLocaleUrl(lang, "/")} lang={lang}>
+    <Navbar logoHref={t.logoHref} lang={lang} localeLinks={localeLinks}>
       {
-        navItems.map((item) => (
-          <NavLink
-            href={buildLocaleUrl(lang, item.href)}
-            isActive={activeNav === item.name}
-          >
+        t.navItems.map((item) => (
+          <NavLink href={item.href} isActive={Astro.url.pathname == item.href}>
             {item.text}
           </NavLink>
         ))

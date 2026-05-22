@@ -1,88 +1,31 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import {
-  mustParseLanguage,
-  languages,
-  type LanguageKey,
-} from "../../../lib/i18n";
+import { languages, buildLocaleUrl } from "../../../lib/i18n";
 import PageLayout from "../../../layouts/PageLayout.astro";
 import BlogCard from "../../../components/BlogCard.astro";
 
 export const getStaticPaths = (() => {
-  return languages.map((lang) => ({ params: { lang } }));
+  const localeLinks = languages.map((lang) => ({
+    lang,
+    href: buildLocaleUrl(lang, "/blog"),
+  }));
+  return languages.map((lang) => ({
+    params: { lang },
+    props: { localeLinks },
+  }));
 }) satisfies GetStaticPaths;
 
-const lang = mustParseLanguage(Astro.params.lang!);
-const isDev = import.meta.env.DEV;
+const { lang } = Astro.params;
+const { localeLinks } = Astro.props;
 
-// 1. 获取所有博客条目
-// 现在的 loader 会将每个 index.xx.md 作为一个独立的 collection entry
-const allBlogEntries = await getCollection("blog", ({ data }) => {
-  if (isDev) return true;
-  return !data.draft;
-});
-
-// 2. 按业务 ID (data.id) 分组，以便处理多语言回退
-const groupedBlogs = allBlogEntries.reduce(
-  (acc, entry) => {
-    const bizId = entry.data.id;
-    if (!acc[bizId]) {
-      acc[bizId] = [];
-    }
-    acc[bizId].push(entry);
-    return acc;
-  },
-  {} as Record<string, typeof allBlogEntries>,
-);
-
-// 3. 处理回退逻辑并构建显示列表
-type Item = {
-  id: string;
-  title: string;
-  description?: string;
-  created_at: Date;
-  updated_at?: Date | null;
-  cover?: any;
-  actualLang: LanguageKey;
-  isFallback: boolean;
-  isDraft: boolean;
-};
-
-const items: Item[] = Object.entries(groupedBlogs)
-  .map(([bizId, versions]): Item | null => {
-    // 优先找当前语言版本
-    let selected = versions.find((v) => v.data.lang === lang);
-    let isFallback = false;
-
-    // 如果没找到，按语言列表顺序找第一个可用的作为 fallback
-    if (!selected) {
-      for (const l of languages) {
-        selected = versions.find((v) => v.data.lang === l);
-        if (selected) {
-          isFallback = true;
-          break;
-        }
-      }
-    }
-
-    if (!selected) return null;
-
-    const { data } = selected;
-    return {
-      id: bizId, // 使用业务 ID
-      title: data.title,
-      description: data.description,
-      created_at: data.created_at,
-      updated_at: data.updated_at,
-      cover: data.cover,
-      actualLang: data.lang as LanguageKey,
-      isFallback,
-      isDraft: data.draft,
-    };
+const items = (
+  await getCollection("blog", ({ data }) => {
+    return import.meta.env.DEV || !data.draft;
   })
-  .filter((x): x is Item => x !== null)
-  .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+)
+  .filter((entry) => entry.data.lang == lang)
+  .sort((a, b) => b.data.created_at.getTime() - a.data.created_at.getTime());
 
 const t = {
   zh: {
@@ -96,7 +39,7 @@ const t = {
 }[lang];
 ---
 
-<PageLayout lang={lang}>
+<PageLayout lang={lang} localeLinks={localeLinks}>
   <h1>{t.title}</h1>
   {
     items.length === 0 ? (
@@ -104,18 +47,7 @@ const t = {
     ) : (
       <div class="blog-grid">
         {items.map((item) => (
-          <BlogCard
-            id={item.id}
-            title={item.title}
-            description={item.description}
-            created_at={item.created_at}
-            updated_at={item.updated_at}
-            cover={item.cover}
-            lang={lang}
-            actualLang={item.actualLang}
-            isFallback={item.isFallback}
-            isDraft={item.isDraft}
-          />
+          <BlogCard entry={item} />
         ))}
       </div>
     )

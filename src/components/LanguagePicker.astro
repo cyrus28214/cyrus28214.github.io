@@ -1,18 +1,21 @@
 ---
 import { Languages } from "@lucide/astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import Dropdown from "./Dropdown.astro";
-import { buildLocaleUrl, changeUrlLocale, type LanguageKey } from "../lib/i18n";
+import { langLabel, type LanguageKey } from "../lib/i18n";
 
 const languages = {
   en: "English",
   zh: "简体中文",
 } as Record<LanguageKey, string>;
 interface Props {
+  localeLinks: {
+    lang: LanguageKey;
+    href: string;
+  }[];
   lang: LanguageKey;
 }
 
-const { lang } = Astro.props;
+const { lang, localeLinks } = Astro.props;
 const url = Astro.url.pathname;
 ---
 
@@ -23,16 +26,17 @@ const url = Astro.url.pathname;
 
   <Fragment slot="menu">
     {
-      Object.entries(languages).map(([langKey, label]) => {
-        const isCurrent = langKey == lang;
+      localeLinks.map((l) => {
+        const isCurrent = l.lang == lang;
         return (
           <li role="menuitem">
             <a
-              href={changeUrlLocale(url, langKey as LanguageKey)}
-              class={`lang-option ${isCurrent ? "active" : ""}`}
-              aria-label={label}
+              href={l.href}
+              class={`dropdown-item ${isCurrent ? "active" : ""}`}
+              aria-label={langLabel[l.lang]}
+              aria-current={isCurrent ? "true" : undefined}
             >
-              {label}
+              {langLabel[l.lang]}
             </a>
           </li>
         );
@@ -40,27 +44,3 @@ const url = Astro.url.pathname;
     }
   </Fragment>
 </Dropdown>
-
-<style>
-  .lang-option {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: var(--text-color);
-    font-size: 0.9rem;
-    border-radius: 4px;
-    text-align: left;
-    transition: background-color 0.2s;
-  }
-
-  .lang-option:hover {
-    background-color: var(--border-color);
-    color: var(--primary-color);
-  }
-
-  .lang-option.active {
-    color: var(--primary-color);
-    background-color: var(--border-color);
-  }
-</style>

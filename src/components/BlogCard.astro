@@ -1,39 +1,16 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import type { LanguageKey } from "../lib/i18n";
-import { buildLocaleUrl } from "../lib/i18n";
+import { buildLocaleUrl, formatDate } from "../lib/i18n";
 import Card from "./Card.astro";
 import { Image } from "astro:assets";
 
 interface Props {
-  id: string;
-  title: string;
-  description?: string;
-  created_at: Date;
-  updated_at?: Date | null;
-  cover?: any; // 这里的 any 对应 astro:content 的 image() 返回类型
-  lang: LanguageKey; // 页面当前语言
-  actualLang: LanguageKey; // 内容实际语言
-  isFallback?: boolean;
-  isDraft?: boolean;
+  entry: CollectionEntry<"blog">;
 }
 
-const {
-  id,
-  title,
-  description,
-  created_at,
-  updated_at,
-  cover,
-  lang,
-  actualLang,
-  isFallback = false,
-  isDraft = false,
-} = Astro.props;
-
-const dateLocale = lang === "zh" ? "zh-CN" : "en-US";
-const formatDate = (d: Date) =>
-  new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
-
+const { entry } = Astro.props;
+const { data } = entry;
 const t = {
   zh: {
     updated: "更新于",
@@ -45,48 +22,41 @@ const t = {
     fallback: "Other language",
     draft: "Draft",
   },
-}[lang];
+}[data.lang];
 ---
 
-<Card href={buildLocaleUrl(lang, `/blog/${id}`)}>
+<Card href={buildLocaleUrl(data.lang, `/blog/${data.slug}`)}>
   <div class="blog-card">
     {
-      cover && (
+      data.cover && (
         <div class="cover">
-          {typeof cover === "object" ? (
-            <Image src={cover} alt={title} width={800} height={450} />
+          {typeof data.cover === "object" ? (
+            <Image src={data.cover} alt={data.title} width={800} height={450} />
           ) : (
-            <img src={cover} alt="" loading="lazy" />
+            <img src={data.cover} alt="" loading="lazy" />
           )}
         </div>
       )
     }
     <div class="content">
-      <h2 class="title" lang={actualLang}>{title}</h2>
-      {
-        description && (
-          <p class="description" lang={actualLang}>
-            {description}
-          </p>
-        )
-      }
+      <h2 class="title">{data.title}</h2>
+      {data.description && <p class="description">{data.description}</p>}
       <div class="meta">
-        <time datetime={created_at.toISOString()}>
-          {formatDate(created_at)}
+        <time datetime={data.created_at.toISOString()}>
+          {formatDate(data.lang, data.created_at)}
         </time>
         {
-          updated_at && (
+          data.updated_at && (
             <span class="updated">
               · {t.updated}{" "}
-              <time datetime={updated_at.toISOString()}>
-                {formatDate(updated_at)}
+              <time datetime={data.updated_at.toISOString()}>
+                {formatDate(data.lang, data.updated_at)}
               </time>
             </span>
           )
         }
         <div class="badges">
-          {isDraft && <span class="badge">{t.draft}</span>}
-          {isFallback && <span class="badge">{t.fallback}</span>}
+          {data.draft && <span class="badge">{t.draft}</span>}
         </div>
       </div>
     </div>

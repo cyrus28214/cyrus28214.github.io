@@ -8,10 +8,14 @@ import type { LanguageKey } from "../lib/i18n";
 
 interface Props {
   lang: LanguageKey;
+  localeLinks: {
+    lang: LanguageKey;
+    href: string;
+  }[];
   logoHref: string; // url no locale prefix
 }
 
-const { lang, logoHref } = Astro.props;
+const { lang, logoHref, localeLinks } = Astro.props;
 ---
 
 <nav class="navbar">
@@ -32,7 +36,7 @@ const { lang, logoHref } = Astro.props;
   </div>
   <div class="nav-links">
     <slot />
-    <LanguagePicker lang={lang} />
+    <LanguagePicker lang={lang} localeLinks={localeLinks} />
     <ThemeToggle />
   </div>
 </nav>
