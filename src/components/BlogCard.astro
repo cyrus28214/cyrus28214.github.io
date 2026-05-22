@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import type { LanguageKey } from "../lib/i18n";
 import { buildLocaleUrl, formatDate } from "../lib/i18n";
 import Card from "./Card.astro";
 import { Image } from "astro:assets";
@@ -26,18 +25,7 @@ const t = {
 ---
 
 <Card href={buildLocaleUrl(data.lang, `/blog/${data.slug}`)}>
-  <div class="blog-card">
-    {
-      data.cover && (
-        <div class="cover">
-          {typeof data.cover === "object" ? (
-            <Image src={data.cover} alt={data.title} width={800} height={450} />
-          ) : (
-            <img src={data.cover} alt="" loading="lazy" />
-          )}
-        </div>
-      )
-    }
+  <div class:list={["blog-card", { "has-cover": !!data.cover }]}>
     <div class="content">
       <h2 class="title">{data.title}</h2>
       {data.description && <p class="description">{data.description}</p>}
@@ -60,34 +48,76 @@ const t = {
         </div>
       </div>
     </div>
+    {
+      data.cover && (
+        <div class="cover">
+          {typeof data.cover === "object" ? (
+            <Image src={data.cover} alt={data.title} width={800} height={600} />
+          ) : (
+            <img src={data.cover} alt="" loading="lazy" />
+          )}
+        </div>
+      )
+    }
   </div>
 </Card>
 
 <style>
+  .blog-card {
+    min-width: 0;
+  }
+
+  .blog-card.has-cover {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(180px, 30%, 320px);
+    align-items: stretch;
+  }
+
   .blog-card:hover .title {
     text-decoration: underline;
   }
 
   .blog-card:hover .cover img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
   .cover {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background-color: var(--bg-muted, rgba(125, 125, 125, 0.08));
-  }
-
-  .cover img {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    overflow: hidden;
+    background-color: var(--bg-muted, rgba(125, 125, 125, 0.08));
+    border-left: 1px solid var(--border-color);
+  }
+
+  .cover :global(picture) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cover img,
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
     border-radius: 0;
     transition: transform 0.3s ease;
   }
 
   .content {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
     padding: 1.2rem 1.4rem 1.3rem;
     display: flex;
     flex-direction: column;
@@ -143,6 +173,10 @@ const t = {
   }
 
   @media (max-width: 768px) {
+    .blog-card.has-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(140px, 34%);
+    }
+
     .content {
       padding: 1rem 1.1rem 1.1rem;
     }
@@ -154,5 +188,12 @@ const t = {
     .description {
       font-size: 0.9rem;
     }
+  }
+
+  @media (max-width: 520px) {
+    .blog-card.has-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(120px, 36%);
+    }
+
   }
 </style>

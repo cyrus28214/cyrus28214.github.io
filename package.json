@@ -17,6 +17,7 @@
     "js-yaml": "^4.1.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "sharp": "^0.34.5",
     "smol-toml": "^1.6.1"
   },
   "devDependencies": {

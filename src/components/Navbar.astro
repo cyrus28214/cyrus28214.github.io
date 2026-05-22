@@ -2,8 +2,8 @@
 import ThemeToggle from "./ThemeToggle.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import { Image } from "astro:assets";
+import { Menu, X } from "@lucide/astro";
 import logoImage from "../assets/logo.png";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import type { LanguageKey } from "../lib/i18n";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 const { lang, logoHref, localeLinks } = Astro.props;
 ---
 
-<nav class="navbar">
+<nav class="navbar" data-mobile-nav>
   <div class="logo-container">
     <a href={logoHref} class="logo-link">
       <Image
@@ -34,10 +34,30 @@ const { lang, logoHref, localeLinks } = Astro.props;
       </div>
     </a>
   </div>
-  <div class="nav-links">
-    <slot />
-    <LanguagePicker lang={lang} localeLinks={localeLinks} />
-    <ThemeToggle />
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+    aria-controls="navbar-menu"
+  >
+    <span class="menu-icon menu-icon-open" aria-hidden="true">
+      <Menu size={22} stroke-width={1.8} />
+    </span>
+    <span class="menu-icon menu-icon-close" aria-hidden="true">
+      <X size={22} stroke-width={1.8} />
+    </span>
+  </button>
+
+  <div class="nav-links" id="navbar-menu">
+    <div class="nav-primary">
+      <slot />
+    </div>
+    <div class="nav-secondary">
+      <LanguagePicker lang={lang} localeLinks={localeLinks} />
+      <ThemeToggle />
+    </div>
   </div>
 </nav>
 
@@ -65,6 +85,7 @@ const { lang, logoHref, localeLinks } = Astro.props;
     text-decoration: none;
     color: var(--text-color);
     gap: 0.75rem;
+    min-height: 40px;
   }
 
   .logo-img {
@@ -77,18 +98,21 @@ const { lang, logoHref, localeLinks } = Astro.props;
   .logo-text {
     display: flex;
     flex-direction: column;
+    min-width: max-content;
   }
 
   .logo-title {
     font-weight: bold;
     font-size: 1.25rem;
     line-height: 1.2;
+    white-space: nowrap;
   }
 
   .logo-subtitle {
     font-size: 0.75rem;
     color: var(--text-muted);
     line-height: 1.2;
+    white-space: nowrap;
   }
 
   .nav-links {
@@ -97,15 +121,206 @@ const { lang, logoHref, localeLinks } = Astro.props;
     gap: 1.5rem;
   }
 
+  .nav-primary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .menu-toggle:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .menu-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-icon-open {
+    display: inline-flex;
+  }
+
+  .navbar.menu-open .menu-icon-open {
+    display: none;
+  }
+
+  .navbar.menu-open .menu-icon-close {
+    display: inline-flex;
+  }
+
   @media (max-width: 768px) {
     .navbar {
+      position: sticky;
       padding: 1rem;
+      align-items: center;
     }
-    .logo-subtitle {
+
+    .logo-text {
       display: none;
     }
+
+    .menu-toggle {
+      display: inline-flex;
+    }
+
     .nav-links {
-      gap: 1rem;
+      display: none;
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.9rem;
+      padding: 0.95rem 1rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar.menu-open .nav-links {
+      display: flex;
+    }
+
+    .nav-primary {
+      display: grid;
+      gap: 0.1rem;
+    }
+
+    .nav-primary :global(.nav-link) {
+      display: block;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border-color);
+      border-left: none;
+      border-right: none;
+    }
+
+    .nav-primary :global(.nav-link.active) {
+      border-bottom: 1px solid var(--primary-color);
+    }
+
+    .nav-secondary {
+      width: 100%;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      padding-top: 0.25rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :global(.dark) .nav-links {
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     }
   }
 </style>
+
+<script>
+  let mobileNavbarAbortController: AbortController | undefined;
+
+  const initMobileNavbar = () => {
+    mobileNavbarAbortController?.abort();
+    mobileNavbarAbortController = new AbortController();
+    const { signal } = mobileNavbarAbortController;
+
+    document.querySelectorAll("[data-mobile-nav]").forEach((navbar) => {
+      if (navbar instanceof HTMLElement === false) return;
+
+      const toggle = navbar.querySelector(".menu-toggle");
+      const menu = navbar.querySelector(".nav-links");
+
+      if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) {
+        return;
+      }
+
+      const closeMenu = () => {
+        navbar.classList.remove("menu-open");
+        toggle.setAttribute("aria-expanded", "false");
+      };
+
+      const openMenu = () => {
+        navbar.classList.add("menu-open");
+        toggle.setAttribute("aria-expanded", "true");
+      };
+
+      toggle.addEventListener(
+        "click",
+        (event) => {
+          event.stopPropagation();
+          const isOpen = navbar.classList.contains("menu-open");
+          if (isOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        },
+        { signal },
+      );
+
+      navbar.addEventListener(
+        "click",
+        (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+
+        if (target.closest(".nav-primary a")) {
+          closeMenu();
+        }
+        },
+        { signal },
+      );
+
+      document.addEventListener(
+        "click",
+        (event) => {
+          const target = event.target;
+          if (!(target instanceof Node)) return;
+          if (!navbar.contains(target)) {
+            closeMenu();
+          }
+        },
+        { signal },
+      );
+
+      window.addEventListener(
+        "resize",
+        () => {
+          if (window.innerWidth > 768) {
+            closeMenu();
+          }
+        },
+        { signal },
+      );
+
+      document.addEventListener("astro:after-swap", closeMenu, { signal });
+    });
+  };
+
+  initMobileNavbar();
+  document.addEventListener("astro:page-load", initMobileNavbar);
+</script>
