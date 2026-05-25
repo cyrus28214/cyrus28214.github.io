@@ -21,7 +21,7 @@ const { href, isActive = false } = Astro.props;
     transition:
       color 0.2s ease,
       border-color 0.2s ease;
-    padding: 0.5rem;
+    padding: 0.25rem;
     border-bottom: 2px solid transparent;
   }
 
@@ -34,9 +34,9 @@ const { href, isActive = false } = Astro.props;
     border-bottom: 2px solid var(--primary-color);
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 769px) {
     .nav-link {
-      padding: 0.25rem;
+      padding: 0.5rem;
     }
   }
 </style>

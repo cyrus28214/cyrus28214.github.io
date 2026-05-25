@@ -69,7 +69,7 @@ const t = {
 
   .blog-card.has-cover {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(180px, 30%, 320px);
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 36%);
     align-items: stretch;
   }
 
@@ -85,9 +85,6 @@ const t = {
     grid-column: 2;
     grid-row: 1;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -97,9 +94,7 @@ const t = {
   }
 
   .cover :global(picture) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     width: 100%;
     height: 100%;
   }
@@ -108,7 +103,8 @@ const t = {
   .cover :global(img) {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    display: block;
+    object-fit: cover;
     object-position: center;
     border-radius: 0;
     transition: transform 0.3s ease;
@@ -118,14 +114,14 @@ const t = {
     grid-column: 1;
     grid-row: 1;
     min-width: 0;
-    padding: 1.2rem 1.4rem 1.3rem;
+    padding: 1rem 1.1rem 1.1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
 
   .title {
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     line-height: 1.4;
     color: var(--text-color);
     margin: 0;
@@ -134,7 +130,7 @@ const t = {
   .description {
     margin: 0;
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -172,28 +168,27 @@ const t = {
     background-color: var(--bg-color);
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 521px) {
     .blog-card.has-cover {
       grid-template-columns: minmax(0, 1fr) minmax(140px, 34%);
     }
+  }
+
+  @media (min-width: 769px) {
+    .blog-card.has-cover {
+      grid-template-columns: minmax(0, 1fr) clamp(180px, 30%, 320px);
+    }
 
     .content {
-      padding: 1rem 1.1rem 1.1rem;
+      padding: 1.2rem 1.4rem 1.3rem;
     }
 
     .title {
-      font-size: 1.15rem;
+      font-size: 1.35rem;
     }
 
     .description {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
-  }
-
-  @media (max-width: 520px) {
-    .blog-card.has-cover {
-      grid-template-columns: minmax(0, 1fr) minmax(120px, 36%);
-    }
-
   }
 </style>

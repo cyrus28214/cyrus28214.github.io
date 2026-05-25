@@ -1,6 +1,11 @@
 ---
 import { getCollection, render, getEntry } from "astro:content";
-import { buildLocaleUrl, langLabel, type LanguageKey } from "../../../lib/i18n";
+import {
+  buildLocaleUrl,
+  formatDate,
+  langLabel,
+  type LanguageKey,
+} from "../../../lib/i18n";
 import PageLayout from "../../../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
@@ -30,6 +35,7 @@ export async function getStaticPaths() {
       lang: lang as LanguageKey,
       href: buildLocaleUrl(lang as LanguageKey, `/blog/${slug}`),
     }));
+    console.log({ localeLinks });
     return {
       params: {
         lang: entry.data.lang,
@@ -42,6 +48,7 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const { blog, localeLinks } = Astro.props;
+const otherLangs = localeLinks.filter((l) => l.lang != lang);
 
 const { Content } = await render(blog);
 const { data } = blog;
@@ -52,12 +59,16 @@ const t = {
     updated: "更新于",
     fallbackNotice: "本文暂无中文版本，正在显示其他语言版本。",
     otherLangs: "其他语言版本：",
+    licenseText:
+      '除特别说明外，本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> 协议发布。转载请注明出处，禁止商业使用，演绎作品需采用相同协议共享。',
   },
   en: {
     back: "← Back to blog",
     updated: "Updated",
     fallbackNotice: "No English version available, showing other language.",
     otherLangs: "Other languages:",
+    licenseText:
+      'Unless otherwise noted, this article is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> Please provide attribution, do not use it commercially, and share adaptations under the same license.',
   },
 }[lang];
 ---
@@ -91,7 +102,7 @@ const t = {
       }
       <div class="meta">
         <time datetime={data.created_at.toISOString()}>
-          {data.created_at}
+          {formatDate(lang, data.created_at)}
         </time>
         {
           data.updated_at && (
@@ -104,6 +115,18 @@ const t = {
           )
         }
       </div>
+      {
+        otherLangs.length > 0 && (
+          <div class="post-locales">
+            <span class="other-langs-label">{t.otherLangs}</span>
+            {otherLangs.map((l) => (
+              <a class="other-lang" href={l.href}>
+                {langLabel[l.lang]}
+              </a>
+            ))}
+          </div>
+        )
+      }
     </header>
 
     <div class="post-body" lang={data.lang}>
@@ -111,23 +134,25 @@ const t = {
     </div>
   </article>
 
-  {
-    localeLinks.length > 0 && (
-      <footer class="post-footer">
-        <span class="other-langs-label">{t.otherLangs}</span>
-        {localeLinks.map((l) => (
-          <a class="other-lang" href={l.href}>
-            {langLabel[lang]}
-          </a>
-        ))}
-      </footer>
-    )
-  }
+  <footer class="post-footer">
+    <section class="post-license" aria-labelledby="post-license-title">
+      <p set:html={t.licenseText} />
+    </section>
+  </footer>
 </PageLayout>
 
 <style>
   .back-nav {
     margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .post-locales {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--text-muted);
     font-size: 0.9rem;
   }
 
@@ -143,17 +168,19 @@ const t = {
 
   .cover {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
     margin-bottom: 1.5rem;
     background-color: var(--bg-muted, rgba(125, 125, 125, 0.08));
   }
 
   .cover img {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
   }
 
   .post-header {
@@ -185,17 +212,15 @@ const t = {
   }
 
   .post-footer {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--border-color);
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.8rem;
     color: var(--text-muted);
     font-size: 0.9rem;
   }
-
   .other-langs-label {
     margin-right: 0.25rem;
   }
@@ -213,5 +238,13 @@ const t = {
   .other-lang:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
+  }
+
+  @media (min-width: 641px) {
+    .post-license-head {
+      align-items: center;
+      flex-direction: row;
+      gap: 0;
+    }
   }
 </style>

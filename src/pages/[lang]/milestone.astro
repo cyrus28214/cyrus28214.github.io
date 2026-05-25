@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { buildLocaleUrl, languages } from "../../lib/i18n";
+import { buildLocaleUrl, formatDate, languages } from "../../lib/i18n";
 import PageLayout from "../../layouts/PageLayout.astro";
 
 export const getStaticPaths = (() => {
@@ -105,7 +105,9 @@ const t = {
       t.milestones.map((item) => (
         <div class="timeline-item">
           <div class="timeline-marker" />
-          <div class="timeline-date">{item.date}</div>
+          <div class="timeline-date">
+            {formatDate(lang, new Date(item.date))}
+          </div>
           <div class="timeline-content" set:html={item.content} />
         </div>
       ))

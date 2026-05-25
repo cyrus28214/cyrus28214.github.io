@@ -43,10 +43,10 @@ const { lang, logoHref, localeLinks } = Astro.props;
     aria-controls="navbar-menu"
   >
     <span class="menu-icon menu-icon-open" aria-hidden="true">
-      <Menu size={22} stroke-width={1.8} />
+      <Menu size={20} stroke-width={1.5} />
     </span>
     <span class="menu-icon menu-icon-close" aria-hidden="true">
-      <X size={22} stroke-width={1.8} />
+      <X size={20} stroke-width={1.5} />
     </span>
   </button>
 
@@ -69,7 +69,7 @@ const { lang, logoHref, localeLinks } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
   }
@@ -96,7 +96,7 @@ const { lang, logoHref, localeLinks } = Astro.props;
   }
 
   .logo-text {
-    display: flex;
+    display: none;
     flex-direction: column;
     min-width: max-content;
   }
@@ -116,44 +116,49 @@ const { lang, logoHref, localeLinks } = Astro.props;
   }
 
   .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+    padding: 0.95rem 1rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   }
 
   .nav-primary {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: grid;
+    gap: 0.1rem;
   }
 
   .nav-secondary {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    padding-top: 0.25rem;
   }
 
   .menu-toggle {
-    display: none;
+    display: inline-flex;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--nav-text);
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    cursor: pointer;
-    transition:
-      color 0.2s ease,
-      border-color 0.2s ease,
-      background-color 0.2s ease;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
   }
 
-  .menu-toggle:hover {
+  .menu-toggle:hover,
+  .menu-toggle[aria-expanded="true"] {
     color: var(--primary-color);
-    border-color: var(--primary-color);
   }
 
   .menu-icon {
@@ -174,68 +179,74 @@ const { lang, logoHref, localeLinks } = Astro.props;
     display: inline-flex;
   }
 
-  @media (max-width: 768px) {
+  .navbar.menu-open .nav-links {
+    display: flex;
+  }
+
+  .nav-primary :global(.nav-link) {
+    display: block;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none;
+  }
+
+  .nav-primary :global(.nav-link.active) {
+    border-bottom: 1px solid var(--primary-color);
+  }
+
+  :global(.dark) .nav-links {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (min-width: 769px) {
     .navbar {
-      position: sticky;
-      padding: 1rem;
-      align-items: center;
+      padding: 1rem 2rem;
     }
 
     .logo-text {
-      display: none;
-    }
-
-    .menu-toggle {
-      display: inline-flex;
-    }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: calc(100% + 1px);
-      left: 0;
-      right: 0;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.9rem;
-      padding: 0.95rem 1rem 1rem;
-      border-bottom: 1px solid var(--border-color);
-      background-color: var(--bg-color);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-    }
-
-    .navbar.menu-open .nav-links {
       display: flex;
     }
 
+    .menu-toggle {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0;
+      border-bottom: none;
+      box-shadow: none;
+    }
+
     .nav-primary {
-      display: grid;
-      gap: 0.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .nav-primary :global(.nav-link) {
-      display: block;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid var(--border-color);
-      border-left: none;
-      border-right: none;
+      display: inline-block;
+      padding: 0.5rem;
+      border-bottom: 2px solid transparent;
     }
 
     .nav-primary :global(.nav-link.active) {
-      border-bottom: 1px solid var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
     }
 
     .nav-secondary {
-      width: 100%;
-      justify-content: flex-end;
-      gap: 0.35rem;
-      padding-top: 0.25rem;
+      width: auto;
+      gap: 0.5rem;
+      padding-top: 0;
     }
-  }
 
-  @media (max-width: 768px) {
     :global(.dark) .nav-links {
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      box-shadow: none;
     }
   }
 </style>

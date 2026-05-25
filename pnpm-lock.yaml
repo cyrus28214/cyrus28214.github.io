@@ -11,6 +11,9 @@ importers:
       '@lucide/astro':
         specifier: ^1.14.0
         version: 1.14.0(astro@6.2.2(@types/node@25.6.0)(rollup@4.60.3)(yaml@2.9.0))
+      '@mstroppel/remark-local-plantuml':
+        specifier: ^1.0.0
+        version: 1.0.0
       astro:
         specifier: ^6.2.2
         version: 6.2.2(@types/node@25.6.0)(rollup@4.60.3)(yaml@2.9.0)
@@ -462,6 +465,10 @@ packages:
     peerDependencies:
       astro: ^4 || ^5 || ^6
 
+  '@mstroppel/remark-local-plantuml@1.0.0':
+    resolution: {integrity: sha512-fFi0fgqSxoQ44kc2wZ4sSP6yftxtlv3W0309l+qnpdad4KiWCkXeDZPd4McWoK2UCyaPfMWY8DlDk9GTTgxFkw==}
+    engines: {node: '>=24.0'}
+
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
 
@@ -795,6 +802,9 @@ packages:
   commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
+
+  commander@2.20.3:
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
   commander@8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
@@ -1257,6 +1267,19 @@ packages:
   node-mock-http@1.0.4:
     resolution: {integrity: sha512-8DY+kFsDkNXy1sJglUfuODx1/opAGJGyrTuFqEoN90oRc2Vk0ZbD4K2qmKXBBEhZQzdKHIVfEJpDU8Ak2NJEvQ==}
 
+  node-nailgun-client@0.1.2:
+    resolution: {integrity: sha512-OC611lR0fsDUSptwnhBf8d3sj4DZ5fiRKfS2QaGPe0kR3Dt9YoZr1MY7utK0scFPTbXuQdSBBbeoKYVbME1q5g==}
+    hasBin: true
+
+  node-nailgun-server@0.3.0:
+    resolution: {integrity: sha512-jiVQheazpL4ENevhIhw6wYKCb9UYuBTOQ0v85t2vMjur16CFPVK3fKQ3K8vSe3K6+72iI4aPpvm5g7dhRJtPfw==}
+    engines: {node: '>= 8.x'}
+
+  node-plantuml-back@1.1.4:
+    resolution: {integrity: sha512-HKgt2jctutB1EFax9UytlaBQYjb8oo3TOLzDCEj4Il0/kOzDo0jTae3V74sn3No9fgID4CU3azmBrq7hdM0+Jg==}
+    engines: {node: '>= 6.x'}
+    hasBin: true
+
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
@@ -1316,6 +1339,9 @@ packages:
   picomatch@4.0.4:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
+
+  plantuml-encoder@1.4.0:
+    resolution: {integrity: sha512-sxMwpDw/ySY1WB2CE3+IdMuEcWibJ72DDOsXLkSmEaSzwEUaYBT6DWgOfBiHGCux4q433X6+OEFWjlVqp7gL6g==}
 
   postcss@8.5.14:
     resolution: {integrity: sha512-SoSL4+OSEtR99LHFZQiJLkT59C5B1amGO1NzTwj7TT1qCUgUO6hxOvzkOYxD+vMrXBM3XJIKzokoERdqQq/Zmg==}
@@ -2153,6 +2179,11 @@ snapshots:
     dependencies:
       astro: 6.2.2(@types/node@25.6.0)(rollup@4.60.3)(yaml@2.9.0)
 
+  '@mstroppel/remark-local-plantuml@1.0.0':
+    dependencies:
+      node-plantuml-back: 1.1.4
+      unist-util-visit: 5.1.0
+
   '@oslojs/encoding@1.1.0': {}
 
   '@rollup/pluginutils@5.3.0(rollup@4.60.3)':
@@ -2522,6 +2553,8 @@ snapshots:
   comma-separated-tokens@2.0.3: {}
 
   commander@11.1.0: {}
+
+  commander@2.20.3: {}
 
   commander@8.3.0: {}
 
@@ -3219,6 +3252,19 @@ snapshots:
 
   node-mock-http@1.0.4: {}
 
+  node-nailgun-client@0.1.2:
+    dependencies:
+      commander: 2.20.3
+
+  node-nailgun-server@0.3.0: {}
+
+  node-plantuml-back@1.1.4:
+    dependencies:
+      commander: 11.1.0
+      node-nailgun-client: 0.1.2
+      node-nailgun-server: 0.3.0
+      plantuml-encoder: 1.4.0
+
   normalize-path@3.0.0: {}
 
   nth-check@2.1.1:
@@ -3278,6 +3324,8 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.4: {}
+
+  plantuml-encoder@1.4.0: {}
 
   postcss@8.5.14:
     dependencies:

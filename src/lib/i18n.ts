@@ -31,5 +31,5 @@ export const formatDate = (lang: LanguageKey, d: Date) => {
     en: "en-US",
     zh: "zh-CN",
   }[lang];
-  new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
+  return new Intl.DateTimeFormat(dateLocale, { dateStyle: "long" }).format(d);
 };

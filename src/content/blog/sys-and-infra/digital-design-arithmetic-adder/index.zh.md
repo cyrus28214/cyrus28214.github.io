@@ -1,6 +1,6 @@
 ---
 title: "从半加器、全加器到超前进位加法器"
-description: "空间换时间的智慧"
+description: "空间换时间的智慧。"
 ---
 
 ## 半加器 (Half Adder)
