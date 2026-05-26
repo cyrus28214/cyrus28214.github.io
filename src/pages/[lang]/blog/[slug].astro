@@ -35,7 +35,6 @@ export async function getStaticPaths() {
       lang: lang as LanguageKey,
       href: buildLocaleUrl(lang as LanguageKey, `/blog/${slug}`),
     }));
-    console.log({ localeLinks });
     return {
       params: {
         lang: entry.data.lang,
@@ -109,7 +108,7 @@ const t = {
             <span class="updated">
               · {t.updated}{" "}
               <time datetime={data.updated_at.toISOString()}>
-                {data.updated_at}
+                {formatDate(lang, data.updated_at)}
               </time>
             </span>
           )

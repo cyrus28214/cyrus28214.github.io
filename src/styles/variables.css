@@ -5,7 +5,8 @@
   --nav-text: #555555;
   --border-color: #eaeaea;
   --primary-color: #000000;
-  --font-serif: "Georgia", "Times New Roman", "Noto Serif SC", serif;
+  --font-serif: "Noto Serif", "Times New Roman", "Noto Serif SC", serif;
+  --code-bg: #f6f8fa;
 }
 
 :root.dark {
@@ -15,6 +16,7 @@
   --nav-text: #cccccc;
   --border-color: #333333;
   --primary-color: #ffffff;
+  --code-bg: #24292e;
 }
 
 body {
