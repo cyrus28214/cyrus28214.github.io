@@ -23,7 +23,6 @@ description: ""
 
 ## 代码
 
-::github{repo="cyrus28214/SVD-image-compression"}
 [GitHub项目地址](https://github.com/cyrus28214/SVD-image-compression)
 
 ```python

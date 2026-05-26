@@ -3,6 +3,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-autospace: normal;
+}
+
+html {
+  color-scheme: light; 
+  scrollbar-color: var(--text-muted) var(--bg-color);
+  scrollbar-width: thin;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 h1 {
@@ -137,4 +148,8 @@ strong {
 
 .katex-display > .katex {
   max-width: 100%;
+}
+
+.plantuml-diagram {
+    overflow-x: auto;
 }

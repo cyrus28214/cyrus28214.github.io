@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36">
+  <diagram name="第 1 页" id="ogaSOHbbW6t5F52_CFy1">
+    <mxGraphModel dx="132" dy="741" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-14" connectable="0" parent="1" style="group;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="" vertex="1">
+          <mxGeometry height="240" width="80" x="1367.5" y="829" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-15" parent="WunCPy6yoyRLSGCRaUOx-14" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="-1.2" vertex="1">
+          <mxGeometry height="80" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-16" parent="WunCPy6yoyRLSGCRaUOx-14" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="5.6" vertex="1">
+          <mxGeometry height="80" width="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-17" parent="WunCPy6yoyRLSGCRaUOx-14" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="2.3" vertex="1">
+          <mxGeometry height="80" width="80" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-19" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1487.5" y="948.5" as="sourcePoint" />
+            <mxPoint x="1647.5" y="949" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-21" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" value="\(\mathrm{Softmax}\)" vertex="1">
+          <mxGeometry height="40" width="240" x="1447.5" y="909" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-23" connectable="0" parent="1" style="group;fontSize=16;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="240" width="80" x="1687.5" y="829" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-24" parent="WunCPy6yoyRLSGCRaUOx-23" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#fff2cc;strokeColor=#d6b656;" value="0.0011" vertex="1">
+          <mxGeometry height="80" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-25" parent="WunCPy6yoyRLSGCRaUOx-23" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#f8cecc;strokeColor=#b85450;" value="0.9634" vertex="1">
+          <mxGeometry height="80" width="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WunCPy6yoyRLSGCRaUOx-26" parent="WunCPy6yoyRLSGCRaUOx-23" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#fff2cc;strokeColor=#d6b656;" value="0.0355" vertex="1">
+          <mxGeometry height="80" width="80" y="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

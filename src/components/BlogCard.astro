@@ -51,11 +51,7 @@ const t = {
     {
       data.cover && (
         <div class="cover">
-          {typeof data.cover === "object" ? (
-            <Image src={data.cover} alt={data.title} width={800} height={600} />
-          ) : (
-            <img src={data.cover} alt="" loading="lazy" />
-          )}
+          <Image src={data.cover} alt={data.title} />
         </div>
       )
     }
