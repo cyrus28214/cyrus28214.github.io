@@ -20,39 +20,21 @@ const { localeLinks } = Astro.props;
 const t = {
   zh: {
     name: "刘仁钦",
+    description:
+      "你好，我是刘仁钦，<strong>浙江大学</strong>27届<strong>计算机科学与技术专业</strong>本科生。",
   },
   en: {
     name: "Renqin Liu",
+    description:
+      "Hi, I'm Renqin Liu, undergraduate student majoring in <strong>Computer Science and Technology</strong> at <strong>Zhejiang University</strong>, Class of 2027.",
   },
 }[lang];
 ---
 
 <PageLayout lang={lang} localeLinks={localeLinks}>
-  {
-    lang === "en" && (
-      <Fragment>
-        <h1>Renqin Liu</h1>
-        <p>
-          Hi, I'm Renqin Liu, undergraduate student majoring in{" "}
-          <strong>Computer Science and Technology</strong> at{" "}
-          <strong>Zhejiang University</strong>, Class of 2027.
-        </p>
-        <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
-      </Fragment>
-    )
-  }
-  {
-    lang === "zh" && (
-      <Fragment>
-        <h1>刘仁钦</h1>
-        <p>
-          你好，我是刘仁钦，<strong>浙江大学</strong>
-          27届<strong>计算机科学与技术专业</strong>本科生。
-        </p>
-        <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
-      </Fragment>
-    )
-  }
+  <h1>{t.name}</h1>
+  <p set:html={t.description} />
+  <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
 </PageLayout>
 
 <style>
