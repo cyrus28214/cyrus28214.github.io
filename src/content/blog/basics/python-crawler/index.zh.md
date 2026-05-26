@@ -11,7 +11,7 @@ description: ""
 
 首先，我选择的 Python 库是 `requests` 和 `lxml`，如果你没有安装这两个库，可以使用 `pip install requests` 和 `pip install lxml` 来安装
 
-`requests` 用来发送请求并获得网页，`lxml` 用来解析网页，并使用 XPath 找到要获取的数据的位置，如果你不熟悉 XPath，可以看看我的这一篇文章 [XPath语法参考](/posts/xpath-syntax-reference/)
+`requests` 用来发送请求并获得网页，`lxml` 用来解析网页，并使用 XPath 找到要获取的数据的位置，如果你不熟悉 XPath，可以看看这一篇文章 [XPath语法参考](https://developer.mozilla.org/zh-CN/docs/Web/XML/XPath)
 
 假如你更喜欢css选择器的风格，可以使用 `beautifulsoup` 这个库，两个库都很方便的
 

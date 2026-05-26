@@ -50,8 +50,6 @@ hello
 
 shell怎么知道这些程序在哪里呢？其实shell会在`$PATH`里面的路径寻找。这里的`$PATH`和上面的`$USER`都是shell中的变量，`$`表示引用变量，提示shell把`$变量名`替换成变量的值。`$PATH`储存了多个路径，用“:”隔开，提示了shell去哪里找这个程序。你也可以使用`which`来查找某一个程序的具体位置。输入程序的完整路径，也可以绕过`$PATH`运行程序。
 
-**想要了解更多关于PATH的内容可以查看我的[另一篇博客](/posts/environment-variable-path/)**
-
 ```txt
 cyrus:~$ echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -157,27 +155,27 @@ drwxr-x--- 20 cyrus cyrus 4096 Oct 26 19:09 cyrus
 
 第一列的第一个字符是`d`代表这是一个文件夹，下面列出了可能的类型：
 
-| 标识符 | 类型                                                    | 英文                  |
-| ------ | ------------------------------------------------------- | --------------------- |
-| –      | 常规文件                                                | regular file          |
-| d      | 文件目录                                                | directory             |
-| c      | 字符设备文件                                            | character device file |
-| b      | 块设备文件                                              | block device file     |
-| s      | 本地socket文件                                          | local socket file     |
-| p      | 命名管道                                                | named pipe            |
-| l      | [符号链接](/posts/linux-inode-and-soft-and-hard-links/) | symbolic link         |
+| 标识符 | 类型                                   | 英文                  |
+| ------ | -------------------------------------- | --------------------- |
+| –      | 常规文件                               | regular file          |
+| d      | 文件目录                               | directory             |
+| c      | 字符设备文件                           | character device file |
+| b      | 块设备文件                             | block device file     |
+| s      | 本地socket文件                         | local socket file     |
+| p      | 命名管道                               | named pipe            |
+| l      | [符号链接](/zh/blog/linux-file-links/) | symbolic link         |
 
 然后是九个字符描述了使用此文件的权限，三个字符为一组分成三组，分别表示文件持有者、文件持有组、和其他用户的权限。每组的三个字符中，`r`、`w`、`x`分别代表read读、write写、execute执行权限，`-`代表没有权限。
 
 例如`rwxr-xr--`代表文件持有者可以读、写、运行此文件，文件持有组可以读、运行此文件，其他用户只能读此文件。
 
-第二列是有多少“ [硬链接](/posts/linux-inode-and-soft-and-hard-links/) ”指向这个文件。
+第二列是有多少“ [硬链接](/zh/blog/linux-file-links/) ”指向这个文件。
 
 第三列和第四列，分别是文件持有者和文件持有组的名称
 
 第五列是文件大小，默认以byte为单位，如果想要显示成“8M”,“13K”这种形式，只需要为`ls`命令附加上`-h`参数。
 
-第六列就是文件的修改时间，即[mtime](/posts/linux-file-timestamps/)。
+第六列就是文件的修改时间，即[mtime](/zh/blog/linux-file-timestamps/)。
 
 最后一列就是文件名
 
@@ -220,7 +218,7 @@ drwxr-xr-x  13 root root    4096 May  2  2023 var
 `touch 文件名`有两个作用：
 
 - 若文件不存在，创建这个文件
-- 若文件存在，将文件的[atime](/posts/linux-file-timestamps/)和[mtime](/posts/linux-file-timestamps/)设置为现在的时间。
+- 若文件存在，将文件的 [atime 和 mtime](/zh/blog/linux-file-timestamps/)设置为现在的时间。
 
 `mkdir 目录名`（make directory）可以创建新的文件夹，例：
 

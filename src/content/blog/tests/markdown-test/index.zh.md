@@ -53,8 +53,8 @@ greet("World");
 
 ```yaml
 - name: Cyrus' Blog
-  url: https://blog.codecyrus.com
-  avatar: https://blog.codecyrus.com/images/avatar.png
+  url: https://codecyrus.com
+  avatar: https://codecyrus.com/images/avatar.png
   description: Think twice, code once.
 ```
 

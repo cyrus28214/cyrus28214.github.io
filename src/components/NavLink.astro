@@ -1,20 +1,36 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { ExternalLink } from "@lucide/astro";
 
 interface Props {
   href: string;
   isActive?: boolean;
+  external?: boolean;
 }
 
-const { href, isActive = false } = Astro.props;
+const { href, isActive = false, external = false } = Astro.props;
 ---
 
-<a href={href} class:list={["nav-link", { active: isActive }]}>
+<a
+  href={href}
+  class:list={["nav-link", { active: isActive, external }]}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+>
   <slot />
+  {
+    external && (
+      <span class="external-icon" aria-hidden="true">
+        <ExternalLink size={14} stroke-width={1.75} />
+      </span>
+    )
+  }
 </a>
 
 <style>
   .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
     text-decoration: none;
     color: var(--nav-text);
     font-weight: 500;
@@ -32,6 +48,13 @@ const { href, isActive = false } = Astro.props;
 
   .nav-link.active {
     border-bottom: 2px solid var(--primary-color);
+  }
+
+  .external-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   @media (min-width: 769px) {

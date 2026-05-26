@@ -23,7 +23,7 @@ description: 通过实操学会 SQL
 
 ![成功界面](./SQLite-install-3.png)
 
-但是当你在命令行输入`sqlite3`命令时会发现，系统找不到这个命令，这是因为没有在系统的环境变量path里加上sqlite3.exe所在的路径（例如C:\\sqlite）。假如你不知道环境变量path是什么，可以看看我的[这篇文章](/posts/environment-variable-path/)。
+但是当你在命令行输入`sqlite3`命令时会发现，系统找不到这个命令，这是因为没有在系统的环境变量path里加上sqlite3.exe所在的路径（例如C:\\sqlite）。假如你不知道环境变量path是什么，可以看看我的[这篇文章](/zh/blog/environment-variable-path/)。
 
 添加了环境变量后，在cmd/powershell/bash或者你喜欢的任何shell里输入`sqlite3`，你应该能看到和上面双击exe一样的输出。
 

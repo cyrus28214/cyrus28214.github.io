@@ -1,0 +1,124 @@
+---
+interface TocHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface TocHeadingNode extends TocHeading {
+  children: TocHeadingNode[];
+}
+
+interface Props {
+  headings: TocHeading[];
+  title: string;
+}
+
+const { headings, title } = Astro.props;
+
+const tocHeadings = headings.filter((heading) => heading.depth >= 2);
+
+const buildTocTree = (items: TocHeading[]): TocHeadingNode[] => {
+  const root: TocHeadingNode[] = [];
+  const stack: TocHeadingNode[] = [];
+
+  for (const heading of items) {
+    const node: TocHeadingNode = {
+      ...heading,
+      children: [],
+    };
+
+    while (stack.length > 0 && stack.at(-1)!.depth >= node.depth) {
+      stack.pop();
+    }
+
+    const parent = stack.at(-1);
+    if (parent) {
+      parent.children.push(node);
+    } else {
+      root.push(node);
+    }
+
+    stack.push(node);
+  }
+
+  return root;
+};
+
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+const renderTocItems = (items: TocHeadingNode[]): string =>
+  items
+    .map((item) => {
+      const children = item.children.length > 0
+        ? `<ol class="toc-list toc-sublist">${renderTocItems(item.children)}</ol>`
+        : "";
+
+      return `<li class="toc-item toc-depth-${item.depth}"><a href="#${escapeHtml(item.slug)}">${escapeHtml(item.text)}</a>${children}</li>`;
+    })
+    .join("");
+
+const tocTree = buildTocTree(tocHeadings);
+const tocHtml = `<ol class="toc-list">${renderTocItems(tocTree)}</ol>`;
+---
+
+{
+  tocTree.length > 0 && (
+    <nav class="post-toc" aria-labelledby="post-toc-title">
+      <h2 id="post-toc-title">{title}</h2>
+      <div class="post-toc-body" set:html={tocHtml} />
+    </nav>
+  )
+}
+
+<style>
+  .post-toc {
+    margin-bottom: 2rem;
+  }
+
+  .post-toc h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .post-toc :global(.toc-list) {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .post-toc :global(.toc-item) {
+    margin: 0.35rem 0;
+  }
+
+  .post-toc :global(.toc-sublist) {
+    margin-top: 0.35rem;
+    padding-left: 1.1rem;
+  }
+
+  .post-toc :global(.toc-depth-2) {
+    font-weight: 500;
+  }
+
+  .post-toc :global(.toc-depth-3),
+  .post-toc :global(.toc-depth-4),
+  .post-toc :global(.toc-depth-5),
+  .post-toc :global(.toc-depth-6) {
+    font-weight: 400;
+  }
+
+  .post-toc a {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .post-toc a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+</style>

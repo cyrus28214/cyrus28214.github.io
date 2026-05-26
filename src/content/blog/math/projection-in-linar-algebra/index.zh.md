@@ -1,6 +1,6 @@
 ---
 title: "线性代数中的投影"
-description: "线性代数的统一与简洁。"
+description: ""
 ---
 
 ## 投影矩阵的推导

@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar.astro";
 import NavLink from "../components/NavLink.astro";
 import "../styles/global.css";
 import "../styles/variables.css";
-import { buildLocaleUrl, type LanguageKey } from "../lib/i18n";
+import { type LanguageKey } from "../lib/i18n";
 
 interface Props {
   lang: LanguageKey;
@@ -14,7 +14,6 @@ interface Props {
 }
 
 const { lang, localeLinks } = Astro.props;
-
 const t = {
   en: {
     logoHref: "/en",
@@ -23,6 +22,12 @@ const t = {
       { name: "blog", text: "Blog", href: "/en/blog" },
       { name: "links", text: "Links", href: "/en/links" },
       { name: "milestone", text: "Milestone", href: "/en/milestone" },
+      {
+        name: "analytics",
+        text: "Analytics",
+        href: "https://cloud.umami.is/analytics/us/share/IgblfKF8IflGMMcO",
+        external: true,
+      },
     ],
   },
   zh: {
@@ -32,6 +37,12 @@ const t = {
       { name: "blog", text: "博客", href: "/zh/blog" },
       { name: "links", text: "朋友们", href: "/zh/links" },
       { name: "milestone", text: "大事记", href: "/zh/milestone" },
+      {
+        name: "analytics",
+        text: "统计",
+        href: "https://cloud.umami.is/analytics/us/share/IgblfKF8IflGMMcO",
+        external: true,
+      },
     ],
   },
 }[lang];
@@ -57,7 +68,7 @@ const t = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap"
       rel="stylesheet"
     />
     <link
@@ -93,16 +104,16 @@ const t = {
       setDarkMode();
       document.addEventListener("astro:after-swap", setDarkMode);
     </script>
-    <script
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="567be927-9a2d-4367-a2e4-00fd7e3a6476"></script>
   </head>
   <body>
     <Navbar logoHref={t.logoHref} lang={lang} localeLinks={localeLinks}>
       {
         t.navItems.map((item) => (
-          <NavLink href={item.href} isActive={Astro.url.pathname == item.href}>
+          <NavLink
+            href={item.href}
+            isActive={!item.external && Astro.url.pathname == item.href}
+            external={item.external}
+          >
             {item.text}
           </NavLink>
         ))
@@ -127,6 +138,9 @@ const t = {
   }
 
   main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
   }
 </style>

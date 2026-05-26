@@ -25,7 +25,11 @@ const items = (
   })
 )
   .filter((entry) => entry.data.lang == lang)
-  .sort((a, b) => b.data.created_at.getTime() - a.data.created_at.getTime());
+  .sort((a, b) => {
+    const aTime = a.data.updated_at ?? a.data.created_at;
+    const bTime = b.data.updated_at ?? b.data.created_at;
+    return bTime.getTime() - aTime.getTime();
+  });
 
 const t = {
   zh: {

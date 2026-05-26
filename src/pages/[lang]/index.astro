@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { languages, buildLocaleUrl } from "../../lib/i18n";
 import PageLayout from "../../layouts/PageLayout.astro";
-
+import { Mail } from "@lucide/astro";
 export const getStaticPaths = (() => {
   const localeLinks = languages.map((lang) => ({
     lang,
@@ -34,12 +34,12 @@ const t = {
 <PageLayout lang={lang} localeLinks={localeLinks}>
   <h1>{t.name}</h1>
   <p set:html={t.description} />
-  <p class="email">Email: liurenqin [AT] zju.edu.cn</p>
+  <p>
+    Email: liurenqin [AT] zju.edu.cn<br />
+    GitHub: <a
+      href="https://github.com/cyrus28214"
+      target="_blank"
+      rel="noopener noreferrer">cyrus28214</a
+    >
+  </p>
 </PageLayout>
-
-<style>
-  .email {
-    opacity: 0.8;
-    font-size: 0.8rem;
-  }
-</style>

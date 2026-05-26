@@ -1,6 +1,6 @@
 ---
 title: 建议每个大一学生都来学学 CS50
-description: 免费体验 Havard 的 CS 入门课
+description: 免费体验 Havard 的 CS 入门课。
 ---
 
 ## 推荐

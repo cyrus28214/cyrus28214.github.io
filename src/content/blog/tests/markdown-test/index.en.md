@@ -35,7 +35,7 @@ You can use **bold text**, _italic text_, or **_bold italic text_**. You can als
 
 ## Links and Images
 
-[CodeCyrus Blog](https://blog.codecyrus.com)
+[CodeCyrus Blog](https://codecyrus.com)
 
 ![CodeCyrus Avatar](/images/avatar.png)
 
@@ -53,8 +53,8 @@ greet("World");
 
 ```yaml
 - name: Cyrus' Blog
-  url: https://blog.codecyrus.com
-  avatar: https://blog.codecyrus.com/images/avatar.png
+  url: https://codecyrus.com
+  avatar: https://codecyrus.com/images/avatar.png
   description: Think twice, code once.
 ```
 

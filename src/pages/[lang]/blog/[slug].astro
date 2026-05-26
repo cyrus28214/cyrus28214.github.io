@@ -1,11 +1,12 @@
 ---
-import { getCollection, render, getEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
 import {
   buildLocaleUrl,
   formatDate,
   langLabel,
   type LanguageKey,
 } from "../../../lib/i18n";
+import PostToc from "../../../components/PostToc.astro";
 import PageLayout from "../../../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
@@ -49,7 +50,7 @@ const { lang } = Astro.params;
 const { blog, localeLinks } = Astro.props;
 const otherLangs = localeLinks.filter((l) => l.lang != lang);
 
-const { Content } = await render(blog);
+const { Content, headings } = await render(blog);
 const { data } = blog;
 
 const t = {
@@ -58,6 +59,7 @@ const t = {
     updated: "更新于",
     fallbackNotice: "本文暂无中文版本，正在显示其他语言版本。",
     otherLangs: "其他语言版本：",
+    toc: "目录",
     licenseText:
       '除特别说明外，本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> 协议发布。转载请注明出处，禁止商业使用，演绎作品需采用相同协议共享。',
   },
@@ -66,6 +68,7 @@ const t = {
     updated: "Updated",
     fallbackNotice: "No English version available, showing other language.",
     otherLangs: "Other languages:",
+    toc: "Contents",
     licenseText:
       'Unless otherwise noted, this article is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> Please provide attribution, do not use it commercially, and share adaptations under the same license.',
   },
@@ -127,6 +130,8 @@ const t = {
         )
       }
     </header>
+
+    <PostToc headings={headings} title={t.toc} />
 
     <div class="post-body" lang={data.lang}>
       <Content />

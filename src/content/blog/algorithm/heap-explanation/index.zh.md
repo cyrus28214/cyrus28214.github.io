@@ -274,7 +274,7 @@ $$
 
 则时间复杂度为 $O(n)$
 
-也可以使用[**主定理（Master Theorem）**](/posts/master-theorem-application-examples/)求解，结果是一样的。
+也可以使用[**主定理（Master Theorem）**](/zh/blog/master-theorem/)求解，结果是一样的。
 
 $$
 \begin{align*}
