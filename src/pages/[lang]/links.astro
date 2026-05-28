@@ -55,7 +55,7 @@ const links = [
   {
     name: "浅碎时光 の 小世界",
     link: "https://darstib.github.io/myworld/",
-    avatar: "https://darstib.github.io/myworld/img/avatar.jpg",
+    avatar: "https://link.darstib.cn/avatar.jpg",
     descr: "因光而遇，因遇而散，旅人即路人，光是遇见就已经很美好了",
   },
   {
@@ -131,7 +131,7 @@ const t = {
 
 <PageLayout lang={lang} localeLinks={localeLinks}>
   <h1>{t.title}</h1>
-  <div class="links-grid">
+  <div id="links-grid" class="links-grid">
     {
       links.map((item) => (
         <Card href={item.link} target="_blank" rel="noopener noreferrer">
@@ -214,8 +214,8 @@ const t = {
     const grid = document.getElementById("links-grid");
     if (!grid) return;
 
-    // 获取所有的卡片节点并转换为数组
-    const cards = Array.from(grid.querySelectorAll(".link-card"));
+    // 获取 grid 的直接子元素（Card 组件渲染出的 <a>）
+    const cards = Array.from(grid.children);
 
     // Fisher-Yates 洗牌算法
     for (let i = cards.length - 1; i > 0; i--) {
@@ -227,9 +227,5 @@ const t = {
     cards.forEach((card) => grid.appendChild(card));
   };
 
-  // Astro 的视图过渡需要在 astro:page-load 时执行脚本
-  document.addEventListener("astro:page-load", shuffleLinks);
-
-  // 首次加载页面时也执行一次
   shuffleLinks();
 </script>
