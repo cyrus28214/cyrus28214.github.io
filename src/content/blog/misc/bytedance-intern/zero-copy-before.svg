@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <marker id="arrowDash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="1100" height="460" fill="#fff"/>
+
+  <!-- 区域分隔线 -->
+  <line x1="40" y1="170" x2="1060" y2="170" stroke="#bbb" stroke-dasharray="4 4"/>
+  <line x1="550" y1="40" x2="550" y2="430" stroke="#bbb" stroke-dasharray="4 4"/>
+
+  <!-- 左右标题 -->
+  <text x="295" y="50" text-anchor="middle" font-weight="600" fill="#444">Client（写）</text>
+  <text x="805" y="50" text-anchor="middle" font-weight="600" fill="#444">Server（读）</text>
+
+  <!-- 行标签 -->
+  <text x="48" y="95" font-weight="600" fill="#666">业务代码</text>
+  <text x="48" y="240" font-weight="600" fill="#666">archon 代码</text>
+
+  <!-- ============ 左：Client（写） ============ -->
+  <!-- thrift struct 椭圆 + binary 矩形 -->
+  <ellipse cx="295" cy="90" rx="140" ry="16" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <rect x="245" y="82" width="100" height="16" fill="#fff" stroke="#7E6BC4"/>
+  <text x="295" y="94" text-anchor="middle" font-size="11">XXXXXXXXXXXXX</text>
+  <text x="178" y="94" font-size="11" fill="#444">thrift struct</text>
+
+  <!-- thrift 序列化 (内存拷贝) -->
+  <line x1="245" y1="98" x2="180" y2="288" stroke="#555" marker-end="url(#arrow)"/>
+  <line x1="345" y1="98" x2="420" y2="288" stroke="#555" marker-end="url(#arrow)"/>
+  <text x="295" y="200" text-anchor="middle" font-weight="600">内存拷贝</text>
+
+  <!-- thrift 序列化后的连续 buffer -->
+  <rect x="80" y="290" width="430" height="32" fill="#fff" stroke="#7E6BC4"/>
+  <rect x="120" y="290" width="60" height="32" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <text x="150" y="310" text-anchor="middle" font-size="11">type+len</text>
+  <rect x="180" y="290" width="240" height="32" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <text x="300" y="310" text-anchor="middle" font-size="11">XXXXXXXXXXXXXXXXXXXX</text>
+  <text x="64" y="340" font-size="11" fill="#444">thrift 序列化后的数据（连续 buffer）</text>
+
+  <!-- 写到 socket buffer -->
+  <line x1="295" y1="342" x2="295" y2="376" stroke="#888" stroke-dasharray="4 3" marker-end="url(#arrowDash)"/>
+
+  <!-- socket write buffer -->
+  <rect x="80" y="378" width="430" height="32" fill="#F4F4F4" stroke="#999" stroke-dasharray="4 3"/>
+  <text x="295" y="398" text-anchor="middle" font-size="12">socket write buffer</text>
+
+  <!-- ============ 右：Server（读） ============ -->
+  <!-- thrift struct -->
+  <ellipse cx="805" cy="90" rx="140" ry="16" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <rect x="755" y="82" width="100" height="16" fill="#fff" stroke="#7E6BC4"/>
+  <text x="805" y="94" text-anchor="middle" font-size="11">XXXXXXXXXXXXX</text>
+  <text x="688" y="94" font-size="11" fill="#444">thrift struct</text>
+
+  <!-- thrift 反序列化（内存拷贝） -->
+  <line x1="690" y1="288" x2="755" y2="98" stroke="#555" marker-end="url(#arrow)"/>
+  <line x1="930" y1="288" x2="855" y2="98" stroke="#555" marker-end="url(#arrow)"/>
+  <text x="805" y="200" text-anchor="middle" font-weight="600">内存拷贝</text>
+
+  <!-- 反序列化前的连续 buffer -->
+  <rect x="590" y="290" width="430" height="32" fill="#fff" stroke="#7E6BC4"/>
+  <rect x="630" y="290" width="60" height="32" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <text x="660" y="310" text-anchor="middle" font-size="11">type+len</text>
+  <rect x="690" y="290" width="240" height="32" fill="#EAE6F7" stroke="#7E6BC4"/>
+  <text x="810" y="310" text-anchor="middle" font-size="11">XXXXXXXXXXXXXXXXXXXX</text>
+  <text x="574" y="340" font-size="11" fill="#444">thrift 反序列化前的数据（连续 buffer）</text>
+
+  <!-- 从 read buffer 取出 -->
+  <line x1="805" y1="376" x2="805" y2="342" stroke="#888" stroke-dasharray="4 3" marker-end="url(#arrowDash)"/>
+
+  <!-- socket read buffer -->
+  <rect x="590" y="378" width="430" height="32" fill="#F4F4F4" stroke="#999" stroke-dasharray="4 3"/>
+  <text x="805" y="398" text-anchor="middle" font-size="12">socket read buffer</text>
+
+  <!-- 网络 -->
+  <line x1="510" y1="394" x2="590" y2="394" stroke="#555" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+  <text x="550" y="385" text-anchor="middle" font-size="11" fill="#666">网络</text>
+</svg>
