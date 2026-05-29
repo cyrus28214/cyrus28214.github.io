@@ -136,6 +136,7 @@ hr {
 
 strong {
   font-weight: bold;
+  color: var(--text-strong);
 }
 
 .katex-display {

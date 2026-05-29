@@ -1,6 +1,7 @@
 :root {
   --bg-color: #ffffff;
-  --text-color: #333333;
+  --text-color: #000000;
+  --text-strong: #000000;
   --text-muted: #666666;
   --nav-text: #555555;
   --border-color: #eaeaea;
@@ -10,8 +11,9 @@
 }
 
 :root.dark {
-  --bg-color: #1a1a1a;
-  --text-color: #ffffff;
+  --bg-color: #080808;
+  --text-color: #f8f8f8;
+  --text-strong: #ffffff;
   --text-muted: #a0a0a0;
   --nav-text: #cccccc;
   --border-color: #333333;
